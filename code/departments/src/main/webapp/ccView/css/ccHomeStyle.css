@@ -1,0 +1,56 @@
+body {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.mainContainer {
+  width: 70%;
+  	background-color: #ffffff;
+  	box-shadow: 10px 10px 10px 10px #c2c2c2;
+  	border-radius: 10px;
+  	margin: 2em auto;
+  	padding: 10% 2% 2% 2%;
+}
+
+.top-navigation-bar {
+    border: 1px solid #315098;
+    border-radius: 6px;
+    padding: 1% 31% 8% 2%;
+    margin: -12% 0% 2% 0%;
+    color: #315098;
+}
+.bottomNagigationBar {
+    border: 1px solid #315098;
+    border-radius: 6px;
+    padding: 1% 6% 5% 2%;
+    margin: 0% 0% 2% 0%;
+}
+.middleLogoImgRight {
+    margin-right: 25px;
+}
+
+h1 {
+    font-family: New Century Schoolbook, serif;
+    font-size: 300%;
+    margin-top: 10px;
+}
+.right {
+    float: right;
+}
+.left {
+    float: left;
+}
+img.middleLogoImg {
+    width:  150px;
+    height: 45px
+}
+
+img.middleLogoImgRight {
+    width:  50px;
+    height: 45px
+}
+
+.content {
+    padding-top: 15px;
+    padding-bottom: 35px;
+}

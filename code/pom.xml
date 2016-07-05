@@ -1,0 +1,765 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.departments.ipa</groupId>
+  <artifactId>dep</artifactId>
+  <packaging>pom</packaging>
+  <version>3.3.3-SNAPSHOT</version>
+  <name>Department Dep</name>
+
+  <organization>
+    <name>DavidSajdl</name>
+    <url>http://www.davidsajdl@yahoo.co.uk</url>
+  </organization>
+
+  <profiles>
+    <profile>
+      <id>linux</id>
+      <activation><activeByDefault>true</activeByDefault></activation>
+      <modules>
+
+        <module>dep.data.sql-db</module>
+        <module>dep_core_ipa</module>
+        <module>departments</module>
+
+      </modules>
+    </profile>
+  </profiles>
+
+  <distributionManagement>
+    <repository>
+        <id>release-repository</id>
+        <url>http://192.168.63.84/nexus/content/repositories/releases</url>
+    </repository>
+    <snapshotRepository>
+		<uniqueVersion>false</uniqueVersion>
+		<id>snapshot-repository</id>
+        <url>http://192.168.63.84/nexus/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+
+  <properties>
+    <slf4j.version>1.7.7</slf4j.version>
+    <skip.keygen>false</skip.keygen>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+	<hsqldb.version>2.3.3</hsqldb.version>
+	<mysql.version>5.1.33</mysql.version>
+	<logback.version>1.1.2</logback.version>
+    
+    <jersey.version>2.16</jersey.version>    <!-- 2.13 -->
+    <jackson.version>2.5.1</jackson.version> <!-- 2.4.3 --> 
+
+	
+	<mailImpl.version>1.5.5</mailImpl.version>
+	
+	<jacoco.version>0.7.4.201502262128</jacoco.version> <!-- 0.7.5.201505241946 available but incompatible with current sonar -->
+	
+	<argLine /> <!-- Default value for code coverage variable -->
+
+	<!-- Code Coverage with SONAR -->
+    <sonar.exclusions>**/js/**/*,**/src/main/webapp/util/**/*,**/src/main/java/ark/util/**/*</sonar.exclusions>
+<!--
+    <sonar.surefire.reportsPath>surefire-reports/junitreports</sonar.surefire.reportsPath> <!- - Tells Sonar where the unit tests execution reports are [ sonar does not like TestNG :( ]- ->
+    <sonar.surefire.itReportPath>failsafe-reports/junitreports</sonar.surefire.itReportPath> <!- - Tells Sonar where the integration tests execution reports are [ sonar does not like TestNG :( ]- ->
+  -->   
+    <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin> <!-- Tells Sonar that the code coverage tool by unit tests is JaCoCo -->
+    <sonar.java.source>1.7</sonar.java.source>
+		
+    <sonar.jacoco.reportPath>${project.build.directory}/jacoco.exec</sonar.jacoco.reportPath> <!-- Tells Sonar where the code coverage report is -->
+    <sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath> <!-- Tells Sonar where the code coverage report is -->
+    <!-- /Code Coverage with SONAR -->
+    	
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>javax.servlet-api</artifactId>
+	    <version>3.0.1</version>
+	  </dependency>
+
+      <dependency>
+		<groupId>com.google.guava</groupId>
+		<artifactId>guava</artifactId>
+		<version>19.0</version>
+	  </dependency>
+    
+      <dependency>
+		<groupId>joda-time</groupId>
+		<artifactId>joda-time</artifactId>
+		<version>2.7</version>
+	  </dependency>
+
+      <dependency>
+	    <groupId>ch.qos.logback</groupId>
+	    <artifactId>logback-classic</artifactId>
+	    <version>${logback.version}</version>
+	  </dependency>
+
+  	  <dependency>
+		<groupId>commons-logging</groupId>
+		<artifactId>commons-logging</artifactId>
+		<version>1.2</version>
+	  </dependency>
+
+  	  <dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-lang3</artifactId>
+		<version>3.3.2</version>
+	  </dependency>
+
+  	  <dependency>
+  	    <groupId>org.slf4j</groupId>
+	    <artifactId>jcl-over-slf4j</artifactId>
+	    <version>${slf4j.version}</version>
+  	  </dependency>
+  	   
+	  <dependency>
+	    <groupId>org.slf4j</groupId>
+	    <artifactId>slf4j-log4j12</artifactId>
+	    <version>${slf4j.version}</version>
+	  </dependency>
+	
+      <dependency>
+        <groupId>javax.ws.rs</groupId>
+        <artifactId>javax.ws.rs-api</artifactId>
+        <version>2.0</version>
+      </dependency>
+      
+      <!-- Mail API -->
+      <dependency>
+        <groupId>javax.mail</groupId>
+        <artifactId>javax.mail-api</artifactId>
+        <version>1.5.4</version>
+      </dependency>
+      <!-- Mail implementation -->
+      <dependency>
+         <groupId>com.sun.mail</groupId>
+        <artifactId>javax.mail</artifactId>
+        <version>${mailImpl.version}</version>
+      </dependency>
+      
+      <dependency>
+        <groupId>org.sql2o</groupId>
+        <artifactId>sql2o</artifactId>
+        <version>1.5.4</version>
+      </dependency>
+
+	<!-- Test dependencies -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.11</version>
+        <scope>test</scope>
+      </dependency>
+
+	  <dependency>
+		<groupId>org.hamcrest</groupId>
+		<artifactId>hamcrest-all</artifactId>
+		<version>1.3</version> <!--  same version as hamcrest-core in junit -->
+	  </dependency>
+	  <dependency>
+		<groupId>org.exparity</groupId>
+		<artifactId>hamcrest-date</artifactId>
+		<version>1.0.1</version>
+		<scope>test</scope>
+	  </dependency>
+      
+      <dependency>
+        <groupId>nl.ivonet</groupId>
+        <artifactId>beanunit</artifactId>
+        <version>2.0</version>
+        <scope>test</scope>
+      </dependency>
+      
+	  <dependency>
+		<groupId>org.dbunit</groupId>
+		<artifactId>dbunit</artifactId>
+		<version>2.5.0</version>
+		<scope>test</scope>
+	  </dependency>
+	  <dependency>
+		<groupId>com.ninja-squad</groupId>
+		<artifactId>DbSetup</artifactId>
+		<version>1.3.0</version>
+		<scope>test</scope>
+	  </dependency>
+	  <dependency>
+		<groupId>org.mockito</groupId>
+		<artifactId>mockito-all</artifactId>
+		<version>1.10.19</version>
+		<scope>test</scope>
+	  </dependency>
+	  <dependency>
+		<groupId>org.mockito</groupId>
+		<artifactId>mockito-core</artifactId>
+		<version>1.10.19</version>
+		<scope>test</scope>
+	  </dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+			<version>1.6.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>1.6.2</version>
+			<scope>test</scope>
+		</dependency>
+
+	  <dependency>
+		<groupId>org.hsqldb</groupId>
+		<artifactId>hsqldb</artifactId>
+		<version>${hsqldb.version}</version>
+		<scope>test</scope>
+	  </dependency>
+	  <dependency>
+		<groupId>org.hsqldb</groupId>
+		<artifactId>sqltool</artifactId>
+		<version>${hsqldb.version}</version>
+		<scope>test</scope>
+	  </dependency>
+
+	<!-- Runtime dependencies -->
+
+      <dependency>
+	    <groupId>mysql</groupId>
+	    <artifactId>mysql-connector-java</artifactId>
+	    <version>${mysql.version}</version>
+	    <scope>runtime</scope>
+	  </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+       <groupId>org.slf4j</groupId>
+       <artifactId>slf4j-api</artifactId>
+       <scope>provided</scope>
+     </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+         <!-- See https://maven.apache.org/plugins/ for latest versions -->
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>2.6</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.3</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>1.8</version>
+        </plugin>
+        
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.7</version>
+        </plugin>
+        
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>2.10</version>
+        </plugin>
+        
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>2.5.4</version>
+        </plugin>
+        
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.18.1</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>2.18.1</version>
+        </plugin>
+        
+        <plugin>
+		  <groupId>org.apache.maven.plugins</groupId>
+		  <artifactId>maven-jar-plugin</artifactId>
+		  <version>2.6</version>
+	    </plugin>
+
+		<plugin>
+		  <groupId>org.apache.maven.plugins</groupId>
+  		  <artifactId>maven-war-plugin</artifactId>
+		  <version>2.6</version>
+	    </plugin>
+    
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.4.0</version>
+        </plugin>
+        
+        <plugin>
+		  <groupId>org.eclipse.jetty</groupId>
+	      <artifactId>jetty-maven-plugin</artifactId>
+		  <version>9.2.6.v20141205</version>
+        </plugin>
+        
+		<plugin>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>${jacoco.version}</version>
+		</plugin>
+        
+        <plugin>
+          <groupId>org.codehaus.cargo</groupId>
+          <artifactId>cargo-maven2-plugin</artifactId>
+          <version>1.4.11</version>
+        </plugin> 
+        
+        <plugin>
+          <groupId>org.jasig.mojo.jspc</groupId>
+          <artifactId>jspc-maven-plugin</artifactId>
+          <version>2.0.0</version>
+          <configuration>
+            <defaultSourcesDirectory>${project.basedir}/src/main/webapp</defaultSourcesDirectory>
+            <!-- Don't use compiled classes - compilation is just for checking OK -->
+            <includeInProject>false</includeInProject>
+            <source>1.7</source>
+            <target>1.7</target>
+            <!-- verbose>true</verbose -->
+            <compilerArgument>-Xlint</compilerArgument>
+            <showWarnings>true</showWarnings>
+          </configuration>
+          <executions>
+	        <execution>
+	          <goals>
+	            <goal>compile</goal>
+	          </goals>
+	        </execution>
+	      </executions>
+	      <dependencies>
+	        <dependency>
+              <groupId>org.jasig.mojo.jspc</groupId>
+              <artifactId>jspc-compiler-tomcat7</artifactId>
+              <version>2.0.0</version>
+	        </dependency>
+	      </dependencies>
+	    </plugin>
+
+   		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+   		<plugin>
+   			<groupId>org.eclipse.m2e</groupId>
+   			<artifactId>lifecycle-mapping</artifactId>
+   			<version>1.0.0</version>
+   			<configuration>
+   				<lifecycleMappingMetadata>
+   					<pluginExecutions>
+   						<pluginExecution>
+   							<pluginExecutionFilter>
+   								<groupId>
+   									org.apache.maven.plugins
+   								</groupId>
+   								<artifactId>
+   									maven-dependency-plugin
+   								</artifactId>
+   								<versionRange>[2.8,)</versionRange>
+   								<goals>
+   									<goal>unpack</goal>
+   								</goals>
+   							</pluginExecutionFilter>
+   							<action>
+   								<ignore />
+   							</action>
+   						</pluginExecution>
+   						<pluginExecution>
+   							<pluginExecutionFilter>
+   								<groupId>org.codehaus.mojo</groupId>
+   								<artifactId>
+   									keytool-maven-plugin
+   								</artifactId>
+   								<versionRange>[1.5,)</versionRange>
+   								<goals>
+   									<goal>generateKeyPair</goal>
+   									<goal>importCertificate</goal>
+   								</goals>
+   							</pluginExecutionFilter>
+   							<action>
+   								<ignore />
+   							</action>
+   						</pluginExecution>
+   						<pluginExecution>
+   							<pluginExecutionFilter>
+   								<groupId>org.jacoco</groupId>
+   								<artifactId>
+   									jacoco-maven-plugin
+   								</artifactId>
+   								<versionRange>
+   									[0.5.5.201112152213,)
+   								</versionRange>
+   								<goals>
+   									<goal>prepare-agent</goal>
+   									<goal>instrument</goal>
+   								</goals>
+   							</pluginExecutionFilter>
+   							<action>
+   								<ignore />
+   							</action>
+   						</pluginExecution>
+   						<pluginExecution>
+   							<pluginExecutionFilter>
+   								<groupId>org.codehaus.mojo</groupId>
+   								<artifactId>
+   									exec-maven-plugin
+   								</artifactId>
+   								<versionRange>[1.2.1,)</versionRange>
+   								<goals>
+   									<goal>exec</goal>
+   									<goal>java</goal>
+   								</goals>
+   							</pluginExecutionFilter>
+   							<action>
+   								<ignore />
+   							</action>
+   						</pluginExecution>
+   						<pluginExecution>
+   							<pluginExecutionFilter>
+   								<groupId>
+   									org.apache.maven.plugins
+   								</groupId>
+   								<artifactId>
+   									maven-antrun-plugin
+   								</artifactId>
+   								<versionRange>[1.6,)</versionRange>
+   								<goals>
+   									<goal>run</goal>
+   								</goals>
+   							</pluginExecutionFilter>
+   							<action>
+   								<ignore />
+   							</action>
+   						</pluginExecution>
+   						<pluginExecution>
+   							<pluginExecutionFilter>
+   								<groupId>org.codehaus.mojo</groupId>
+   								<artifactId>
+   									build-helper-maven-plugin
+   								</artifactId>
+   								<versionRange>[1.9.1,)</versionRange>
+   								<goals>
+   									<goal>add-source</goal>
+   									<goal>add-test-source</goal>
+   								</goals>
+   							</pluginExecutionFilter>
+   							<action>
+   								<ignore />
+   							</action>
+   						</pluginExecution>
+   						<pluginExecution>
+   							<pluginExecutionFilter>
+   								<groupId>
+   									com.googlecode.maven-download-plugin
+   								</groupId>
+   								<artifactId>
+   									download-maven-plugin
+   								</artifactId>
+   								<versionRange>[1.2.0,)</versionRange>
+   								<goals>
+   									<goal>wget</goal>
+   								</goals>
+   							</pluginExecutionFilter>
+   							<action>
+   								<ignore />
+   							</action>
+   						</pluginExecution>
+   						<pluginExecution>
+   							<pluginExecutionFilter>
+   								<groupId>org.codehaus.mojo</groupId>
+   								<artifactId>
+   									xml-maven-plugin
+   								</artifactId>
+   								<versionRange>[1.0,)</versionRange>
+   								<goals>
+   									<goal>transform</goal>
+   								</goals>
+   							</pluginExecutionFilter>
+   							<action>
+   								<ignore />
+   							</action>
+   						</pluginExecution>
+   						<pluginExecution>
+   							<pluginExecutionFilter>
+   								<groupId>
+   									org.codehaus.enunciate
+   								</groupId>
+   								<artifactId>
+   									maven-enunciate-plugin
+   								</artifactId>
+   								<versionRange>[1.29,)</versionRange>
+   								<goals>
+   									<goal>assemble</goal>
+   								</goals>
+   							</pluginExecutionFilter>
+   							<action>
+   								<ignore />
+   							</action>
+   						</pluginExecution>
+   						<pluginExecution>
+   							<pluginExecutionFilter>
+   								<groupId>
+   									com.google.code.maven-replacer-plugin
+   								</groupId>
+   								<artifactId>
+   									maven-replacer-plugin
+   								</artifactId>
+   								<versionRange>[1.4.1,)</versionRange>
+   								<goals>
+   									<goal>replace</goal>
+   								</goals>
+   							</pluginExecutionFilter>
+   							<action>
+   								<ignore />
+   							</action>
+   						</pluginExecution>
+   						<pluginExecution>
+   							<pluginExecutionFilter>
+   								<groupId>de.juplo</groupId>
+   								<artifactId>
+   									hibernate4-maven-plugin
+   								</artifactId>
+   								<versionRange>[1.0.5,)</versionRange>
+   								<goals>
+   									<goal>export</goal>
+   								</goals>
+   							</pluginExecutionFilter>
+   							<action>
+   								<ignore />
+   							</action>
+   						</pluginExecution>
+   						<pluginExecution>
+   							<pluginExecutionFilter>
+   								<groupId>org.jbehave</groupId>
+   								<artifactId>
+   									jbehave-maven-plugin
+   								</artifactId>
+   								<versionRange>[4.0.1,)</versionRange>
+   								<goals>
+   									<goal>
+   										unpack-view-resources
+   									</goal>
+   								</goals>
+   							</pluginExecutionFilter>
+   							<action>
+   								<ignore />
+   							</action>
+   						</pluginExecution>
+   						<pluginExecution>
+   							<pluginExecutionFilter>
+   								<groupId>org.codehaus.mojo</groupId>
+   								<artifactId>
+   									properties-maven-plugin
+   								</artifactId>
+   								<versionRange>
+   									[1.0-alpha-2,)
+   								</versionRange>
+   								<goals>
+   									<goal>
+   										set-system-properties
+   									</goal>
+   								</goals>
+   							</pluginExecutionFilter>
+   							<action>
+   								<ignore />
+   							</action>
+   						</pluginExecution>
+   						<pluginExecution>
+   							<pluginExecutionFilter>
+   								<groupId>
+   									com.webcohesion.enunciate
+   								</groupId>
+   								<artifactId>
+   									enunciate-maven-plugin
+   								</artifactId>
+   								<versionRange>[2.2.0,)</versionRange>
+   								<goals>
+   									<goal>assemble</goal>
+   								</goals>
+   							</pluginExecutionFilter>
+   							<action>
+   								<ignore />
+   							</action>
+   						</pluginExecution>
+   						<pluginExecution>
+   							<pluginExecutionFilter>
+   								<groupId>
+   									com.webcohesion.enunciate
+   								</groupId>
+   								<artifactId>
+   									enunciate-slim-maven-plugin
+   								</artifactId>
+   								<versionRange>[2.2.0,)</versionRange>
+   								<goals>
+   									<goal>assemble</goal>
+   									<goal>docs</goal>
+   								</goals>
+   							</pluginExecutionFilter>
+   							<action>
+   								<ignore />
+   							</action>
+   						</pluginExecution>
+   					</pluginExecutions>
+   				</lifecycleMappingMetadata>
+   			</configuration>
+   		</plugin>
+   	  </plugins>
+    </pluginManagement>
+    
+    <plugins>
+	  <plugin>
+	    <groupId>org.apache.maven.plugins</groupId>
+	    <artifactId>maven-compiler-plugin</artifactId>
+	    <configuration>
+          <!-- Version currently supported in live system -->
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+		
+        <configuration>
+          <propertyName>jacoco.agent.argLine</propertyName><!-- used for surefire/failsafe-plugin combination -->
+        </configuration>
+		<executions>
+          <execution>
+            <id>jacoco-initialize</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+            <execution>
+                <id>jacoco-agent-for-it</id>
+                <goals>
+                    <goal>prepare-agent-integration</goal>
+                </goals>
+            </execution>
+            <execution>
+                <id>jacoco-site</id>
+                <phase>verify</phase>
+                <goals>
+                    <goal>report</goal>
+                </goals>
+            </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>2.13</version>
+        <configuration>
+          <reportSets>
+            <reportSet>
+              <inherited>true</inherited>
+              <reports>
+                <report>report-only</report>
+                <report>failsafe-report-only</report>
+              </reports>
+            </reportSet>
+          </reportSets>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+       	  <runOrder>hourly</runOrder>
+          	<!-- runOrder>reversealphabetical</runOrder-->
+			<!-- OPTIONS: alphabetical reversealphabetical hourly(alternates alpha and reverseaplha) filesystem failedfirst -->
+		  <!-- argLine>${jacoco.args}</argLine -->
+          <argLine>${jacoco.agent.argLine}</argLine>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+            <!-- For Sonar to pick up the results 
+            <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory> -->
+          <argLine>${jacoco.agent.argLine}</argLine>
+        </configuration>
+      </plugin>
+
+        <plugin>
+		  <groupId>org.apache.maven.plugins</groupId>
+		  <artifactId>maven-jar-plugin</artifactId>
+ 		  <configuration>
+		    <archive>
+				<!-- NOTE: if you make any changes to this element then make sure 
+					you make the same changes in the same element of maven-war-plugin, maven-assembly-plugin 
+					and maven-ejb-plugin in this file. -->
+			  <manifestEntries>
+			    <Specification-Vendor>${project.organization.name}</Specification-Vendor>
+			    <Specification-Title>${project.name}</Specification-Title>
+			    <Implementation-Title>${project.artifactId}</Implementation-Title>
+ 			    <Implementation-Version>${project.version}</Implementation-Version>
+			  </manifestEntries>
+	        </archive>
+	      </configuration>
+	    </plugin>
+
+		<plugin>
+		  <groupId>org.apache.maven.plugins</groupId>
+  		  <artifactId>maven-war-plugin</artifactId>
+ 		  <configuration>
+		    <archive>
+				<!-- NOTE: if you make any changes to this element then make sure 
+					you make the same changes in the same element of maven-war-plugin, maven-assembly-plugin 
+					and maven-ejb-plugin in this file. -->
+			  <manifestEntries>
+			    <Specification-Vendor>${project.organization.name}</Specification-Vendor>
+			    <Specification-Title>${project.name}</Specification-Title>
+			    <Implementation-Title>${project.artifactId}</Implementation-Title>
+ 			    <Implementation-Version>${project.version}</Implementation-Version>
+			  </manifestEntries>
+	        </archive>
+	      </configuration>
+	    </plugin>
+
+    </plugins>
+  </build>
+
+</project>

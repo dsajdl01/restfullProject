@@ -1,0 +1,21 @@
+package dep.data.ipa;
+
+
+public class Department {
+
+    private Integer depId;
+    private String depName;
+
+    public Department(Ingeter depId, String depName){
+        this.depId = depId;
+        this.depName = depName;
+    }
+
+    public Integer getDepId() {
+        return depId;
+    }
+
+    public String getDepName() {
+        return depName;
+    }
+}

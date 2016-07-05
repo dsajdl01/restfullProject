@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Control Center</title>
+    <link rel="stylesheet" type="text/css" href="ccView/css/ccHomeStyle.css" media="all" >
+</head>
+<body ng-app="ccApp">
+    <div class="mainContainer" ng-controller="homeControlCenterController as ctrl" ng-cloak ng-init="ctrl.init()">
+        <div class="top-navigation-bar">
+            <div class="left">
+                <a href="index.html" title=" Chooser Managment ">
+                    <img class="topLogoImg" src="ccView/image/repChooserLogo.png" alt="Report logo, link to report view">
+                </a>
+            </div>
+            <div class="right">
+                <h1>Control Center</h1>
+            </div>
+        </div>
+        <div class="bottomNagigationBar">
+            <div class="left">
+                <span>
+                    <a ng-href="#/report" ><img class="middleLogoImg" src="ccView/image/report-logo.png" alt="Report logo, link to report view"></a>
+                </span>
+            </div>
+            <div class="right">
+                <span>
+                    <img class="middleLogoImgRight" src="ccView/image/D-Logo.png" alt="Report logo, link to report view">
+                </span>
+                <span>
+                    <a ng-href="#/home" ><img class="middleLogoImgRight" src="ccView/image/home-logo.jpg" alt="Home logo, link to home or index view"></a>
+                </span>
+                <span>
+                    <img class="middleLogoImgRight" src="ccView/image/about.png" alt="About logo, link to Inbormation About this view">
+                </span>
+            </div>
+        </div>
+        <div class="content" ng-view >
+        </div>
+        <div class="footer">
+            <div class="col-sm-4 col-sm-offset-8">
+                <span class="copyRight">&copy; Copyright 2016 Created by David Sajdl</span>
+            </div>
+        </div>
+    </div>
+    <script src="AngularJS/vendor/angular/angular.min.js"></script>
+    <script src="AngularJS/vendor/angular-resource/angular-resource.js"></script>
+    <script src="AngularJS/vendor/angular-route/angular-route.js"></script>
+
+    <script src="ccView/app.js"></script>
+    <script src="ccView/controllers/homeControlCenterController.js"></script>
+</body>
+</html>
