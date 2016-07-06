@@ -20,7 +20,7 @@ public class DepartmentDBO  {
 
         // Properties for user and password.
         Properties p = new Properties();
-        p.put("user","XXXXX");
+        p.put("user","XXXX");
         p.put("password","XXXXX");
 
         // Now to connect

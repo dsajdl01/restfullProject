@@ -12,5 +12,8 @@ controlCenterApp.config(['$routeProvider', function($routeProvider) {
 	  .when('/report', {
 	        templateUrl: 'ccView/views/reportview.html',
 	  })
+	  .when('/createdepartment', {
+      	        templateUrl: 'ccView/views/createdepartment.html',
+      	  })
         .otherwise({redirectTo: '/home'})
 }]);

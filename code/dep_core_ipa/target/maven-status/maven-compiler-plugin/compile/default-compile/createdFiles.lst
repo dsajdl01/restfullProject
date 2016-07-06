@@ -1,2 +1,4 @@
 dep/data/provider/DataProvider.class
+dep/data/core_dep/Department.class
 com/departments/ipa/dep_core_ipa/App.class
+dep/data/provider/DepartmentImpl.class

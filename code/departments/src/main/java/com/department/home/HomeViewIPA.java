@@ -24,5 +24,5 @@ public class HomeViewIPA {
 		DataProvider dataPro = new DataProvider();
 		String output = dataPro.getMessage();
 		return Response.status(200).entity(output).build();
-}
+	}
 }
