@@ -5,8 +5,8 @@
     <title>Control Center</title>
     <link rel="stylesheet" type="text/css" href="ccView/css/ccHomeStyle.css" media="all" >
 </head>
-<body ng-app="ccApp">
-    <div class="mainContainer" ng-controller="homeControlCenterController as ctrl" ng-cloak ng-init="ctrl.init()">
+<body ng-app="ccApp" ng-cloak>
+    <div class="mainContainer" ng-controller="homeControlCenterController as ctrl" ng-init="ctrl.init()">
         <div class="top-navigation-bar">
             <div class="left">
                 <a href="index.html" title=" Chooser Managment ">
@@ -49,5 +49,8 @@
 
     <script src="ccView/app.js"></script>
     <script src="ccView/controllers/homeControlCenterController.js"></script>
+    <script src="ccView/controllers/departmentViewController.js"></script>
+    <script src="ccView/services/departmentServices.js"></script>
+    <script src="commonServices/commonFunctionServices.js"></script>
 </body>
 </html>

@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/code.iml" filepath="$PROJECT_DIR$/.idea/code.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dep.data.sql-db/dep.data.sql-db.iml" filepath="$PROJECT_DIR$/dep.data.sql-db/dep.data.sql-db.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dep_core_ipa/dep_core_ipa.iml" filepath="$PROJECT_DIR$/dep_core_ipa/dep_core_ipa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/departments/departments.iml" filepath="$PROJECT_DIR$/departments/departments.iml" />
     </modules>
   </component>
 </project>

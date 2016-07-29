@@ -1,2 +1,4 @@
 com/controlcenter/homerestipa/DepartmentIPA.class
 com/department/home/HomeViewIPA.class
+com/controlcenter/homerestipa/response/DepartmentJson.class
+com/controlcenter/homerestipa/response/ListDepartment.class

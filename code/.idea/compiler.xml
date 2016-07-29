@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <excludeFromCompile>
+      <file url="file://$PROJECT_DIR$/departments/src/main/java/com/controlcenter/homerestipa/response/ListDepartment.java" />
+    </excludeFromCompile>
     <resourceExtensions />
     <wildcardResourcePatterns>
       <entry name="!?*.java" />
@@ -17,6 +20,21 @@
       <profile default="true" name="Default" enabled="false">
         <processorPath useClasspath="true" />
       </profile>
+      <profile default="false" name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="dep.data.sql-db" />
+        <module name="dep_core_ipa" />
+        <module name="departments" />
+      </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="code" target="1.7" />
+      <module name="dep.data.sql-db" target="1.5" />
+      <module name="dep_core_ipa" target="1.5" />
+      <module name="departments" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

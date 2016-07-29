@@ -30,6 +30,17 @@
             <artifactId>dep_core_ipa</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+		<dependency>
+			<groupId>com.jcabi</groupId>
+			<artifactId>jcabi-aether</artifactId>
+			<version>0.7.19</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-core</artifactId>
+			<version>3.0.3</version>
+		</dependency>
   		
 	    <dependency>
 	      <groupId>junit</groupId>
@@ -45,16 +56,69 @@
 		</dependency>
 
 		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.1.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>1.7.21</version>
+		</dependency>
+
+
+
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.jaxrs</groupId>
+			<artifactId>jackson-jaxrs-json-provider</artifactId>
+			<version>2.8.1</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.8.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+<!--
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+		&lt;!&ndash; https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind &ndash;&gt;
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+-->
+
+<!--		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>-->
+
+<!--		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-server</artifactId>
 			<version>1.9</version>
-		</dependency>	 
+		</dependency>
 	        <dependency>
 	            <groupId>com.sun.jersey</groupId>
 	            <artifactId>jersey-client</artifactId>
 	            <version>1.9</version>
 	        </dependency>
-	 
+
 	        <dependency>
 	            <groupId>com.sun.jersey</groupId>
 	            <artifactId>jersey-json</artifactId>
@@ -64,7 +128,20 @@
     			<groupId>com.sun.jersey</groupId>
     			<artifactId>jersey-json</artifactId>
     			<version>1.9</version>
-			</dependency>
+			</dependency>-->
+
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>2.17</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet-core</artifactId>
+			<version>2.17</version>
+		</dependency>
+
+
   	</dependencies>
   	
     <profiles>

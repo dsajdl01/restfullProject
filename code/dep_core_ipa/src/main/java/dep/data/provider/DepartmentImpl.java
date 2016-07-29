@@ -8,7 +8,6 @@ import java.util.List;
 public class DepartmentImpl {
 
     public DepartmentImpl(){
-
     }
 
     public List<Department> getDepartmentList(){
@@ -20,5 +19,15 @@ public class DepartmentImpl {
         list.add(dep1);
         list.add(dep2);
         return list;
+    }
+
+    public String getCreaterName(Integer createrId){
+        if(createrId == null){
+            // throw exception
+        }
+        if(createrId.intValue() == 1){
+            return "David Sajd";
+        }
+        return "Unknown Creater";
     }
 }

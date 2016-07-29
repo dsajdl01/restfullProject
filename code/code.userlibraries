@@ -1,3 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<eclipse-userlibraries />
+<eclipse-userlibraries>
+  <library name="Maven: asm:asm:3.1">
+    <archive path="/home/david/.m2/repository/asm/asm/3.1/asm-3.1.jar" />
+  </library>
+  <library name="Maven: com.sun.jersey:jersey-client:1.9">
+    <archive path="/home/david/.m2/repository/com/sun/jersey/jersey-client/1.9/jersey-client-1.9.jar" />
+  </library>
+  <library name="Maven: com.sun.jersey:jersey-core:1.9">
+    <archive path="/home/david/.m2/repository/com/sun/jersey/jersey-core/1.9/jersey-core-1.9.jar" />
+  </library>
+  <library name="Maven: com.sun.jersey:jersey-json:1.9">
+    <archive path="/home/david/.m2/repository/com/sun/jersey/jersey-json/1.9/jersey-json-1.9.jar" />
+  </library>
+  <library name="Maven: com.sun.jersey:jersey-server:1.9">
+    <archive path="/home/david/.m2/repository/com/sun/jersey/jersey-server/1.9/jersey-server-1.9.jar" />
+  </library>
+  <library name="Maven: com.sun.xml.bind:jaxb-impl:2.2.3-1">
+    <archive path="/home/david/.m2/repository/com/sun/xml/bind/jaxb-impl/2.2.3-1/jaxb-impl-2.2.3-1.jar" />
+  </library>
+  <library name="Maven: javax.activation:activation:1.1">
+    <archive path="/home/david/.m2/repository/javax/activation/activation/1.1/activation-1.1.jar" />
+  </library>
+  <library name="Maven: javax.xml.bind:jaxb-api:2.2.2">
+    <archive path="/home/david/.m2/repository/javax/xml/bind/jaxb-api/2.2.2/jaxb-api-2.2.2.jar" />
+  </library>
+  <library name="Maven: javax.xml.stream:stax-api:1.0-2">
+    <archive path="/home/david/.m2/repository/javax/xml/stream/stax-api/1.0-2/stax-api-1.0-2.jar" />
+  </library>
+  <library name="Maven: junit:junit:3.8.1">
+    <archive path="/home/david/.m2/repository/junit/junit/3.8.1/junit-3.8.1.jar" />
+  </library>
+  <library name="Maven: junit:junit:4.11">
+    <archive path="/home/david/.m2/repository/junit/junit/4.11/junit-4.11.jar" />
+  </library>
+  <library name="Maven: mysql:mysql-connector-java:5.1.6">
+    <archive path="/home/david/.m2/repository/mysql/mysql-connector-java/5.1.6/mysql-connector-java-5.1.6.jar" />
+  </library>
+  <library name="Maven: org.codehaus.jackson:jackson-core-asl:1.8.3">
+    <archive path="/home/david/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.8.3/jackson-core-asl-1.8.3.jar" />
+  </library>
+  <library name="Maven: org.codehaus.jackson:jackson-jaxrs:1.8.3">
+    <archive path="/home/david/.m2/repository/org/codehaus/jackson/jackson-jaxrs/1.8.3/jackson-jaxrs-1.8.3.jar" />
+  </library>
+  <library name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.8.3">
+    <archive path="/home/david/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.8.3/jackson-mapper-asl-1.8.3.jar" />
+  </library>
+  <library name="Maven: org.codehaus.jackson:jackson-xc:1.8.3">
+    <archive path="/home/david/.m2/repository/org/codehaus/jackson/jackson-xc/1.8.3/jackson-xc-1.8.3.jar" />
+  </library>
+  <library name="Maven: org.codehaus.jettison:jettison:1.1">
+    <archive path="/home/david/.m2/repository/org/codehaus/jettison/jettison/1.1/jettison-1.1.jar" />
+  </library>
+  <library name="Maven: org.hamcrest:hamcrest-core:1.3">
+    <archive path="/home/david/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar" />
+  </library>
+  <library name="Maven: org.slf4j:slf4j-api:1.7.21">
+    <archive path="/home/david/.m2/repository/org/slf4j/slf4j-api/1.7.21/slf4j-api-1.7.21.jar" />
+  </library>
+  <library name="Maven: org.slf4j:slf4j-api:1.7.7">
+    <archive path="/home/david/.m2/repository/org/slf4j/slf4j-api/1.7.7/slf4j-api-1.7.7.jar" />
+  </library>
+  <library name="Maven: stax:stax-api:1.0.1">
+    <archive path="/home/david/.m2/repository/stax/stax-api/1.0.1/stax-api-1.0.1.jar" />
+  </library>
+</eclipse-userlibraries>
 

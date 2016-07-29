@@ -20,8 +20,8 @@ public class DepartmentDBO  {
 
         // Properties for user and password.
         Properties p = new Properties();
-        p.put("user","XXXX");
-        p.put("password","XXXXX");
+        p.put("user","root");
+        p.put("password","dsajdl0112345");
 
         // Now to connect
         Connection c = DriverManager.getConnection(CONNECTION,p);

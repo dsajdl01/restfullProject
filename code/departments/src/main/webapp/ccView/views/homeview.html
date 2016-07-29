@@ -1,4 +1,31 @@
-<div>
-    <h1>HOME..</h1>
-    <p>get all available departments. User can select and relattment and add a new employee</p>
+<div  class="depContainer">
+    <div  class="controllerClass" ng-controller="departmentViewController as depCtrl" ng-init="depCtrl.init()" ng-show="depCtrl.showPage">
+        <h1>HOME..</h1>
+
+        <div class="tableContent" ng-show="depCtrl.containTable">
+            <table>
+                <thead>
+                <tr>
+                    <td></td>
+                    <td>Department Name</td>
+                    <td>Created by</td>
+                </tr>
+                </thead>
+                <tbody>
+                <form>
+                <tr ng-repeat="dep in depCtrl.depList">
+                        <td>
+                            <input type="radio" name="departmentName" ng-value='dep.depId'></radio>
+                        </td>
+                        <td>{{ dep.delName }}</td>
+                        <td>{{ dep.createdBy }}</td>
+                </tr>
+                </form>
+                </tbody>
+            </table>
+        </div>
+        <div class="tableContent" ng-show="!depCtrl.containTable">
+            <span>No department created</span>
+        </div>
+    </div>
 </div>
