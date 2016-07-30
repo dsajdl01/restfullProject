@@ -1,1 +1,16 @@
 code/.idea
+.metadata/
+RemoteSystemsTempFiles/
+Servers/
+
+code/dep.data.sql-db/target/
+code/dep_core_ipa/target/
+code/departments/target/
+
+# Package File #
+*.jar
+*.war
+*.ear
+
+*~
+
