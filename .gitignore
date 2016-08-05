@@ -3,11 +3,9 @@ code/.idea
 RemoteSystemsTempFiles/
 Servers/
 
-code/**/target/**
-code/**/target/*
-code/**/target/
+**/target/**
 
-code/dep.data.sql-db/target/dep.data.sql-db-0.0.1-SNAPSHOT.jar
+
 
 # Package File #
 *.jar

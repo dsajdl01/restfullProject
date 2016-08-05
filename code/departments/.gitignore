@@ -1,6 +1,5 @@
-*/target/**
-*/target/*
-/target/
+
+#/target/
 
 src/main/resources/configDep.properties
 

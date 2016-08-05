@@ -61,10 +61,7 @@
 
 	<!-- Code Coverage with SONAR -->
     <sonar.exclusions>**/js/**/*,**/src/main/webapp/util/**/*,**/src/main/java/ark/util/**/*</sonar.exclusions>
-<!--
-    <sonar.surefire.reportsPath>surefire-reports/junitreports</sonar.surefire.reportsPath> <!- - Tells Sonar where the unit tests execution reports are [ sonar does not like TestNG :( ]- ->
-    <sonar.surefire.itReportPath>failsafe-reports/junitreports</sonar.surefire.itReportPath> <!- - Tells Sonar where the integration tests execution reports are [ sonar does not like TestNG :( ]- ->
-  -->   
+
     <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin> <!-- Tells Sonar that the code coverage tool by unit tests is JaCoCo -->
     <sonar.java.source>1.7</sonar.java.source>
 		
@@ -683,23 +680,6 @@
             </execution>
         </executions>
       </plugin>
-
-<!--      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-report-plugin</artifactId>
-        <version>2.13</version>
-        <configuration>
-          <reportSets>
-            <reportSet>
-              <inherited>true</inherited>
-              <reports>
-                <report>report-only</report>
-                <report>failsafe-report-only</report>
-              </reports>
-            </reportSet>
-          </reportSets>
-        </configuration>
-      </plugin>-->
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

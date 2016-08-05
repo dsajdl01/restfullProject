@@ -27,12 +27,41 @@
             <artifactId>dep.data.sql-db</artifactId>
             <version>${project.version}</version>
         </dependency>
-        
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-server</artifactId>
-			<version>1.9</version>
-		</dependency>
+
+
+      <dependency>
+          <groupId>javax.servlet</groupId>
+          <artifactId>javax.servlet-api</artifactId>
+          <version>3.1.0</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.glassfish.jersey.media</groupId>
+          <artifactId>jersey-media-multipart</artifactId>
+          <version>2.22.2</version>
+      </dependency>
+      <dependency>
+          <groupId>org.glassfish.jersey.media</groupId>
+          <artifactId>jersey-media-sse</artifactId>
+          <version>2.22.2</version>
+      </dependency>
+      <dependency>
+          <groupId>org.glassfish.jersey.core</groupId>
+          <artifactId>jersey-server</artifactId>
+          <version>2.22.2</version>
+      </dependency>
+      <dependency>
+          <groupId>org.glassfish.jersey.containers</groupId>
+          <artifactId>jersey-container-servlet</artifactId>
+          <version>2.22.2</version>
+          <!--<scope>runtime</scope>-->
+      </dependency>
+      <dependency>
+          <groupId>org.glassfish.jersey.test-framework.providers</groupId>
+          <artifactId>jersey-test-framework-provider-jetty</artifactId>
+          <version>2.22.2</version>
+          <!--<scope>test</scope>-->
+      </dependency>
 
   </dependencies>
   <profiles>
