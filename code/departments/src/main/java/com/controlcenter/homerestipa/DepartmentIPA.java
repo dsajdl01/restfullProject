@@ -43,7 +43,7 @@ public class DepartmentIPA{
         }
         ListDepartment listDep = new ListDepartment(department);
         LOGGER.info("List of Department {}", listDep);
-        return  Response.ok(listDep, MediaType.APPLICATION_JSON ).build(); // success((Object) listDep);
+        return  success(listDep); //Response.ok(listDep, MediaType.APPLICATION_JSON ).build();
     }
 
     private Response success(final Object response)

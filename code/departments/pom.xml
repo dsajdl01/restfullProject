@@ -7,9 +7,6 @@
   <version>0.0.1-SNAPSHOT</version>
    <name>departments Maven Webapp</name>
   <url>http://maven.apache.org</url>
-<!--	<name>departments</name>
-	<url>http://maven.apache.org</url>-->
-  
   	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -24,7 +21,7 @@
 	</repositories>
   
   	<dependencies>
-  	
+
   		 <dependency>
             <groupId>com.departments.ipa</groupId>
             <artifactId>dep_core_ipa</artifactId>
@@ -67,8 +64,6 @@
 			<version>1.7.21</version>
 		</dependency>
 
-
-
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
 			<artifactId>javax.ws.rs-api</artifactId>
@@ -80,65 +75,39 @@
 			<version>2.8.1</version>
 		</dependency>
 
-
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
 			<version>2.8.1</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
-<!--
+
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.8.0</version>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-multipart</artifactId>
+			<version>2.22.2</version>
 		</dependency>
-		&lt;!&ndash; https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind &ndash;&gt;
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.8.0</version>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-sse</artifactId>
+			<version>2.22.2</version>
 		</dependency>
--->
-
-<!--		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>-->
-
-<!--		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-server</artifactId>
-			<version>1.9</version>
-		</dependency>
-	        <dependency>
-	            <groupId>com.sun.jersey</groupId>
-	            <artifactId>jersey-client</artifactId>
-	            <version>1.9</version>
-	        </dependency>
-
-	        <dependency>
-	            <groupId>com.sun.jersey</groupId>
-	            <artifactId>jersey-json</artifactId>
-	            <version>1.9</version>
-	        </dependency>
-	        <dependency>
-    			<groupId>com.sun.jersey</groupId>
-    			<artifactId>jersey-json</artifactId>
-    			<version>1.9</version>
-			</dependency>-->
-
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-server</artifactId>
-			<version>2.17</version>
+			<version>2.22.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
-			<artifactId>jersey-container-servlet-core</artifactId>
-			<version>2.17</version>
+			<artifactId>jersey-container-servlet</artifactId>
+			<version>2.22.2</version>
+			<!--<scope>runtime</scope>-->
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.test-framework.providers</groupId>
+			<artifactId>jersey-test-framework-provider-jetty</artifactId>
+			<version>2.22.2</version>
+			<!--<scope>test</scope>-->
 		</dependency>
 
 
@@ -155,42 +124,35 @@
                 </dependency>
             </dependencies>
          </profile>
-   </profiles> 
-  
+   </profiles>
   
   <build>
-    <finalName>departments</finalName>
-    
-    <sourceDirectory>src/main/java</sourceDirectory>
- 
-		<plugins>
- 
-			<plugin>
+	  <finalName>departments</finalName>
+	  <sourceDirectory>src/main/java</sourceDirectory>
+	  <plugins>
+		  <plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.4</version>
 				<configuration>
 					<warSourceDirectory>WebContent</warSourceDirectory>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
-			</plugin>
-			
-			<plugin>
+		  </plugin>
+		  <plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>9.2.11.v20150529</version>
-			</plugin>
+		  </plugin>
  
-			<plugin>
+		  <plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
-			</plugin>
- 
+		  </plugin>
 		</plugins>
-		
-    
   </build>
+
 </project>
