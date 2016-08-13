@@ -30,6 +30,7 @@ public class DepartmentIPA{
     private static final Logger LOGGER = LoggerFactory.getLogger(DepartmentIPA.class);
     private DepartmentImpl depImpl = new DepartmentImpl();
 
+
     @GET
     @Path("getListDepartment")
     @Produces(MediaType.APPLICATION_JSON)

@@ -3,6 +3,7 @@ code/.idea
 RemoteSystemsTempFiles/
 Servers/
 
+code/dep_core_ipa/src/main/resources/configDep.properties
 **/target/**
 
 
