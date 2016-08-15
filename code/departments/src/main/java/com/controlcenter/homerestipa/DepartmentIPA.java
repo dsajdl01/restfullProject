@@ -40,7 +40,7 @@ public class DepartmentIPA{
         List<Department> dep = depImpl.getDepartmentList();
         List<DepartmentJson> department = new ArrayList<DepartmentJson>();
         for(Department d : dep){
-            department.add(new DepartmentJson(d.getId(), d.getName(), depImpl.getCreaterName(new Integer(d.getCreatedBy()))));
+            department.add(new DepartmentJson(d.getId(), d.getName(), d.getCreater()));
         }
         ListDepartment listDep = new ListDepartment(department);
         LOGGER.info("List of Department {}", listDep);

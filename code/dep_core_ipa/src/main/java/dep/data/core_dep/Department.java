@@ -5,12 +5,12 @@ public class Department {
 
     private Integer id;
     private String name;
-    private Integer createdBy;
+    private String creater;
 
-    public Department(Integer id, String name, Integer createdBy){
+    public Department(Integer id, String name, String creater){
         this.id = id;
         this.name = name;
-        this.createdBy = createdBy;
+        this.creater = creater;
     }
 
     public Integer getId() {
@@ -21,7 +21,7 @@ public class Department {
         return name;
     }
 
-    public Integer getCreatedBy() {
-        return createdBy;
+    public String getCreater() {
+        return creater;
     }
 }

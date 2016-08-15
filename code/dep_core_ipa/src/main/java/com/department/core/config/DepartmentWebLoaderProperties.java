@@ -22,7 +22,7 @@ public class DepartmentWebLoaderProperties implements Factory<DepartmentWebPrope
             try {
                 LOGGER.debug("Initialising DepartmentWebProperties");
                 instance = new DepartmentWebProperties();
-            } catch (Exception e) { // (FileNotFoundException | URISyntaxException e) {
+            } catch (Exception e) {
                 LOGGER.error("Could not create an instance of DepartmentWebProperties: {}", e.getMessage());
             }
         }
