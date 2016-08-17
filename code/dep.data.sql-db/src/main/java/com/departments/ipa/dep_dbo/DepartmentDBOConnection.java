@@ -26,12 +26,12 @@ public class DepartmentDBOConnection {
 
     public DepartmentDBOConnection (PropertiesDataConfig propertiesData){
         this.propertiesData = propertiesData;
-        LOGGER.info("DepartmentDBOConnection class constractor");
     }
 
-    public Statement getDbConnection() {
+    public Connection getDbConnection() {
 
-        Statement statement = null;
+        //Statement statement = null;
+        Connection con = null;
         try {
             if(this.propertiesData == null){
                 LOGGER.error("Unable to connect to database. propertiesData={}", this.propertiesData);
@@ -44,8 +44,7 @@ public class DepartmentDBOConnection {
             p.put("password", propertiesData.getValue(DB_PROPERTIES_PASSWORD));
 
             // Now to connect
-            Connection c = DriverManager.getConnection(propertiesData.getValue(DB_PROPERTIES_CONNECTION), p);
-            statement = c.createStatement();
+            con = DriverManager.getConnection(propertiesData.getValue(DB_PROPERTIES_CONNECTION), p);
         }
         catch (ClassNotFoundException e){
             LOGGER.error("DepartmentDBOConnection.class. Class not found exception={} ", e);
@@ -54,6 +53,6 @@ public class DepartmentDBOConnection {
             LOGGER.error("DepartmentDBOConnection.class. Unable to connect to database={} ", e);
         }
 
-        return statement;
+        return con;
     }
 }

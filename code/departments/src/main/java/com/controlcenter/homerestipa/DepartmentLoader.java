@@ -42,7 +42,7 @@ public class DepartmentLoader extends ResourceConfig {
       @Override
         protected void configure(){
           bindFactory(DepartmentWebLoaderProperties.class).to(DepartmentWebProperties.class);
-          LOGGER.info("DepartmentBinder ===> DepartmentLoader {}", DepartmentLoader.class.toString());
+          LOGGER.info("Successfully registered DepartmentLoader {}", DepartmentLoader.class.toString());
       }
     }
 }
