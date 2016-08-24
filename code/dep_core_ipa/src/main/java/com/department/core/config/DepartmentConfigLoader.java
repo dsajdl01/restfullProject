@@ -30,6 +30,7 @@ public class DepartmentConfigLoader extends AbstrctDepartmentProperties implemen
     @Override
     public void loader() {
 
+        printLoading();
         Properties prop = new Properties();
         InputStream input = null;
         try {
@@ -58,4 +59,16 @@ public class DepartmentConfigLoader extends AbstrctDepartmentProperties implemen
 
     }
 
+    private void printLoading(){
+        String prefix = "[INFO] ";
+        System.out.println(prefix + "  _ _ _ _                     __       ");
+        System.out.println(prefix + "   |     \\                   / _\\    ");
+        System.out.println(prefix + "   |  _   \\  _ _ _  _ _ _   / /     _ _  _  __   _ _ _");
+        System.out.println(prefix + "   | | \\   |/  _ _|/   _ \\ | |     / _ \\| |/  \\ /  _ _|");
+        System.out.println(prefix + "   | |  )  |  |_  |   |_\\ || |    | / \\ |  /-^-|  |_");
+        System.out.println(prefix + "   | |_/   |   _| |    _ / | |  _ | | | |  |   |   _|");
+        System.out.println(prefix + "   |      /|  |_ _|   |     \\ \\/ /| \\_/ |  |   |  |_ _ _");
+        System.out.println(prefix + "  _|_ _ _/ | _ _ _| _ |_[]__ \\__/__\\_ _/|_ |_ _|_ _ _ __\\" + " is launching ...\n");
+
+    }
 }
