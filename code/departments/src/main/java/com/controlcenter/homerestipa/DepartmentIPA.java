@@ -3,7 +3,10 @@ package com.controlcenter.homerestipa;
 //import org.slf4j.LoggerFactory;
 
 
-import dep.data.core_dep.Department;
+import com.department.core.config.DepartmentProperties;
+import com.departments.ipa.data.Department;
+import com.departments.ipa.dep_dbo.DepartmentDBO;
+import com.departments.ipa.dep_dbo.DepartmentDBOConnection;
 import dep.data.provider.DepartmentImpl;
 import com.controlcenter.homerestipa.response.DepartmentJson;
 import com.controlcenter.homerestipa.response.ListDepartment;
@@ -28,7 +31,7 @@ public class DepartmentIPA{
 
 //
     private static final Logger LOGGER = LoggerFactory.getLogger(DepartmentIPA.class);
-    private DepartmentImpl depImpl = new DepartmentImpl();
+    private DepartmentImpl depImpl = new DepartmentImpl(new DepartmentDBO(new DepartmentDBOConnection(new DepartmentProperties().getPropertiesDataConfig()).getDbConnection()));
 
 
     @GET

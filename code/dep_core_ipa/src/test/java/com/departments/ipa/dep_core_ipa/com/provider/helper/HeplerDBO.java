@@ -20,11 +20,16 @@ public class HeplerDBO {
     private final String DB_PROPERTIES_CONNECTION = "db.connectionTest";
 
     private static final Logger LOGGER = LoggerFactory.getLogger( HeplerDBO.class);
-    private PropertiesDataConfig propertiesDataTestConfig;
+    private static PropertiesDataConfig propertiesDataTestConfig;
 
     public HeplerDBO (){
         System.out.println("HeplerDBO ()");
         propertiesDataTestConfig = new LoaderPropertyTest().loadTestPropertiers(new PropertiesDataConfig());
+        setPropertyForSqlConnection();
+    }
+
+    private void setPropertyForSqlConnection() {
+        propertiesDataTestConfig.addPropertiesDataConfig("db.connection", propertiesDataTestConfig.getValue(DB_PROPERTIES_CONNECTION));
     }
 
     public Connection getDbTestConnection() {
@@ -54,6 +59,10 @@ public class HeplerDBO {
         }
 
         return con;
+    }
+
+    public PropertiesDataConfig getPropertiesTestDataConfig(){
+        return propertiesDataTestConfig;
     }
 
 }
