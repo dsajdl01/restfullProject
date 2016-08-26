@@ -2,18 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5caf8685-85ff-4d8b-afad-5ffaf2d4c50e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/data/Department.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/data/DepartmentDbTable.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dep_core_ipa/src/main/java/dep/data/core_dep/Department.java" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/common/lgb/CommonConversions.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/data/DepartmentTable.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/data/StaffTable.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/dep_dbo/DepartmentDBO.java" afterPath="$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/dep_dbo/DepartmentDBO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dep_core_ipa/dep_core_ipa.iml" afterPath="$PROJECT_DIR$/dep_core_ipa/dep_core_ipa.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dep_core_ipa/pom.xml" afterPath="$PROJECT_DIR$/dep_core_ipa/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dep_core_ipa/src/main/java/dep/data/provider/DepartmentImpl.java" afterPath="$PROJECT_DIR$/dep_core_ipa/src/main/java/dep/data/provider/DepartmentImpl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dep_core_ipa/src/test/java/com/departments/ipa/dep_core_ipa/com/provider/helper/HeplerDBO.java" afterPath="$PROJECT_DIR$/dep_core_ipa/src/test/java/com/departments/ipa/dep_core_ipa/com/provider/helper/HeplerDBO.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dep_core_ipa/src/test/java/com/departments/ipa/dep_core_ipa/dep/data/provider/DepartmentImplTest.java" afterPath="$PROJECT_DIR$/dep_core_ipa/src/test/java/com/departments/ipa/dep_core_ipa/dep/data/provider/DepartmentImplTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/departments/departments.iml" afterPath="$PROJECT_DIR$/departments/departments.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/departments/src/main/java/com/controlcenter/homerestipa/DepartmentIPA.java" afterPath="$PROJECT_DIR$/departments/src/main/java/com/controlcenter/homerestipa/DepartmentIPA.java" />
     </list>
     <ignored path="code.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -42,11 +36,33 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DepartmentImplTest.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/test/java/com/departments/ipa/dep_core_ipa/dep/data/provider/DepartmentImplTest.java">
+      <file leaf-file-name="DepartmentWebLoaderProperties.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/main/java/com/department/core/config/DepartmentWebLoaderProperties.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1920">
-              <caret line="128" column="0" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+            <state relative-caret-position="165">
+              <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="65" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HeplerDBO.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/test/java/com/departments/ipa/dep_core_ipa/com/provider/helper/HeplerDBO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1740">
+              <caret line="116" column="5" selection-start-line="116" selection-start-column="5" selection-end-line="116" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CommonConversions.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/common/lgb/CommonConversions.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="30" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -57,7 +73,7 @@
       <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dep_core_ipa/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="634">
+            <state relative-caret-position="1530">
               <caret line="102" column="40" selection-start-line="102" selection-start-column="40" selection-end-line="102" selection-end-column="40" />
               <folding />
             </state>
@@ -67,39 +83,36 @@
       <file leaf-file-name="Department.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/data/Department.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-              <folding>
-                <element signature="e#395#396#0" expanded="true" />
-                <element signature="e#428#429#0" expanded="true" />
-                <element signature="e#463#464#0" expanded="true" />
-                <element signature="e#498#499#0" expanded="true" />
-                <element signature="e#536#537#0" expanded="true" />
-                <element signature="e#574#575#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PropertiesDataConfig.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/data/PropertiesDataConfig.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+            <state relative-caret-position="75">
+              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DepartmentDBOConnection.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/dep_dbo/DepartmentDBOConnection.java">
+      <file leaf-file-name="DepartmentTable.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/data/DepartmentTable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="30" column="22" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
+            <state relative-caret-position="360">
+              <caret line="24" column="18" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
               <folding>
-                <element signature="e#932#933#0" expanded="true" />
-                <element signature="e#984#985#0" expanded="true" />
+                <element signature="e#378#379#0" expanded="true" />
+                <element signature="e#403#404#0" expanded="true" />
+                <element signature="e#434#435#0" expanded="true" />
+                <element signature="e#461#462#0" expanded="true" />
+                <element signature="e#498#499#0" expanded="true" />
+                <element signature="e#530#531#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StaffTable.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/data/StaffTable.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-3">
+              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -107,7 +120,7 @@
       <file leaf-file-name="LoaderPropertyTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/test/java/com/departments/ipa/dep_core_ipa/com/provider/helper/LoaderPropertyTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
+            <state relative-caret-position="283">
               <caret line="24" column="32" selection-start-line="24" selection-start-column="32" selection-end-line="24" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -119,39 +132,25 @@
       <file leaf-file-name="DepartmentConfigLoader.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/main/java/com/department/core/config/DepartmentConfigLoader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="343">
+            <state relative-caret-position="465">
               <caret line="43" column="47" selection-start-line="43" selection-start-column="47" selection-end-line="43" selection-end-column="47" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#662#663#0" expanded="false" />
+                <element signature="e#686#687#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DepartmentIPA.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/departments/src/main/java/com/controlcenter/homerestipa/DepartmentIPA.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="42" column="14" selection-start-line="42" selection-start-column="14" selection-end-line="42" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DepartmentJson.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/departments/src/main/java/com/controlcenter/homerestipa/response/DepartmentJson.java">
+      <file leaf-file-name="DepartmentImplTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/test/java/com/departments/ipa/dep_core_ipa/dep/data/provider/DepartmentImplTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="285">
-              <caret line="20" column="11" selection-start-line="20" selection-start-column="11" selection-end-line="20" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DepartmentDBO.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/dep_dbo/DepartmentDBO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="21" column="100" selection-start-line="21" selection-start-column="100" selection-end-line="21" selection-end-column="100" />
-              <folding />
+              <caret line="42" column="41" selection-start-line="42" selection-start-column="41" selection-end-line="42" selection-end-column="41" />
+              <folding>
+                <element signature="e#2695#2707#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -178,9 +177,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/dep_core_ipa/src/main/java/dep/data/cere_dep/Department.java" />
-        <option value="$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.21/slf4j-api-1.7.21.jar!/org/slf4j/LoggerFactory.class" />
-        <option value="$PROJECT_DIR$/departments/src/main/java/com/response/DepartmentJson.java" />
         <option value="$PROJECT_DIR$/departments/src/main/java/com/department/home/HomeViewIPA.java" />
         <option value="$PROJECT_DIR$/departments/src/main/java/com/response/ListDepartment.java" />
         <option value="$PROJECT_DIR$/departments/src/main/webapp/ccView/controllers/homeControlCenterController.js" />
@@ -222,13 +218,16 @@
         <option value="$PROJECT_DIR$/departments/pom.xml" />
         <option value="$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/data/PropertiesDataConfig.java" />
         <option value="$PROJECT_DIR$/dep_core_ipa/src/test/java/com/departments/ipa/dep_core_ipa/com/provider/helper/LoaderPropertyTest.java" />
-        <option value="$PROJECT_DIR$/dep_core_ipa/src/test/java/com/departments/ipa/dep_core_ipa/com/provider/helper/HeplerDBO.java" />
         <option value="$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/data/Department.java" />
         <option value="$PROJECT_DIR$/departments/src/main/java/com/controlcenter/homerestipa/DepartmentIPA.java" />
         <option value="$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/dep_dbo/DepartmentDBO.java" />
         <option value="$PROJECT_DIR$/dep_core_ipa/src/main/java/dep/data/provider/DepartmentImpl.java" />
         <option value="$PROJECT_DIR$/dep_core_ipa/pom.xml" />
+        <option value="$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/data/DepartmentTable.java" />
+        <option value="$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/data/StaffTable.java" />
+        <option value="$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/common/lgb/CommonConversions.java" />
         <option value="$PROJECT_DIR$/dep_core_ipa/src/test/java/com/departments/ipa/dep_core_ipa/dep/data/provider/DepartmentImplTest.java" />
+        <option value="$PROJECT_DIR$/dep_core_ipa/src/test/java/com/departments/ipa/dep_core_ipa/com/provider/helper/HeplerDBO.java" />
       </list>
     </option>
   </component>
@@ -245,10 +244,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="65" />
-    <option name="y" value="136" />
+    <option name="x" value="29" />
+    <option name="y" value="52" />
     <option name="width" value="1759" />
-    <option name="height" value="971" />
+    <option name="height" value="925" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -291,8 +290,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -837,9 +835,44 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="code" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="code" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dep.data.sql-db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ipa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lgb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1186,7 +1219,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="136" width="1759" height="971" extended-state="0" />
+    <frame x="29" y="52" width="1759" height="925" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1246,27 +1279,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/core/jersey-server/2.22.2/jersey-server-2.22.2.jar!/org/glassfish/jersey/server/ServerRuntime.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="172" column="0" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/javax/ws/rs/javax.ws.rs-api/2.0/javax.ws.rs-api-2.0.jar!/javax/ws/rs/core/MediaType.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="31" column="31" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/departments/src/main/java/com/controlcenter/homerestipa/response/ListDepartment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/main/java/com/department/core/config/DepartmentPropeties.java" />
     <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/main/java/com/department/core/config/DepartmentPropetiesLoader.java" />
     <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/main/java/com/resources.java" />
@@ -1274,7 +1286,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="43" selection-start-line="5" selection-start-column="43" selection-end-line="5" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1348,13 +1359,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="317">
           <caret line="476" column="23" selection-start-line="476" selection-start-column="23" selection-end-line="476" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/main/java/com/department/core/config/DepartmentWebLoaderProperties.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="24" column="35" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
         </state>
       </provider>
     </entry>
@@ -1472,7 +1476,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="15" column="15" selection-start-line="15" selection-start-column="15" selection-end-line="15" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1480,29 +1483,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="82" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/test/java/com/departments/ipa/dep_core_ipa/com/provider/helper/HeplerDBO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="63" column="59" selection-start-line="63" selection-start-column="32" selection-end-line="63" selection-end-column="59" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2366#2367#0" expanded="true" />
-            <element signature="e#2413#2414#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/test/java/com/departments/ipa/dep_core_ipa/com/provider/helper/LoaderPropertyTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="24" column="32" selection-start-line="24" selection-start-column="32" selection-end-line="24" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1517,34 +1497,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/main/java/dep/data/core_dep/Department.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/main/java/dep/data/core_dep/Department.java" />
     <entry file="file://$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/data/PropertiesDataConfig.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/data/Department.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding>
-            <element signature="e#395#396#0" expanded="true" />
-            <element signature="e#428#429#0" expanded="true" />
-            <element signature="e#463#464#0" expanded="true" />
-            <element signature="e#498#499#0" expanded="true" />
-            <element signature="e#536#537#0" expanded="true" />
-            <element signature="e#574#575#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1568,7 +1526,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="20" column="11" selection-start-line="20" selection-start-column="11" selection-end-line="20" selection-end-column="11" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1584,27 +1544,100 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/main/java/com/department/core/config/DepartmentConfigLoader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
+        <state relative-caret-position="465">
           <caret line="43" column="47" selection-start-line="43" selection-start-column="47" selection-end-line="43" selection-end-column="47" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#662#663#0" expanded="false" />
+            <element signature="e#686#687#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dep_core_ipa/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="634">
+        <state relative-caret-position="1530">
           <caret line="102" column="40" selection-start-line="102" selection-start-column="40" selection-end-line="102" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/test/java/com/departments/ipa/dep_core_ipa/dep/data/provider/DepartmentImplTest.java">
+    <entry file="file://$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/data/Department.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1920">
-          <caret line="128" column="0" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+        <state relative-caret-position="75">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/main/java/com/department/core/config/DepartmentWebLoaderProperties.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/test/java/com/departments/ipa/dep_core_ipa/com/provider/helper/LoaderPropertyTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="24" column="32" selection-start-line="24" selection-start-column="32" selection-end-line="24" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/test/java/com/departments/ipa/dep_core_ipa/dep/data/provider/DepartmentImplTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="42" column="41" selection-start-line="42" selection-start-column="41" selection-end-line="42" selection-end-column="41" />
+          <folding>
+            <element signature="e#2695#2707#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/test/java/com/departments/ipa/dep_core_ipa/com/provider/helper/HeplerDBO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1740">
+          <caret line="116" column="5" selection-start-line="116" selection-start-column="5" selection-end-line="116" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/common/lgb/CommonConversions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="30" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/data/DepartmentTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="18" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
+          <folding>
+            <element signature="e#378#379#0" expanded="true" />
+            <element signature="e#403#404#0" expanded="true" />
+            <element signature="e#434#435#0" expanded="true" />
+            <element signature="e#461#462#0" expanded="true" />
+            <element signature="e#498#499#0" expanded="true" />
+            <element signature="e#530#531#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/data/StaffTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
