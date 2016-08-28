@@ -24,7 +24,8 @@ public class StaffTable {
 
     private final String comment;
 
-    public StaffTable(Integer id, Integer depId, String name, Date dob, Date startDay, Date lastDay, String position, String email, String comment) {
+    public StaffTable(final Integer id, final Integer depId, final String name, final Date dob, final Date startDay,
+                      final Date lastDay, final String position, final String email, final String comment) {
         this.id = id;
         this.depId = depId;
         this.name = name;
@@ -70,5 +71,29 @@ public class StaffTable {
 
     public String getComment() {
         return comment;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this) return true;
+        if(obj == null) return false;
+        if(getClass() != obj.getClass()) return false;
+        StaffTable staffTable = (StaffTable) obj;
+        return this.id == staffTable.id
+                && this.depId == staffTable.depId
+                && this.name == staffTable.name
+                && this.dob == staffTable.dob
+                && this.startDay == staffTable.startDay
+                && this.lastDay == staffTable.lastDay
+                && this.position == staffTable.position
+                && this.email == staffTable.email
+                && this.comment == staffTable.comment;
+    }
+
+    @Override
+    public String toString(){
+        return "StaffTable [id = " + this.id + ", depId = " + this.depId + ", name = " + this.name +
+                ", dob = " + this.dob + ", start day = " + this.startDay + ", last Day = " + this.lastDay +
+                ", position = " + this.position + ", email = " + this.email + ", comment = " + this.comment + "]";
     }
 }
