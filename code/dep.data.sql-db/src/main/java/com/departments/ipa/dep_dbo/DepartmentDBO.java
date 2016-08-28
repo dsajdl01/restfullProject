@@ -2,6 +2,7 @@ package com.departments.ipa.dep_dbo;
 //        com.departments/ipa/dep_dbo/DepartmentDBO.java
 
 import com.departments.ipa.data.Department;
+import com.departments.ipa.fault.exception.DepartmentFaultService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +26,7 @@ public class DepartmentDBO  {
         this.con = con;
     }
 
-    public List<Department> getDepartments() {
+    public List<Department> getDepartments() throws  DepartmentFaultService{
         List<Department> departmentList = new ArrayList<Department>();
         PreparedStatement preparedStatement = null;
         try {
@@ -38,8 +39,8 @@ public class DepartmentDBO  {
             return  departmentList;
         } catch (SQLException sqlE){
             LOGGER.error("getDepartments: {}", sqlE);
+            throw new DepartmentFaultService("Inable to connect to databese");
         }
-        return null; // throw exception later
     }
 
     public String getCreaterName(Integer createrId){

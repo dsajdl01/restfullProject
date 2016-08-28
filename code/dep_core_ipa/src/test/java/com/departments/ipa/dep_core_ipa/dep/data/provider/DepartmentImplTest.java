@@ -6,16 +6,22 @@ import com.departments.ipa.data.StaffTable;
 import com.departments.ipa.dep_core_ipa.com.provider.helper.HeplerDBO;
 import com.departments.ipa.dep_dbo.DepartmentDBO;
 import com.departments.ipa.dep_dbo.DepartmentDBOConnection;
+import com.departments.ipa.fault.exception.DepartmentFaultService;
 import dep.data.provider.DepartmentImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.AfterClass;
+import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.PreparedStatement;
 import java.util.Date;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -58,7 +64,7 @@ public class DepartmentImplTest {
     }
 
     @Test
-    public void getDepartmentListTest(){
+    public void getDepartmentListTest() throws DepartmentFaultService {
 
         List<Department> departmentList = depImpl.getDepartmentList();
         assertThat(departmentList.size(), is(2));
