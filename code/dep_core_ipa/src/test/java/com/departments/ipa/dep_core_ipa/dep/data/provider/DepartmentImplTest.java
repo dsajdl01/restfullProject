@@ -1,5 +1,6 @@
 package com.departments.ipa.dep_core_ipa.dep.data.provider;
 
+import com.departments.ipa.common.lgb.CommonConversions;
 import com.departments.ipa.data.Department;
 import com.departments.ipa.data.DepartmentTable;
 import com.departments.ipa.data.StaffTable;
@@ -15,8 +16,6 @@ import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.PreparedStatement;
-import java.util.Date;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -26,7 +25,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -83,17 +81,13 @@ public class DepartmentImplTest {
 
     private List<StaffTable> getStaffData() {
         List<StaffTable> staff = new ArrayList<StaffTable>();
+        CommonConversions convertion = new CommonConversions();
         try {
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date dob = dateFormat.parse("2013-12-04");
-            Date startDate = dateFormat.parse("2009-11-24");
-            staff.add(new StaffTable(null, 1, "David Sajdl", dob, startDate, null, "Developer", "ds@example.co.uk", null));
-            dob = dateFormat.parse("1984-05-17");
-            startDate = dateFormat.parse("2004-01-02");
-            staff.add(new StaffTable(null, 2, "Jolita Diez", dob, startDate, null, "Economist", "jd@example.com", "Exelent communication"));
+            staff.add(new StaffTable(null, 1, "David Sajdl", convertion.getDateFromString("2009-11-24"), convertion.getDateFromString("2009-11-24"), null, "Developer", "ds@example.co.uk", null));
+            staff.add(new StaffTable(null, 2, "Jolita Diez", convertion.getDateFromString("1984-05-17"), convertion.getDateFromString("2004-01-02"), null, "Economist", "jd@example.com", "Exelent communication"));
             return staff;
         } catch (ParseException e){
-            LOGGER.error("Date convertion error: {}", e);
+            LOGGER.error("DepartmentImplTest class, Date convertion error: {}", e);
         }
         return null;
     }
