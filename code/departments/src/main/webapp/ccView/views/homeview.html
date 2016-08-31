@@ -1,5 +1,6 @@
 <div  class="depContainer">
-    <div  class="controllerClass" ng-controller="departmentViewController as depCtrl" ng-init="depCtrl.init()" ng-show="depCtrl.showPage">
+    <div  class="controllerClass" ng-controller="departmentViewController as depCtrl" ng-init="depCtrl.init()" >
+        <div class="mainContent"  ng-show="depCtrl.showPage">
         <h1>HOME..</h1>
 
         <div class="tableContent" ng-show="depCtrl.containTable">
@@ -27,5 +28,10 @@
         <div class="tableContent" ng-show="!depCtrl.containTable">
             <span>No department created</span>
         </div>
+        </div>
+        <div class="errorSupportContainer" ng-show="!depCtrl.showPage">
+            <h4>{{ depCtrl.supportMessage }}</h4>
+        </div>
     </div>
+
 </div>

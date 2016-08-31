@@ -1,4 +1,5 @@
 var controlCenterApp = angular.module('ccApp', [
+        'toaster',
         'ngRoute'
         ]);
 

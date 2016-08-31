@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Control Center</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/toaster.min.css">
+    <link rel="stylesheet" type="text/css" href="css/angular-motion.min.css">
     <link rel="stylesheet" type="text/css" href="ccView/css/ccHomeStyle.css" media="all" >
 </head>
 <body ng-app="ccApp" ng-cloak>
+    <toaster-container toaster-options="{'close-button': true}"></toaster-container>
     <div class="mainContainer" ng-controller="homeControlCenterController as ctrl" ng-init="ctrl.init()">
         <div class="top-navigation-bar">
             <div class="left">
@@ -46,6 +50,8 @@
     <script src="AngularJS/vendor/angular/angular.min.js"></script>
     <script src="AngularJS/vendor/angular-resource/angular-resource.js"></script>
     <script src="AngularJS/vendor/angular-route/angular-route.js"></script>
+    <script src="AngularJS/vendor/angular-messages/angular-messages.js"></script>
+    <script src="AngularJS/vendor/angularjs-toaster/toaster.js"></script>
 
     <script src="ccView/app.js"></script>
     <script src="ccView/controllers/homeControlCenterController.js"></script>

@@ -1,6 +1,6 @@
 
-controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonService',
-		function(DepService, commonService){
+controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonService','toaster',
+		function(DepService, commonService, toaster){
 
 	var self = this;
 	self.depList;
@@ -16,6 +16,9 @@ controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonS
                 console.log("self.depList: ", self.depList);
             } else {
                 // display error message
+                toaster.pop("error","ERROR!","An internal error occer while getting depatrment data.");
+                self.showPage = false;
+                self.supportMessage = "ERROR occur! Please contact help support team."
             }
         });
 	};
