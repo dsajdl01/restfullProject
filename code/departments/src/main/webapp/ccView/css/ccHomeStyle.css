@@ -13,16 +13,22 @@ body {
 }
 
 .top-navigation-bar {
-    border: 1px solid #315098;
+    border: 1px solid #5D5B5B;
     border-radius: 6px;
-    padding: 1% 31% 8% 2%;
     margin: -12% 0% 2% 0%;
-    color: #315098;
+    font-size: 1.5em;
+    color: #5D5B5B;
+    font-weight: bold;
+}
+
+.topLogoImg {
+    width: 95px;
+    height: 80px;
+    padding: 5px 0px 5px 30px;
 }
 .bottomNagigationBar {
-    border: 1px solid #315098;
+    border: 1px solid #5D5B5B;
     border-radius: 6px;
-    padding: 1% 6% 5% 2%;
     margin: 0% 0% 2% 0%;
 }
 .middleLogoImgRight {
@@ -34,20 +40,18 @@ h1 {
     font-size: 300%;
     margin-top: 10px;
 }
-.right {
-    float: right;
-}
-.left {
-    float: left;
-}
+
 img.middleLogoImg {
     width:  150px;
-    height: 45px
+    height: 45px;
+    margin: 10px 0px 10px 10px;
+
 }
 
 img.middleLogoImgRight {
     width:  50px;
-    height: 45px
+    height: 45px;
+    margin: 10px 0px 0px 50px;
 }
 
 .content {
@@ -56,4 +60,75 @@ img.middleLogoImgRight {
 }
 a {
     text-decoration: none;
+}
+
+/************************
+**  department table ****
+*************************/
+
+.panel {
+    border: 1px solid #5D5B5B;
+}
+
+.tableId {
+    background-color: #5D5B5B;
+    width: 30px;
+    border-right: 1px solid #ffffff;
+}
+
+.tableDep {
+    background-color: #5D5B5B;
+    width: auto;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    font-size: initial;
+}
+
+.tableCreater {
+    background-color: #5D5B5B;
+    font-weight: bold;
+    text-align: center;
+    color: #ffffff;
+    width: auto;
+    font-size: initial;
+}
+
+.tableIdOdd {
+    background-color: #ffffff;
+    width: 30px;
+}
+
+.tableIdEven {
+    background-color: #d0d0d0;
+    width: 30px;
+}
+
+.tableDepEven,
+.tableCreaterEven{
+    background-color: #d0d0d0;
+}
+
+.tableDep0dd {
+    background-color: #ffffff;
+    border-right: 1px solid #a8a8a8;
+}
+
+.tableCreaterOdd {
+    background-color: #ffffff;
+}
+
+.tableFooter {
+    background-color: #5D5B5B;
+}
+
+.imbBtn {
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+.tablesButtons {
+   display: flex;
+   flex-flow: row wrap;
+   justify-content: space-around;
 }

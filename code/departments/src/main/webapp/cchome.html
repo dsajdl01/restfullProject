@@ -11,37 +11,40 @@
 <body ng-app="ccApp" ng-cloak>
     <toaster-container toaster-options="{'close-button': true}"></toaster-container>
     <div class="mainContainer" ng-controller="homeControlCenterController as ctrl" ng-init="ctrl.init()">
-        <div class="top-navigation-bar">
-            <div class="left">
+
+        <div class="row top-navigation-bar">
+            <div class="pull-left col-lg-4">
                 <a href="index.html" title=" Chooser Managment ">
-                    <img class="topLogoImg" src="ccView/image/repChooserLogo.png" alt="Report logo, link to report view">
+                    <img class="topLogoImg" src="ccView/image/roundChooserLogo.png" alt="Report logo, link to report view">
                 </a>
             </div>
-            <div class="right">
-                <h1>Control Center</h1>
+            <div class="pull-right col-md-8">
+                <h1 class="contCenterHeader">Control Center</h1>
             </div>
         </div>
-        <div class="bottomNagigationBar">
-            <div class="left">
+
+        <div class="row bottomNagigationBar">
+            <div class="pull-left col-lg-4">
                 <span>
                     <a ng-href="#/report" title=" Create and Get Report " ><img class="middleLogoImg" src="ccView/image/report-logo.png" alt="Report logo, link to report view"></a>
                 </span>
             </div>
-            <div class="right">
+            <div class="pull-right col-md-5">
                 <span>
-                    <a ng-href="#/createdepartment" title=" Create a New Department "> <img class="middleLogoImgRight" src="ccView/image/D-Logo.png" alt="Report logo, link to report view"> </a>
+                    <a ng-href="#/createdepartment" title=" Add a New Department "> <img class="imbBtn middleLogoImgRight" src="ccView/image/D-Logo.png" alt="Report logo, link to report view"> </a>
                 </span>
                 <span>
-                    <a ng-href="#/home" title=" Home " ><img class="middleLogoImgRight" src="ccView/image/home-logo.jpg" alt="Home logo, link to home or index view"></a>
+                    <a ng-href="#/home" title=" Home " ><img class="imbBtn middleLogoImgRight" src="ccView/image/home-logo.jpg" alt="Home logo, link to home or index view"></a>
                 </span>
                 <span>
-                    <img class="middleLogoImgRight" src="ccView/image/about.png" alt="About logo, link to Inbormation About this view">
+                    <img class="imbBtn middleLogoImgRight" src="ccView/image/about.png" alt="About logo, link to Inbormation About this view">
                 </span>
             </div>
         </div>
+
         <div class="content" ng-view >
         </div>
-        <div class="footer">
+        <div class="row footer">
             <div class="col-sm-4 col-sm-offset-8">
                 <span class="copyRight">&copy; Copyright 2016 Created by David Sajdl</span>
             </div>

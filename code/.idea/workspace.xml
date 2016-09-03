@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5caf8685-85ff-4d8b-afad-5ffaf2d4c50e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/departments/src/main/webapp/css/angular-motion.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/departments/src/main/webapp/css/angular-motion.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/departments/src/main/webapp/css/bootstrap.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/departments/src/main/webapp/css/toaster.min.css" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/departments/src/main/java/com/department/home/HomeViewIPA.java" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/departments/src/main/webapp/ccView/image/chooser.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/departments/src/main/webapp/ccView/image/roundChooserLogo.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/departments/src/main/webapp/ccView/app.js" afterPath="$PROJECT_DIR$/departments/src/main/webapp/ccView/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/departments/src/main/webapp/ccView/controllers/departmentViewController.js" afterPath="$PROJECT_DIR$/departments/src/main/webapp/ccView/controllers/departmentViewController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/departments/src/main/webapp/ccView/css/ccHomeStyle.css" afterPath="$PROJECT_DIR$/departments/src/main/webapp/ccView/css/ccHomeStyle.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/departments/src/main/webapp/ccView/views/homeview.html" afterPath="$PROJECT_DIR$/departments/src/main/webapp/ccView/views/homeview.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/departments/src/main/webapp/cchome.html" afterPath="$PROJECT_DIR$/departments/src/main/webapp/cchome.html" />
     </list>
@@ -40,24 +37,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DepartmentIPA.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/departments/src/main/java/com/controlcenter/homerestipa/DepartmentIPA.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="383">
-              <caret line="45" column="48" selection-start-line="45" selection-start-column="48" selection-end-line="45" selection-end-column="48" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="DepartmentImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/main/java/dep/data/provider/DepartmentImpl.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="180">
               <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#334#335#0" expanded="false" />
+                <element signature="e#370#371#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -67,7 +56,11 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="225">
               <caret line="22" column="102" selection-start-line="22" selection-start-column="102" selection-end-line="22" selection-end-column="102" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#870#871#0" expanded="false" />
+                <element signature="e#900#901#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -75,18 +68,8 @@
       <file leaf-file-name="departmentViewController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/ccView/controllers/departmentViewController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" column="79" selection-start-line="20" selection-start-column="79" selection-end-line="20" selection-end-column="79" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/ccView/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
+            <state relative-caret-position="240">
+              <caret line="16" column="90" selection-start-line="16" selection-start-column="90" selection-end-line="16" selection-end-column="90" />
               <folding />
             </state>
           </provider>
@@ -102,11 +85,41 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="dephome.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/dephome.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="homeview.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/ccView/views/homeview.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="31" column="69" selection-start-line="31" selection-start-column="69" selection-end-line="31" selection-end-column="69" />
+            <state relative-caret-position="75">
+              <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="createdepartment.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/ccView/views/createdepartment.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ccHomeStyle.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/ccView/css/ccHomeStyle.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="155">
+              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -115,28 +128,8 @@
       <file leaf-file-name="cchome.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/cchome.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="departmentServices.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/ccView/services/departmentServices.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="65" selection-start-line="19" selection-start-column="65" selection-end-line="19" selection-end-column="65" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="homeControlCenterController.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/ccView/controllers/homeControlCenterController.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="255">
+              <caret line="17" column="82" selection-start-line="17" selection-start-column="82" selection-end-line="17" selection-end-column="82" />
               <folding />
             </state>
           </provider>
@@ -164,7 +157,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/dep_core_ipa/src/main/java/com/departments/ipa/dep_core_ipa/App.java" />
         <option value="$PROJECT_DIR$/dep_core_ipa/src/main/java/com/department/core/config/DepartmentPropetiesLoader.java" />
         <option value="$PROJECT_DIR$/dep_core_ipa/src/main/java/com/department/core/config/DepartmentPropeties.java" />
@@ -210,11 +202,12 @@
         <option value="$PROJECT_DIR$/dep.data.sql-db/src/test/java/com/departments/ipa/data/StaffTableTest.java" />
         <option value="$PROJECT_DIR$/dep.data.sql-db/src/test/java/com/departments/ipa/data/PropertiesDataConfigTest.java" />
         <option value="$PROJECT_DIR$/departments/src/main/webapp/ccView/app.js" />
-        <option value="$PROJECT_DIR$/departments/src/main/webapp/cchome.html" />
         <option value="$PROJECT_DIR$/departments/src/main/webapp/ccView/services/departmentServices.js" />
-        <option value="$PROJECT_DIR$/departments/src/main/webapp/ccView/views/homeview.html" />
-        <option value="$PROJECT_DIR$/departments/src/main/webapp/ccView/controllers/departmentViewController.js" />
         <option value="$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/dep_dbo/DepartmentDBO.java" />
+        <option value="$PROJECT_DIR$/departments/src/main/webapp/ccView/controllers/departmentViewController.js" />
+        <option value="$PROJECT_DIR$/departments/src/main/webapp/ccView/views/homeview.html" />
+        <option value="$PROJECT_DIR$/departments/src/main/webapp/ccView/css/ccHomeStyle.css" />
+        <option value="$PROJECT_DIR$/departments/src/main/webapp/cchome.html" />
       </list>
     </option>
   </component>
@@ -283,6 +276,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -504,6 +500,74 @@
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ccView" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="image" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="code" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="code" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="departments" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ccView" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="code" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="code" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="departments" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -571,9 +635,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -592,15 +653,15 @@
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="code" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/departments/src/main/webapp/css" />
-      <recent name="$PROJECT_DIR$/departments/src/main/webapp/ccView/image" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/departments/src/main/webapp/ccView/image" />
       <recent name="$PROJECT_DIR$/departments/src/main/webapp" />
       <recent name="$PROJECT_DIR$/departments/src/main/webapp/staffView" />
       <recent name="$PROJECT_DIR$/departments/src/main/webapp/ccView" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/departments/src/main/webapp/ccView/image" />
+      <recent name="$PROJECT_DIR$/departments/src/main/webapp/css" />
     </key>
   </component>
   <component name="RunManager" selected="Remote.DebugMvn">
@@ -943,7 +1004,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12614445" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26837417" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19335347" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="257" y="282" width="1645" height="798" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22990844" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -980,44 +1041,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/test/java/com/departments/ipa/dep_core_ipa/LoaderHepletTest.java" />
-    <entry file="file://$MAVEN_REPOSITORY$/junit/junit/4.4/junit-4.4.pom">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/main/resources/configDep.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="49" selection-start-line="3" selection-start-column="43" selection-end-line="3" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-279">
-          <caret line="617" column="51" selection-start-line="617" selection-start-column="51" selection-end-line="617" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/rt.jar!/com/sun/xml/internal/ws/dump/LoggingDumpTube.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="84" column="8" selection-start-line="84" selection-start-column="8" selection-end-line="84" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/departments/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="994">
-          <caret line="113" column="0" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/main/java/com/department/core/config/DepartmentProperties.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -1100,7 +1123,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="81" column="5" selection-start-line="81" selection-start-column="5" selection-end-line="105" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1108,7 +1130,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="674">
           <caret line="69" column="17" selection-start-line="69" selection-start-column="17" selection-end-line="69" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1186,7 +1207,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
           <caret line="38" column="5" selection-start-line="38" selection-start-column="5" selection-end-line="38" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1194,7 +1214,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="20" column="22" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1233,19 +1252,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/dephome.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/ccView/controllers/homeControlCenterController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1253,7 +1263,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1261,7 +1270,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="19" column="65" selection-start-line="19" selection-start-column="65" selection-end-line="19" selection-end-column="65" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1269,24 +1277,51 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/departments/src/main/java/com/department/home/HomeViewIPA.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/departments/src/main/java/com/department/home/HomeViewIPA.java" />
     <entry file="file://$PROJECT_DIR$/departments/src/main/java/com/controlcenter/homerestipa/DepartmentIPA.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
+        <state relative-caret-position="345">
           <caret line="45" column="48" selection-start-line="45" selection-start-column="48" selection-end-line="45" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/ccView/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/css/department/chooserStyle.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="42" column="14" selection-start-line="42" selection-start-column="14" selection-end-line="42" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/dep_dbo/DepartmentDBO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="22" column="102" selection-start-line="22" selection-start-column="102" selection-end-line="22" selection-end-column="102" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#870#871#0" expanded="false" />
+            <element signature="e#900#901#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/main/java/dep/data/provider/DepartmentImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#334#335#0" expanded="false" />
+            <element signature="e#370#371#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1299,50 +1334,57 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/ccView/app.js">
+    <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/dephome.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/ccView/controllers/departmentViewController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="79" selection-start-line="20" selection-start-column="79" selection-end-line="20" selection-end-column="79" />
+        <state relative-caret-position="240">
+          <caret line="16" column="90" selection-start-line="16" selection-start-column="90" selection-end-line="16" selection-end-column="90" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dep_core_ipa/src/main/java/dep/data/provider/DepartmentImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dep.data.sql-db/src/main/java/com/departments/ipa/dep_dbo/DepartmentDBO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="22" column="102" selection-start-line="22" selection-start-column="102" selection-end-line="22" selection-end-column="102" />
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/ccView/image/roundChooser.png" />
+    <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/ccView/image/chooserLogo.png" />
+    <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/ccView/image/chooser.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/cchome.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
+        <state relative-caret-position="255">
+          <caret line="17" column="82" selection-start-line="17" selection-start-column="82" selection-end-line="17" selection-end-column="82" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/ccView/css/ccHomeStyle.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/ccView/views/createdepartment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/departments/src/main/webapp/ccView/views/homeview.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="69" selection-start-line="31" selection-start-column="69" selection-end-line="31" selection-end-column="69" />
+        <state relative-caret-position="75">
+          <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
           <folding />
         </state>
       </provider>
