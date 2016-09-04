@@ -11,13 +11,13 @@ public class DepartmentJson {
     @JsonProperty("depId")
     private final Integer depId;
 
-    @JsonProperty("delName")
+    @JsonProperty("depName")
     private final String depName;
 
     @JsonProperty("createdBy")
     private final String createdBy;
 
-/*    @JsonCreator*/
+    @JsonCreator
     public DepartmentJson(@JsonProperty("depId") final Integer depId,
                           @JsonProperty("depName")final String depName,
                           @JsonProperty("createdBy")final String createdBy)
@@ -27,4 +27,15 @@ public class DepartmentJson {
         this.createdBy = createdBy;
     }
 
+    public Integer getDepId() {
+        return depId;
+    }
+
+    public String getDepName() {
+        return depName;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
 }

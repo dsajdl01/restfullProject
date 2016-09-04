@@ -12,9 +12,6 @@ controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonS
             if(listDepartment){
                 self.showPage = true;
                 self.containTable = commonService.isLengtsmallerOrEqualToZero(listDepartment.length);
-                listDepartment.push({'createdBy':"David Sajdl","delName":"Finance","depId":3});
-                listDepartment.push({'createdBy':"David Sajdl","delName":"H&R","depId":4});
-                listDepartment.push({'createdBy':"David Sajdl","delName":"Customer Service","depId":5});
                 self.depList = listDepartment;
                 console.log("self.depList: ", self.depList);
             } else {

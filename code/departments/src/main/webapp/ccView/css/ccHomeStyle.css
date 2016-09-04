@@ -132,3 +132,16 @@ a {
    flex-flow: row wrap;
    justify-content: space-around;
 }
+/*
+
+*/
+.addDepTitle{
+    text-align: center;
+    margin-top: -40px;
+    margin-bottom: 35px;
+}
+.createDepContent {
+     border: 1px solid #5D5B5B;
+     padding: 25px 20px 60px 20px;
+     border-radius: 10px;
+}

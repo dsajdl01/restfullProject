@@ -19,4 +19,12 @@ public class DepartmentImpl {
         List<Department> depList =  depDBO.getDepartments();
         return depList;
     }
+
+    public Boolean checkDepartmenName(String name) throws DepartmentFaultService {
+        return depDBO.checkDepartmenName(name);
+    }
+
+    public void createNewDepartment(String depName, Integer creater) throws DepartmentFaultService {
+        depDBO.createNewDepartment(depName, creater);
+    }
 }
