@@ -34,4 +34,8 @@ public class CommonConversions {
            throw new DepartmentFaultService("String must contains only digits, " + value);
         }
     }
+
+    public boolean hasStringValue(String val) {
+        return val != null || (!val.equals("")) || (!val.equals("null"));
+    }
 }

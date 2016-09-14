@@ -1,10 +1,10 @@
 
-controlCenterApp.factory('DepService', [ '$http',
- function($http) {
-	return new DepService($http);
+controlCenterApp.factory('DepService', [ '$http', 'commonService',
+ function($http, commonService) {
+	return new DepService($http, commonService);
 }]);
 
-function DepService($http)
+function DepService($http, commonService)
  {
     var self = this;
 
@@ -18,6 +18,7 @@ function DepService($http)
     				.then(function (response)
     				{
     					console.log("response: ", response.data);
+    					commonService.departmentList =  response.data.department;
     					successCallback(response.data.department);
     				},
     				function errorCallBack(error){
@@ -37,9 +38,9 @@ function DepService($http)
            );
     }
 
-    self.saveDepartment = function (depName, userId, callbackSuccess, callbackFailure) {
+    self.saveDepartment = function (depId, depName, userId, callbackSuccess, callbackFailure) {
          var restUrl = '/department/rest/dep/createDepartment';
-         var newDepartment = { "depId": null, "depName": depName, "createdBy": userId };
+         var newDepartment = { "depId": depId, "depName": depName, "createdBy": userId };
          return $http(
             {
                 method: 'PUT',
@@ -51,9 +52,10 @@ function DepService($http)
             }).
             then(function(response) {
                 callbackSuccess(response.data);
-            }).
-            then(function(response) {
-                callbackFailure(response.data);
+            },
+            function(response) {
+                console.log("error: ", response)
+                callbackFailure(false);
             });
     }
  }

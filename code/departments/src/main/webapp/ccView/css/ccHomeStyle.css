@@ -132,9 +132,10 @@ a {
    flex-flow: row wrap;
    justify-content: space-around;
 }
-/*
+/******************************************
+***     create depatrtment template     ***
+*******************************************/
 
-*/
 .addDepTitle{
     text-align: center;
     margin-top: -40px;
@@ -144,4 +145,18 @@ a {
      border: 1px solid #5D5B5B;
      padding: 25px 20px 60px 20px;
      border-radius: 10px;
+}
+/*****************************
+***     model template     ***
+******************************/
+.modal-header.ccView-Model-template {
+    background-color: #5D5B5B !important;
+}
+
+/**************************************
+***     bulk Upload staff view      ***
+***************************************/
+.breadcrumb.bulkUploadBreadcrumb {
+    margin: -82px 0px 82px 0px;
+    background ~ffffff;
 }

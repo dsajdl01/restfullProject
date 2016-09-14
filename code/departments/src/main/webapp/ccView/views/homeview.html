@@ -15,7 +15,7 @@
                         <tbody>
                             <tr class="depRow" ng-repeat="dep in depCtrl.depList">
                                     <td ng-class-odd="'tableIdOdd'" ng-class-even="'tableIdEven'">
-                                        <input type="radio" name="departmentName" ng-value='dep.depId'></radio>
+                                        <input type="radio" ng-model="depCtrl.rdbDepValue"  name="departmentName" ng-value='dep.depId'></radio>
                                     </td>
                                     <td ng-class-odd="'tableDep0dd'" ng-class-even="'tableDepEven'" >{{ dep.depName }}</td>
                                     <td ng-class-odd="'tableCreaterOdd'" ng-class-even="'tableCreaterEven'">{{ dep.createdBy }}</td>
@@ -25,9 +25,9 @@
                             <tr>
                                 <th colspan="3">
                                    <div class="tablesButtons">
-                                        <button class="btn" ng-onclick="">Add Staff</button>
-                                        <button class="btn" ng-onclick="">Modifiy Staff</button>
-                                        <button class="btn" ng-onclick="">Bulk Add Staff</button>
+                                        <button class="btn" ng-click="depCtrl.addStaff(depCtrl.rdbDepValue)">Add Staff</button>
+                                        <button class="btn" ng-click="depCtrl.modifyDepartemnt(depCtrl.rdbDepValue)">Modifiy Department</button>
+                                        <button class="btn" ng-click="depCtrl.bulkAddStaff(depCtrl.rdbDepValue)">Bulk Add Staff</button>
                                     </div>
                                 </th>
                             </tr>

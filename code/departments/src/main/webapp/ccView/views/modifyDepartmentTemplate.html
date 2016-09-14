@@ -1,0 +1,28 @@
+<div class="controller" ng-controller="departmentCreaterController as ctrl" ng-init="ctrl.init()">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="createDepContent">
+                <ng-form role="form" name="form">
+                    <div class="form-group">
+                        <lable for="depName">Department name</lable>
+                        <input type="text"
+                               class="form-control"
+                               placeholder=" Add department name"
+                               ng-required="true"
+                               department-validation="{ctrl:ctrl}"
+                               ng-change="ctrl.onChange()"
+                               name="detartmentName"
+                               ng-model="ctrl.depName"
+                               ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
+                    </div>
+                    <div class="needToStyleMe" ng-messages="form.detartmentName.$error" ng-if="form.detartmentName.$error.departmentValidation">
+                        <div class="error-message" ng-message="departmentValidation">Department is not available.</div>
+                    </div>
+                    <button class="btn btn-default pull-right" type="button" title="{{ ctrl.btnName }} "
+                            ng-disabled="form.detartmentName.$error.departmentValidation || form.detartmentName.$error.required"
+                            ng-click="ctrl.modify()">{{ ctrl.btnName }}</button>
+                </ng-form>
+            </div>
+        </div>
+    </div>
+</div>

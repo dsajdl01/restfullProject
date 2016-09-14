@@ -1,0 +1,23 @@
+<div class="modal" tabindex="-1" role="dialog"  ng-controller="commonTemplateController as ctrlTmp">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header ccView-Model-template">
+                <button type="button" ng-click="ctrlTmp.close()" class="btn close" data-dismiss="modal" >X</button>
+                <h3 class="modal-title">{{ ctrlTmp.templateTitle }}</h3>
+            </div>
+
+            <div class="modal-body">
+
+                    <div ng-include="ctrlTmp.templateUrl"></div>
+
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-8">
+                        <span> &#169; Copyright 2016 Created by David Sajdl</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

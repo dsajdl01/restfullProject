@@ -1,7 +1,10 @@
 var controlCenterApp = angular.module('ccApp', [
         'toaster',
-        'ngRoute'
-        ]);
+        'ngRoute',
+        'ngResource',
+        'ngMessages',
+        'mgcrea.ngStrap'
+]);
 
 controlCenterApp.config(['$routeProvider', function($routeProvider) {
 	  $routeProvider
@@ -14,7 +17,10 @@ controlCenterApp.config(['$routeProvider', function($routeProvider) {
 	        templateUrl: 'ccView/views/reportview.html',
 	  })
 	  .when('/createdepartment', {
-      	        templateUrl: 'ccView/views/createdepartment.html',
+      	        templateUrl: 'ccView/views/createDepartment.html',
+      	  })
+      	  .when('/bulkUploadStaff', {
+      	        templateUrl: 'ccView/views/bulkUploadStaff.html',
       	  })
         .otherwise({redirectTo: '/home'})
 }]);

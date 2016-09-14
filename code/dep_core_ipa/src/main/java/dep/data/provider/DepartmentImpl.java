@@ -27,4 +27,7 @@ public class DepartmentImpl {
     public void createNewDepartment(String depName, Integer creater) throws DepartmentFaultService {
         depDBO.createNewDepartment(depName, creater);
     }
+    public void modifyDepartmentName(Integer depId, String name) throws DepartmentFaultService {
+        depDBO.modifyDepartmentName(depId, name);
+    }
 }

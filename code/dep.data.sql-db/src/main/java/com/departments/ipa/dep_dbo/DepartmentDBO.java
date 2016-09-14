@@ -24,6 +24,8 @@ public class DepartmentDBO  {
     private static final String CREATER_NAME_QUERY = "select name from staff where id = ?";
     private static final String CHECK_DEP_NAME_QUARY = "select count(name) as numberOfDepNames from department where name like ?";
     private static final String ADD_NEW_DEPARTMENT_QUERY = "insert into department (name, createdBy) values (?, ?);";
+    private static final String MODIFY_DEPARTMENT_NAME_QUERY = "UPDATE department SET name= ? where id = ?";
+
     public DepartmentDBO(Connection con){
         this.con = con;
     }
@@ -55,6 +57,19 @@ public class DepartmentDBO  {
         }
             catch (SQLException sqlE){
             LOGGER.error("checkDepartmenName: {}", sqlE);
+            throw new DepartmentFaultService("Inable to connect to databese");
+        }
+    }
+
+    public void modifyDepartmentName(Integer depId, String name) throws DepartmentFaultService {
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement(MODIFY_DEPARTMENT_NAME_QUERY);
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2, depId);
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException sqlE){
+            LOGGER.error("modify department name: {}", sqlE);
             throw new DepartmentFaultService("Inable to connect to databese");
         }
     }

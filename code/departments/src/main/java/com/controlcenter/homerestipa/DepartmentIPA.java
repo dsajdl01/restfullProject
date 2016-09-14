@@ -4,30 +4,29 @@ package com.controlcenter.homerestipa;
 
 
 
+import com.controlcenter.homerestipa.response.DepartmentErrorJson;
+import com.controlcenter.homerestipa.response.DepartmentJson;
+import com.controlcenter.homerestipa.response.DepartmentSuccessJson;
+import com.controlcenter.homerestipa.response.ListDepartment;
 import com.department.core.config.DepartmentProperties;
+import com.departments.ipa.common.lgb.CommonConversions;
 import com.departments.ipa.data.Department;
 import com.departments.ipa.dep_dbo.DepartmentDBO;
 import com.departments.ipa.dep_dbo.DepartmentDBOConnection;
 import com.departments.ipa.fault.exception.DepartmentFaultService;
 import dep.data.provider.DepartmentImpl;
-import com.departments.ipa.common.lgb.CommonConversions;
-import com.controlcenter.homerestipa.response.DepartmentErrorJson;
-import com.controlcenter.homerestipa.response.DepartmentJson;
-import com.controlcenter.homerestipa.response.DepartmentSuccessJson;
-import com.controlcenter.homerestipa.response.ListDepartment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.HttpHeaders;
-
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.CacheControl;
-// import javax.ws.rs.PathParam;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
+
+// import javax.ws.rs.PathParam;
 
 
 @Path("/dep")
@@ -35,6 +34,7 @@ public class DepartmentIPA {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DepartmentIPA.class);
     private DepartmentImpl depImpl = new DepartmentImpl(new DepartmentDBO(new DepartmentDBOConnection(new DepartmentProperties().getPropertiesDataConfig()).getDbConnection()));
+    private CommonConversions commonConv = new CommonConversions();
 
     @GET
     @Path("getListDepartment")
@@ -72,11 +72,23 @@ public class DepartmentIPA {
     @PUT
     @Path("createDepartment")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createDepartment(DepartmentJson dep) {
-        LOGGER.info("createDepartment: depName={}, depCreater={}", dep.getDepName(), dep.getCreatedBy());
+    public Response saveDepartment(DepartmentJson dep) {
+        LOGGER.info("createDepartment: depId={} depName={}, depCreater={}", dep.getDepId(), dep.getDepName(), dep.getCreatedBy());
         try {
-            Integer creater = new CommonConversions().concertStringToInteger(dep.getCreatedBy());
-            depImpl.createNewDepartment(dep.getDepName(), creater);
+            if(dep.getDepId() == null)
+            {
+                Integer creater = commonConv.concertStringToInteger(dep.getCreatedBy());
+                depImpl.createNewDepartment(dep.getDepName(), creater);
+            }
+            else
+            {
+                if(commonConv.hasStringValue(dep.getDepName())) {
+                    depImpl.modifyDepartmentName(dep.getDepId(), dep.getDepName());
+                } else {
+                    LOGGER.error("Modify Department name is empty");
+                    return error(new DepartmentErrorJson(400, "Depatrment name cannot be empty"));
+                }
+            }
             return success( new DepartmentSuccessJson(200, "Ok"));
         }
         catch (DepartmentFaultService e) {

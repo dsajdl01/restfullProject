@@ -1,0 +1,12 @@
+<div class="mainCol">
+    <div  class="controller" ng-controller="bulkUploadStaffController as ctrl" ng-init="ctrl.init()">
+        <div ng-show="ctrl.showPage">
+            <p class="breadcrumb bulkUploadBreadcrumb"> <a ng-href="#/home" title=" Home " > Back to Department List</a></p>
+            <h2>Bulk Upload Staff for {{ ctrl.departmentName }}</h2>
+            <p>Logic to uploud .csv file with staff </p>
+        </div>
+        <div ng-show="!ctrl.showPage">
+            Deparment was not selected. Please <a ng-href="#/home" title=" Home " > click here </a>  to get back to department list and select department
+        </div>
+    </div>
+</div>
