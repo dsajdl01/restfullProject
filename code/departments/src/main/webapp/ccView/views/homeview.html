@@ -13,7 +13,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="depRow" ng-repeat="dep in depCtrl.depList">
+                            <tr class="depRow" ng-repeat="dep in depCtrl.commonService.departmentList">
                                     <td ng-class-odd="'tableIdOdd'" ng-class-even="'tableIdEven'">
                                         <input type="radio" ng-model="depCtrl.rdbDepValue"  name="departmentName" ng-value='dep.depId'></radio>
                                     </td>

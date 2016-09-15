@@ -8,15 +8,14 @@ controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonS
 	self.containTable = false;
 	self.rdbDepValue = "";
 	self.texts = "harvard."
+	self.commonService = commonService;
 
 	self.init = function(){
-	    console.log("know running....");
-        DepService.getDepartmentList(function(listDepartment){
-            if(listDepartment){
+	    self.commonService.init();
+        DepService.getDepartmentList(function(responce){
+            if(responce){
                 self.showPage = true;
-                self.containTable = commonService.isLengtsmallerOrEqualToZero(listDepartment.length);
-                self.depList = listDepartment;
-                console.log("self.depList: ", self.depList);
+                self.containTable = commonService.isLengtsmallerOrEqualToZero(self.commonService.departmentList.length);
             } else {
                 // display error message
                 toaster.pop("error","ERROR!","An internal error occer while getting depatrment data.");

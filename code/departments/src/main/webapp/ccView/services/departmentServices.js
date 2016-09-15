@@ -18,8 +18,8 @@ function DepService($http, commonService)
     				.then(function (response)
     				{
     					console.log("response: ", response.data);
-    					commonService.departmentList =  response.data.department;
-    					successCallback(response.data.department);
+    					commonService.setDepartmentList(response.data.department);
+    					successCallback(true);
     				},
     				function errorCallBack(error){
     				    successCallback(false);
