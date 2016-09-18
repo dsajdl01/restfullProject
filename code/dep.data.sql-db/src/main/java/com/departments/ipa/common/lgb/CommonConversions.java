@@ -36,6 +36,6 @@ public class CommonConversions {
     }
 
     public boolean hasStringValue(String val) {
-        return val != null || (!val.equals("")) || (!val.equals("null"));
+        return val == null || (val.equals("")) || (val.equals("null"));
     }
 }

@@ -9,25 +9,21 @@ import com.departments.ipa.dep_dbo.DepartmentDBO;
 import com.departments.ipa.dep_dbo.DepartmentDBOConnection;
 import com.departments.ipa.fault.exception.DepartmentFaultService;
 import dep.data.provider.DepartmentImpl;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.AfterClass;
-import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by david on 19/08/16.
@@ -77,6 +73,45 @@ public class DepartmentImplTest {
                 assertThat(dep.getCreater(), is("Jolita Diez"));
             }
         }
+    }
+
+    @Test
+    public void checkDepartmenNameExistTest() throws DepartmentFaultService {
+        assertThat(depImpl.checkDepartmenName("Department Team"), is(true));
+    }
+
+    @Test
+    public void checkDepartmenNameNotExistTest() throws DepartmentFaultService {
+        assertThat(depImpl.checkDepartmenName("Unknow Department"), is(false));
+    }
+
+    @Test
+    public void createNewDepartmentTest() throws DepartmentFaultService {
+        depImpl.createNewDepartment("new department", 2);
+        assertThat(depImpl.checkDepartmenName("new department"), is(true));
+    }
+
+    @Test
+    public void modifyDepartmentNameTest() throws DepartmentFaultService {
+        // create a new  departemnt
+        depImpl.createNewDepartment("add department", 2);
+        assertThat(depImpl.checkDepartmenName("add department"), is(true));
+        // modify a new department name
+        depImpl.modifyDepartmentName(getDepartmentId("add department"), "old department");
+        // checking if department name is renamed
+        assertThat(depImpl.checkDepartmenName("add department"), is(false));
+        assertThat(depImpl.checkDepartmenName("old department"), is(true));
+    }
+
+    private Integer getDepartmentId(String depName) throws DepartmentFaultService{
+        List<Department> departmentList = depImpl.getDepartmentList();
+        for(Department dep : departmentList){
+            if(dep.getName().equals(depName)){
+                return dep.getId();
+            }
+        }
+        LOGGER.info("ERROR: getDepartmentId() {} id has not been found!", depName);
+        return -1;
     }
 
     private List<StaffTable> getStaffData() {

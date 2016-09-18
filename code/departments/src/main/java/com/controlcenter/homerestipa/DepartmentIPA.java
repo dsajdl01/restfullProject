@@ -82,7 +82,7 @@ public class DepartmentIPA {
             }
             else
             {
-                if(commonConv.hasStringValue(dep.getDepName())) {
+                if(!commonConv.hasStringValue(dep.getDepName())) {
                     depImpl.modifyDepartmentName(dep.getDepId(), dep.getDepName());
                 } else {
                     LOGGER.error("Modify Department name is empty");

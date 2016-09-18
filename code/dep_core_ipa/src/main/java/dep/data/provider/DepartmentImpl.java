@@ -4,10 +4,11 @@ package dep.data.provider;
 import com.departments.ipa.data.Department;
 import com.departments.ipa.dep_dbo.DepartmentDBO;
 import com.departments.ipa.fault.exception.DepartmentFaultService;
+import dep.data.provider.inter.provider.DepartmentInter;
 
 import java.util.List;
 
-public class DepartmentImpl {
+public class DepartmentImpl implements DepartmentInter {
 
     private final DepartmentDBO depDBO;
 
