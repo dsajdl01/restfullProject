@@ -1,5 +1,14 @@
 
-#/target/
+/target/
+/departments.eml
+/target-grunt/
+/node_modules/
+node/
 
+../npm-debug.log
+npm.tar.gz
+
+
+src/main/webapp/vendor/*
 src/main/resources/configDep.properties
 

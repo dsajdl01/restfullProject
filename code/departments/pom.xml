@@ -152,6 +152,102 @@
 					<target>1.8</target>
 				</configuration>
 		  </plugin>
+
+
+          <!-- clean vendor styles and scripts dirs -->
+          <plugin>
+              <artifactId>maven-clean-plugin</artifactId>  <!-- clean javascript output folders -->
+              <version>2.6.1</version>
+              <configuration>
+                  <excludeDefaultDirectories>false</excludeDefaultDirectories>
+                  <filesets>
+                      <fileset><directory>src/main/webapp/styles</directory></fileset>
+                      <fileset><directory>src/main/webapp/scripts</directory></fileset>
+                      <fileset><directory>src/main/webapp/vendor</directory></fileset>
+                  </filesets>
+              </configuration>
+          </plugin>
+
+          <plugin>
+              <groupId>com.github.eirslett</groupId>
+              <artifactId>frontend-maven-plugin</artifactId>
+              <version>1.0</version>
+
+              <executions>
+                  <execution>
+                      <id>install node and npm</id>
+                      <goals>
+                          <goal>install-node-and-npm</goal>
+                      </goals>
+                      <!-- optional: default phase is "generate-resources" -->
+                      <phase>generate-resources</phase>
+                      <configuration>
+                          <nodeVersion>v0.10.18</nodeVersion>
+                          <npmVersion>1.3.8</npmVersion>
+                          <!-- optional: where to download node and npm from. Defaults to http://nodejs.org/dist/ -->
+                          <!-- <downloadRoot>http://myproxy.example.org/nodejs/dist/</downloadRoot> -->
+                      </configuration>
+                  </execution>
+
+                  <!-- Load all npm packages into local folder -->
+                  <execution>
+                      <id>npm install</id>
+                      <goals>
+                          <goal>npm</goal>
+                      </goals>
+                      <!-- optional: default phase is "generate-resources" -->
+                      <phase>generate-resources</phase>
+                  </execution>
+                  <!-- install all Bower dependencies through grunt -->
+                  <execution>
+                      <id>grunt dependencies</id>
+                      <goals>
+                          <goal>grunt</goal>
+                      </goals>
+
+                      <!-- optional: the default phase is "generate-resources" -->
+                      <phase>generate-resources</phase>
+
+                      <configuration>
+                          <!-- optional: if not specified, it will run Grunt's default task
+                              (and you can remove this whole <configuration> section.) -->
+                          <arguments>bower-install</arguments>
+                      </configuration>
+                  </execution>
+
+
+                  <!-- Run javascript tests through karma -->
+                  <execution>
+                      <id>javascript tests</id>
+                      <goals>
+                          <goal>karma</goal>
+                      </goals>
+
+                      <!-- optional: the default phase is "test". Some developers choose
+                          to run karma in the "integration-test" phase. -->
+                      <phase>test</phase>
+
+                      <configuration>
+                          <!-- optional: the default is "karma.conf.js" in your working directory -->
+                          <karmaConfPath>src/test/javascript/karma.conf.ci.js</karmaConfPath>
+                      </configuration>
+                  </execution>
+                  <execution>
+                      <id>grunt build</id>
+                      <goals>
+                          <goal>grunt</goal>
+                      </goals>
+
+                      <phase>generate-resources</phase>
+
+                      <configuration>
+                          <arguments>build</arguments>
+                      </configuration>
+                  </execution>
+              </executions>
+
+          </plugin>
+
 		</plugins>
   </build>
 
