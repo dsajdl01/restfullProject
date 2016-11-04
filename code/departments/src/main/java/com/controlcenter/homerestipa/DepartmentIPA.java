@@ -7,7 +7,7 @@ package com.controlcenter.homerestipa;
 import com.controlcenter.homerestipa.response.DepartmentErrorJson;
 import com.controlcenter.homerestipa.response.DepartmentJson;
 import com.controlcenter.homerestipa.response.DepartmentSuccessJson;
-import com.controlcenter.homerestipa.response.ListDepartment;
+import com.controlcenter.homerestipa.response.ListDepartmentsJson;
 import com.department.core.config.DepartmentProperties;
 import com.departments.ipa.common.lgb.CommonConversions;
 import com.departments.ipa.data.Department;
@@ -49,7 +49,7 @@ public class DepartmentIPA {
             for (Department d : dep) {
                 department.add(new DepartmentJson(d.getId(), d.getName(), d.getCreater()));
             }
-            return success(new ListDepartment(department));
+            return success(new ListDepartmentsJson(department));
         } catch (DepartmentFaultService e) {
             LOGGER.error("DepartmentFaultService: {}", e);
             return error(new DepartmentErrorJson(500, e.getMessage()));

@@ -8,12 +8,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class ListDepartment {
+public class ListDepartmentsJson {
 
     @JsonProperty("department")
     private final List<DepartmentJson> department;
 
-    public ListDepartment(final List<DepartmentJson> department){
+    public ListDepartmentsJson(final List<DepartmentJson> department){
         this.department = department;
     }
 }
