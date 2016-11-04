@@ -2,7 +2,7 @@
 /target/
 /departments.eml
 /target-grunt/
-/node_modules/
+node_modules/
 node/
 
 ../npm-debug.log
