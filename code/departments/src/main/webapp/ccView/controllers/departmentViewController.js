@@ -10,7 +10,7 @@ controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonS
 	self.texts = "harvard."
 	self.commonService = commonService;
 
-	self.init = function(){
+	self.init = function() {
 	    self.commonService.init();
         DepService.getDepartmentList(function(responce){
             if(responce){
@@ -79,4 +79,6 @@ controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonS
 	    }
 	    return;
 	}
+
+	self.init();
 }]);

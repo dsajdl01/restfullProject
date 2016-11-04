@@ -1,7 +1,8 @@
-controlCenterApp.controller('bulkUploadStaffController', ['commonService', 'toaster',
-        function(commonService, toaster ){
+controlCenterApp.controller('bulkUploadStaffController', ['commonService',
+        function(commonService){
         var self = this;
         self.showPage = false;
+        self.departmentName = null;
         var commonService = commonService;
 
         self.init = function(){
@@ -16,6 +17,7 @@ controlCenterApp.controller('bulkUploadStaffController', ['commonService', 'toas
 
         var isDepatrmentSelected = function(){
             return commonService.selectedDepartment != null && commonService.selectedDepartment.depId != null ;
-        }
+        };
 
+        self.init();
 }]);

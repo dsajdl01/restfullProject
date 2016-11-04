@@ -2,7 +2,6 @@ controlCenterApp.controller('departmentCreaterController', ['DepService', 'commo
         function(depService, commonService, modalDialogBoxService, toaster){
 
     var self = this;
-    self.test = "hello world.";
     self.btnName = "Save";
     self.originalDepName = "";
     self.commonService = commonService;
@@ -53,4 +52,7 @@ controlCenterApp.controller('departmentCreaterController', ['DepService', 'commo
     self.onChange = function() {
         self.btnName = "Save";
     };
+
+    self.init();
+
 }]);
