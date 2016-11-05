@@ -122,5 +122,4 @@ describe('Controller: departmentCreaterController', function() {
             ctrl.onChange();
             expect(ctrl.btnName).toEqual("Save");
         })
-
 });

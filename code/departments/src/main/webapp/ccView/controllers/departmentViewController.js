@@ -12,15 +12,15 @@ controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonS
 
 	self.init = function() {
 	    self.commonService.init();
-        DepService.getDepartmentList(function(responce){
-            if(responce){
+        DepService.getDepartmentList(function(responce) {
+            if ( responce ) {
                 self.showPage = true;
                 self.containTable = commonService.isLengtsmallerOrEqualToZero(self.commonService.departmentList.length);
             } else {
                 // display error message
                 toaster.pop("error","ERROR!","An internal error occer while getting depatrment data.");
                 self.showPage = false;
-                self.supportMessage = "ERROR occur! Please contact help support team."
+                self.supportMessage = "ERROR occur! Please contact help support team.";
             }
         });
 	};
@@ -33,12 +33,8 @@ controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonS
                     templateTitle: "Modify Department",
                     templateUrl: "ccView/views/modifyDepartmentTemplate.html"
             };
-
-            modalDialogBoxService.notify = function() {};
             modalDialogBoxService.showDialog();
         }
-	    console.log( "self.rdbDepValue: ", depId );
-	    self.rdbDepValue;
 	}
 
 	self.bulkAddStaff = function(depId){
@@ -64,8 +60,6 @@ controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonS
                 templateTitle: "Add Staff to " +  commonService.selectedDepartment.depName,
                 templateUrl: "ccView/views/addSingleStaffTamplate.html"
             };
-
-            modalDialogBoxService.notify = function() {};
             modalDialogBoxService.showDialog();
         }
 	}
@@ -77,7 +71,6 @@ controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonS
 	            return;
 	        }
 	    }
-	    return;
 	}
 
 	self.init();

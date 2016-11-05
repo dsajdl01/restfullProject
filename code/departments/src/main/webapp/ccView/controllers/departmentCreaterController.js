@@ -44,12 +44,6 @@ controlCenterApp.controller('departmentCreaterController', ['DepService', 'commo
         return { depId: self.commonService.selectedDepartment.depId, depName: self.depName, createdBy: self.commonService.selectedDepartment.createdBy };
     };
 
-    var refreshTable = function(){
-        depService.getDepartmentList(function(){
-
-        })
-    };
-
     self.onChange = function() {
         self.btnName = "Save";
     };
