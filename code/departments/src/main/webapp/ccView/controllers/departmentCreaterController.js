@@ -3,10 +3,12 @@ controlCenterApp.controller('departmentCreaterController', ['DepService', 'commo
 
     var self = this;
     self.btnName = "Save";
-    self.originalDepName = "";
+    self.depName = null;
     self.commonService = commonService;
 
     self.init = function (){
+        self.depName = null;
+        self.originalDepName = "";
         if ( self.commonService.selectedDepartment ) {
             self.depName = self.commonService.selectedDepartment.depName;
             self.originalDepName = self.depName;
@@ -14,7 +16,6 @@ controlCenterApp.controller('departmentCreaterController', ['DepService', 'commo
     };
 
     self.save = function(){
-        console.log("depName: ", self.depName );
         var userId = 1; // later get logon user
         depService.saveDepartment(null, self.depName, userId, function(respponce) {
             self.btnName = "Done";
@@ -34,7 +35,7 @@ controlCenterApp.controller('departmentCreaterController', ['DepService', 'commo
             toaster.pop("success", "Done",  self.depName + " is successfully added to the system.");
         },
         function(error) {
-            toaster.pop("error","ERROR!","An internal error occer while saving .");
+            toaster.pop("error","ERROR!","An internal error occer while saving.");
         });
         modalDialogBoxService.hideDialog();
     };
