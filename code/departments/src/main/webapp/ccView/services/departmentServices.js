@@ -17,7 +17,6 @@ function DepService($http, commonService)
     				})
     				.then(function (response)
     				{
-    					console.log("response: ", response.data);
     					commonService.setDepartmentList(response.data.department);
     					successCallback(true);
     				},
@@ -51,11 +50,11 @@ function DepService($http, commonService)
                 data:  newDepartment
             }).
             then(function(response) {
-                callbackSuccess(response.data);
+                callbackSuccess();
             },
             function(response) {
                 console.log("error: ", response)
-                callbackFailure(false);
+                callbackFailure();
             });
     }
  }

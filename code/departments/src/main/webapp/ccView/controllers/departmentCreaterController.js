@@ -17,13 +17,13 @@ controlCenterApp.controller('departmentCreaterController', ['DepService', 'commo
 
     self.save = function(){
         var userId = 1; // later get logon user
-        depService.saveDepartment(null, self.depName, userId, function(respponce) {
+        depService.saveDepartment(null, self.depName, userId, function() {
             self.btnName = "Done";
             var name = self.depName;
             self.depName = null;
             toaster.pop("success", "Done", name + " is successfully added to the system.");
         },
-        function(error){
+        function(){
             toaster.pop("error","ERROR!","An internal error occer while getting depatrment data.");
         });
     };
