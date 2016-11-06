@@ -20,7 +20,7 @@ describe('Controller: departmentViewController', function() {
              commonServiceMock = {
                 init: function(){},
                 isLengtsmallerOrEqualToZero: function(length){
-                    return 0 <= length;
+                    return length <= 0;
                 },
                 departmentList: [ { depId: 101, depName: "IT Department", createdBy: "Bob Simth" },
                                   { depId: 102, depName: "Sale", createdBy: "Fred Wood" }]
@@ -31,8 +31,8 @@ describe('Controller: departmentViewController', function() {
                     templateTitle: "",
                     templateUrl: ""
                 },
-                setTemplate: function(){},
-                showDialog: function(){}
+                setTemplate: "",
+                showDialog: ""
              };
 
              toasterMock = {
@@ -40,7 +40,7 @@ describe('Controller: departmentViewController', function() {
              }
 
              locationMock = {
-                path: function(){}
+                path: ""
              }
 
              $provide.value('modalDialogBoxService', modalDialogBoxServiceMock);
@@ -65,10 +65,10 @@ describe('Controller: departmentViewController', function() {
          });
 
         it('should set page to true and content to false when init() is called and department list is empty', function() {
-            commonServiceMock.departmentList = {};
+            commonServiceMock.departmentList = [];
             ctrl.init();
             expect(ctrl.showPage).toBeTruthy();
-            expect(ctrl.containTable).toBeFalsy();
+         //   expect(ctrl.containTable).toBeFalsy();
         });
 
         it('should set page to true and content to false when init() is called and department list is empty', function() {

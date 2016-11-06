@@ -15,7 +15,7 @@ controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonS
         DepService.getDepartmentList(function(responce) {
             if ( responce ) {
                 self.showPage = true;
-                self.containTable = commonService.isLengtsmallerOrEqualToZero(self.commonService.departmentList.length);
+                self.containTable = !(commonService.isLengtsmallerOrEqualToZero(self.commonService.departmentList.length));
             } else {
                 // display error message
                 toaster.pop("error","ERROR!","An internal error occer while getting depatrment data.");

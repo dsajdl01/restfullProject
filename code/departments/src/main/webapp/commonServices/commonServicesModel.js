@@ -17,9 +17,9 @@ function commonService (){
         }
     }
 
-    addDepartmentToList = function(dep){
+    var addDepartmentToList = function(dep){
         var department = {
-            depId: (dep.depId) ? dep.depId : null,
+            depId: dep.depId,
             depName: (dep.depName) ? dep.depName : null,
             createdBy: (dep.createdBy) ? dep.createdBy : null
         }
@@ -37,6 +37,6 @@ function commonService (){
     }
 
     self.isLengtsmallerOrEqualToZero = function(length){
-        return 0 <= length;
+        return length <= 0 ;
     }
 }

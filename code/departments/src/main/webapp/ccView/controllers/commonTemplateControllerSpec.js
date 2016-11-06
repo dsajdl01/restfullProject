@@ -10,7 +10,7 @@ describe('Controller: commonTemplateController', function() {
                        templateTitle: "Home Page",
                        templateUrl: "../template/index.html"
                    },
-                   hideDialog: function(){}
+                   hideDialog: ""
             };
 
             $provide.value('modalDialogBoxService', modalDialogBoxServiceMock);

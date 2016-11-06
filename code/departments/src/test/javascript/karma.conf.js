@@ -28,13 +28,10 @@ module.exports = function(config) {
               'vendor/angular-ui-utils/ui-utils.js',
               'vendor/angular-ui-select/dist/select.js',
               'ccView/app.js',
-              'ccView/controllers/*.js'
-
-/*        'appSpec.js',
-        'controller*//*.js',
-        'directives*//*.js',
-        'service*//*.js'*/
-
+              'ccView/controllers/*.js',
+              'ccView/services/*.js',
+              'ccView/directives/*.js',
+              'commonServices/*.js'
     ],
 
 

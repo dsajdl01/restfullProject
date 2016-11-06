@@ -7,7 +7,7 @@ describe('Controller: departmentCreaterController', function() {
        beforeEach(module(function($provide) {
 
             modalDialogBoxServiceMock = {
-                hideDialog: function(){}
+                hideDialog: ""
             };
 
             commonServiceMock = {

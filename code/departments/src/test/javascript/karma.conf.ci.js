@@ -48,13 +48,11 @@ module.exports = function(config){
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-       // 'appSpec.js': ['coverage'],
         'ccView/app.js': ['coverage'],
-        'ccView/controllers/*.js' : ['coverage']
-       /* 'controller*//*.js': ['coverage'],
-        'directives*//*.js': ['coverage'] ,
-        'service*//*.js': ['coverage'],
-        "js/views/accounts.html": [""]*/
+        'ccView/controllers/*.js' : ['coverage'],
+        'ccView/services/*.js' : ['coverage'],
+        'ccView/directives/*.js' : ['coverage'],
+        'commonServices/*.js' : ['coverage']
     },
 
     });
