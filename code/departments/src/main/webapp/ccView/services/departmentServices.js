@@ -53,7 +53,6 @@ function DepService($http, commonService)
                 callbackSuccess();
             },
             function(response) {
-                console.log("error: ", response)
                 callbackFailure();
             });
     }

@@ -7,8 +7,8 @@ function staffService($http)
 {
     var self = this;
 
-    self.doesStaffExist = function(callback){
-        var url = "someURL";
-        callback(true);
-    }
+//    self.doesStaffExist = function(callback){
+//        var url = "someURL";
+//        callback(true);
+//    }
 }
