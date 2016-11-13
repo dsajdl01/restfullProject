@@ -1,0 +1,43 @@
+.bgcLogin {
+    background-color: #74AFAD;
+    padding: 100px;
+    margin-bottom: 50px;
+}
+
+.btn-login {
+    background-color: #D9853B;
+    width: 30%;
+    padding: 4px 0px;
+    border: solid #D9853B;
+    color: #ffffff;
+    font-weight:  900;
+    font-size: large;
+    margin-top: 30px;
+    border-radius: 5px;
+}
+
+.btn-login:hover {
+    background-color: #F3A662;
+    width: 30%;
+    padding: 4px 0px;
+    border: solid #F3A662;
+    color: #ffffff;
+    font-weight:  900;
+    font-size: large;
+    margin-top: 30px;
+    border-radius: 5px;
+}
+
+.login-h2 {
+    color: #000000;
+    font-size: xx-large;
+    font-weight: 900px;
+    margin-bottom: 35px;
+}
+
+label[for=formPassword],
+label[for=formEmailAddress] {
+    font-weight: bold;
+    color: #000000;
+    font-size: 15px;
+}

@@ -49,6 +49,7 @@ module.exports = function(config){
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
         'ccView/app.js': ['coverage'],
+        'app.js' : ['coverage'],
         'ccView/controllers/*.js' : ['coverage'],
         'ccView/services/*.js' : ['coverage'],
         'ccView/directives/*.js' : ['coverage'],

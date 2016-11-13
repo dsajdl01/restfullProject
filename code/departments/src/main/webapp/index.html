@@ -1,29 +1,33 @@
 <!DOCTYPE html>
-<html ng-app="depApp">
+<html>
 	<head>
 		<title>Chooser Managment</title>
 <!--		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>-->
 <!--		<script src="AngularJS/controllers/homeController.js"></script>-->
+		<link rel="stylesheet" type="text/css" href="ccView/css/login.css" media="all" >
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/department/chooserStyle.css" media="all" >
 
 	</head>
-	<body> <!-- ng-controller="MainCtrl as ctrl" ng-init="ctrl.init()">-->
-		<div class="mainContainer">
-			<h2>Chooser Managment:</h2>
-			<div class="btnContainer">
-				<ul>
-					<li><a class="bntNavigator" href="cchome.html"  title="Control Center"> Control Center </a></li>
-					<li><a class="bntNavigator" href="dephome.html" title="Department">Devartment </a></li>
-				</ul>
-			</div>
-		</div>
+	<body ng-app="depApp" ng-cloak> <!-- ng-controller="MainCtrl as ctrl" ng-init="ctrl.init()">-->
 
 
-		<script src="AngularJS/vendor/angular/angular.min.js"></script>
-		<script src="AngularJS/vendor/angular-resource/angular-resource.js"></script>
-		<script src="AngularJS/vendor/angular-route/angular-route.js"></script>
+		<div class="content" ng-view > </div>
 
-			<script src="app.js"></script>
+		<script src="vendor/angular/angular.min.js"></script>
+		<script src="vendor/angular-resource/angular-resource.js"></script>
+		<script src="vendor/angular-route/angular-route.js"></script>
+
+		<script src="vendor/angular-messages/angular-messages.js"></script>
+		<script src="vendor/angular-strap/dist/angular-strap.min.js"></script>
+
+		<script src="app.js"></script>
+		<script src="commonServices/authorizationSerivices.js"></script>
+		<script src="commonServices/commonServicesUser.js"></script>
+		<script src="commonServices/loginServices.js"></script>
+		<script src="controller/loginController.js"></script>
+
+
 	</body>
 
 </html>

@@ -1,0 +1,33 @@
+<div class="container bgcLogin" ng-controller="loginController as ctrl">
+        <div class="col-md-6 col-md-offset-3">
+            <h2 class="login-h2"> Department Hierarchy System </h2>
+            <form  role="form" name="form" novalidate ng-submit="ctrl.save()" >
+                <div class="form-group">
+                    <label for="formEmailAddress">Email Address</label>
+                    <input type="text"
+                           class="form-control"
+                           id="formEmailAddress"
+                           name="email"
+                           placeholder="Email Address"
+                           required
+                           ng-model="ctrl.email"
+                           ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
+                </div>
+                <div class="form-group">
+                    <label for="formPassword">Password</label>
+                    <input type="password"
+                           class="form-control"
+                           name="password"
+                           id="formPassword"
+                           placeholder="Password"
+                           required
+                           ng-model="ctrl.password"
+                           ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
+                </div>
+                <button ng-click="ctrl.login()"
+                        class="btn-login center-block"
+                        ng-disabled="form.password.$invalid || form.email.$invalid"
+                        title="Login">Login</button>
+            </form>
+        </div>
+</div>
