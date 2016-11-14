@@ -1,14 +1,12 @@
 package com.departments.ipa.dep_dbo;
 
 import com.departments.ipa.data.PropertiesDataConfig;
-import com.departments.ipa.fault.exception.DepartmentDatabaseFaultService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Properties;
 
 /**

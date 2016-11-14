@@ -19,12 +19,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.CacheControl;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.controlcenter.homerestipa.cash.control.response.RestResponseHandler.error;
+import static com.controlcenter.homerestipa.cash.control.response.RestResponseHandler.internalServerError;
+import static com.controlcenter.homerestipa.cash.control.response.RestResponseHandler.success;
 
 // import javax.ws.rs.PathParam;
 
@@ -65,7 +67,11 @@ public class DepartmentIPA {
         }
         catch (DepartmentFaultService e) {
             LOGGER.error("DepartmentFaultService: {}", e);
-            return success(false);
+            return error(false);
+        }
+        catch (Exception e ) {
+            LOGGER.error("Exception: {}", e);
+            return error(false);
         }
     }
 
@@ -95,25 +101,9 @@ public class DepartmentIPA {
             LOGGER.error("createDepartment fault: {} ", e);
             return error(new DepartmentErrorJson(500, e.getMessage()));
         }
-    }
-
-    private Response success(final Object response) {
-        final CacheControl cacheControl = new CacheControl();
-        cacheControl.setNoCache(true);
-        cacheControl.setNoTransform(false);
-        return Response.ok(response, MediaType.APPLICATION_JSON)
-                .cacheControl(cacheControl)
-                .header("Pragma", "no-cache")
-                .header(HttpHeaders.EXPIRES, "Fri, 01 Jan 1990 00:00:00 GMT")
-                .build();
-    }
-
-    private Response error(final Object response) {
-        final CacheControl cacheControl = new CacheControl();
-        cacheControl.setNoCache(true);
-        cacheControl.setNoTransform(false);
-        return Response.ok(response, MediaType.APPLICATION_JSON)
-                .cacheControl(cacheControl).header("Pragma", "no-cache")
-                .header(HttpHeaders.EXPIRES, "Fri, 01 Jan 1990 00:00:00 GMT").build();
+        catch (Exception e) {
+            LOGGER.error("Exception fault: {} ", e);
+            return internalServerError("Exception = " + e.getMessage());
+        }
     }
 }
