@@ -4,7 +4,7 @@ import com.controlcenter.homerestipa.response.DepartmentErrorJson;
 import com.controlcenter.homerestipa.response.StaffJson;
 import com.controlcenter.homerestipa.response.UserLoginJson;
 import com.department.core.config.DepartmentProperties;
-import com.departments.ipa.data.StaffTable;
+import com.departments.ipa.data.LoginStaff;
 import com.departments.ipa.dep_dbo.DepartmentDBOConnection;
 import com.departments.ipa.dep_dbo.UserDBO;
 import com.departments.ipa.fault.exception.DepartmentFaultService;
@@ -42,7 +42,7 @@ public class UserIPA {
         try {
             LOGGER.info("logInUser: email= {}, password={}", user.getEmail(), user.getPassword());
 
-            StaffTable staff = userImpl.logInUser(user.getEmail(), user.getPassword());
+            LoginStaff staff = userImpl.logInUser(user.getEmail(), user.getPassword());
             HttpSession session = request.getSession(true);
 
             if(staff == null) {
@@ -50,9 +50,8 @@ public class UserIPA {
                 return badRequest("Invalid email or password");
             }
 
-            session.setAttribute("userId", staff.getId());
-            return success( new StaffJson(staff.getId(), staff.getDepId(), staff.getName(), staff.getDob(),
-                    staff.getStartDay(), staff.getLastDay(), staff.getPosition(), staff.getEmail(), staff.getComment()));
+            session.setAttribute("userId", staff.getUserId());
+            return success( new StaffJson(staff.getUserId(), staff.getName()));
         }
         catch (DepartmentFaultService departmentFaultService) {
             LOGGER.error("loginUser: DepartmentFaultService = {} ", departmentFaultService);

@@ -31,8 +31,9 @@
 .login-h2 {
     color: #000000;
     font-size: xx-large;
-    font-weight: 900px;
+    font-weight: bold;
     margin-bottom: 35px;
+    text-align: center;
 }
 
 label[for=formPassword],
@@ -40,4 +41,10 @@ label[for=formEmailAddress] {
     font-weight: bold;
     color: #000000;
     font-size: 15px;
+}
+
+.msg-error {
+    color: #FF0000;
+    text-size: 110%;
+    text-align: center;
 }

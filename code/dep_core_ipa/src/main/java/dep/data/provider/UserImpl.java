@@ -1,7 +1,7 @@
 package dep.data.provider;
 
 
-import com.departments.ipa.data.StaffTable;
+import com.departments.ipa.data.LoginStaff;
 import com.departments.ipa.dep_dbo.UserDBO;
 import com.departments.ipa.fault.exception.DepartmentFaultService;
 
@@ -16,7 +16,7 @@ public class UserImpl {
         this.userDBO = userDBO;
     }
 
-    public StaffTable logInUser(String email, String password) throws DepartmentFaultService {
+    public LoginStaff logInUser(String email, String password) throws DepartmentFaultService {
         Integer userId = userDBO.loninUser(email, password);
         if ( userId == null ) return null;
         return userDBO.getStaffDetails(userId);

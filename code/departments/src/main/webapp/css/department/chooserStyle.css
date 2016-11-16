@@ -1,23 +1,23 @@
 body {
-   /* background-color: #ffffff;
-    //width: 1000%;
-    margin: 0 auto;*/
     background-color: #ffffff;
     color: #000000;
 }
 
 .mainContainer {
-  width: 70%;
+    width: 70%;
   	background-color: #ffffff;
   	box-shadow: 10px 10px 10px 10px #c2c2c2;
   	border-radius: 10px;
   	margin: 2em auto;
-  	padding: 10% 2% 10% 2%;
+  	padding: 0% 2% 10% 2%;
 }
 
-h2 {
+.h2-chooser {
     text-align: center;
     font-size: 180%;
+    padding-top: 12%;
+    font-weight: bold;
+    margin-left: 100px;
 }
 .btnContainer ul {
     list-style-type: none;
@@ -53,4 +53,33 @@ a.bntNavigator:hover {
 
 .btnContainer {
     padding-bottom: 20%;
+}
+
+.btn-logout {
+    background: #00BF32;
+    padding: 10px 60px;
+    color: #ffffff;
+    font-size: 140%;
+    font-weight: bolder;
+    border: solid #00BF32;
+    border-radius: 4px;
+    margin-top: 30px;
+}
+
+.btn-logout:hover {
+    background: #38DF64;
+    padding: 10px 60px;
+    color: #ffffff;
+    font-size: 140%;
+    font-weight: bolder;
+    border: solid #38DF64;
+    border-radius: 4px;
+    margin-top: 30px;
+}
+
+.logOnUser {
+    color: #000fff;
+    margin-top: 10px;
+    font-size: smaller;
+    padding-bottom: 15%;
 }

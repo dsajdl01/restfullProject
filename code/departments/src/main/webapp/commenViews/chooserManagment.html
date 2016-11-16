@@ -1,9 +1,13 @@
-<div class="mainContainer">
-    <h2>Chooser Managment:</h2>
+<div class="mainContainer" ng-controller="loginController as ctrl">
+    <span class="logOnUser pull-right">Login: {{ ctrl.userName }}</span>
+    <h2 class="h2-chooser">Chooser Managment:</h2>
     <div class="btnContainer">
         <ul>
             <li><a class="bntNavigator" href="cchome.html"  title="Control Center"> Control Center </a></li>
             <li><a class="bntNavigator" href="dephome.html" title="Department">Devartment </a></li>
         </ul>
+        <button class="btn-logout center-block"
+                ng-click="ctrl.logout()"
+                title="Logout">Logout</button>
     </div>
 </div>

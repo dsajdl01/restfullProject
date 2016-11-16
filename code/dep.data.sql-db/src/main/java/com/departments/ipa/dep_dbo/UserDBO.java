@@ -1,6 +1,6 @@
 package com.departments.ipa.dep_dbo;
 
-import com.departments.ipa.data.StaffTable;
+import com.departments.ipa.data.LoginStaff;
 import com.departments.ipa.fault.exception.DepartmentFaultService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,8 @@ public class UserDBO {
     private Connection con;
 
     private String LOGIN_USER = "SELECT user_id FROM staff_login WHERE email = ? AND password = ? ";
-    private String SQL_STAFF = "SELECT id as userId, dep_id as depId, name, dob, start_day as startDay, last_day as lastDay, position, email, comments "
+
+    private String SQL_STAFF = "SELECT id as userId, name "
                                 + "FROM department_db.staff WHERE id = ?";
 
     public UserDBO(Connection con) {
@@ -44,7 +45,7 @@ public class UserDBO {
         }
     }
 
-    public StaffTable getStaffDetails(Integer userId) throws DepartmentFaultService {
+    public LoginStaff getStaffDetails(Integer userId) throws DepartmentFaultService {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = con.prepareStatement(SQL_STAFF);
@@ -52,8 +53,7 @@ public class UserDBO {
             ResultSet res = preparedStatement.executeQuery();
             res.next();
             if (res.getRow() <= 0 ) return null;
-            return new StaffTable(res.getInt("userId"), res.getInt("depId"), res.getString("name"), getDate(res.getString("dob")), getDate(res.getString("startDay")),
-                    getDate(res.getString("lastDay")),res.getString("position"), res.getString("email"), res.getString("comments") );
+            return new LoginStaff(res.getInt("userId"), res.getString("name"));
         } catch (SQLException sqlE){
             LOGGER.error("loninUser: {}", sqlE);
             throw new DepartmentFaultService("Inable to connect to databese");

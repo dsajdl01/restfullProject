@@ -24,6 +24,7 @@
                            ng-model="ctrl.password"
                            ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
                 </div>
+                <div class="msg-error center-block">{{ ctrl.errorMessage }}</div>
                 <button ng-click="ctrl.login()"
                         class="btn-login center-block"
                         ng-disabled="form.password.$invalid || form.email.$invalid"
