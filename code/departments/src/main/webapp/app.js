@@ -9,7 +9,7 @@ var departmentApp = angular.module('depApp', [
 departmentApp.run(['$rootScope', '$location', 'Authorization', function ($rootScope, $location, Authorization) {
 
     $rootScope.$on('$routeChangeStart', function (event, next) {
-    	if(!Authorization.isUserLogin()){
+    	if(!Authorization.isUserLogin()) {
              $location.path("/logIn");
     	}
     });

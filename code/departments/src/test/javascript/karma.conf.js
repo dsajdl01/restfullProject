@@ -29,6 +29,7 @@ module.exports = function(config) {
               'vendor/angular-ui-select/dist/select.js',
               'vendor/ngstorage/ngStorage.min.js',
               'app.js',
+              'appSpec.js',
               'ccView/app.js',
               'ccView/controllers/*.js',
               'ccView/services/*.js',

@@ -50,6 +50,7 @@ module.exports = function(config){
         preprocessors: {
         'ccView/app.js': ['coverage'],
         'app.js' : ['coverage'],
+        'appSpec.js' : ['coverage'],
         'ccView/controllers/*.js' : ['coverage'],
         'ccView/services/*.js' : ['coverage'],
         'ccView/directives/*.js' : ['coverage'],
