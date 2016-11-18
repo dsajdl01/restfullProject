@@ -27,12 +27,14 @@ module.exports = function(config) {
               'vendor/angular-strap/dist/angular-strap.tpl.js',
               'vendor/angular-ui-utils/ui-utils.js',
               'vendor/angular-ui-select/dist/select.js',
+              'vendor/ngstorage/ngStorage.min.js',
               'app.js',
               'ccView/app.js',
               'ccView/controllers/*.js',
               'ccView/services/*.js',
               'ccView/directives/*.js',
-              'commonServices/*.js'
+              'commonServices/*.js',
+              'controller/*.js'
     ],
 
 

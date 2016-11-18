@@ -53,7 +53,8 @@ module.exports = function(config){
         'ccView/controllers/*.js' : ['coverage'],
         'ccView/services/*.js' : ['coverage'],
         'ccView/directives/*.js' : ['coverage'],
-        'commonServices/*.js' : ['coverage']
+        'commonServices/*.js' : ['coverage'],
+        'controller/*.js' : ['coverage']
     },
 
     });

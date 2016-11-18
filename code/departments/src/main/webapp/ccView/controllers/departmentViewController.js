@@ -1,6 +1,6 @@
 
-controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonService', 'modalDialogBoxService', 'toaster', '$location',
-		function(DepService, commonService, modalDialogBoxService,  toaster, $location){
+controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonService', 'modalDialogBoxService', 'toaster', '$location', '$sessionStorage',
+		function(DepService, commonService, modalDialogBoxService,  toaster, $location, $sessionStorage){
 
 	var self = this;
 	self.depList;
@@ -11,6 +11,7 @@ controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonS
 	self.commonService = commonService;
 
 	self.init = function() {
+	    var user = $sessionStorage.user;
 	    self.commonService.init();
         DepService.getDepartmentList(function(responce) {
             if ( responce ) {

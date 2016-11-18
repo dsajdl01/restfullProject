@@ -3,6 +3,7 @@ var controlCenterApp = angular.module('ccApp', [
         'ngRoute',
         'ngResource',
         'ngMessages',
+        'ngStorage',
         'mgcrea.ngStrap'
 ]);
 

@@ -1,32 +1,48 @@
-departmentApp.factory('Authorization',[ '$sessionStorage',
-    function($sessionStorage) {
-	    return new Authorization($sessionStorage);
+departmentApp.factory('Authorization',[ '$sessionStorage', '$http',
+    function($sessionStorage, $http) {
+	    return new Authorization($sessionStorage, $http);
 }]);
 
 
 // http://www.stefanoscerra.it/permission-based-auth-system-in-angularjs/
-function Authorization ($sessionStorage){
+function Authorization ($sessionStorage, $http){
 
        var self = this;
 
-       self.init = function() {
-           // return commonServicesUser.isUserLogIn;
-       }
+    self.isUserLogin = function() {
+        if(!isUserLogInExist()) return false;
+        checkIfLoginTimeHasNotExpire();
+        return isUserLogInExist();
+    }
 
-    self.isLodIn = function() {
-        checkLoginTime();
+    var isUserLogInExist = function () {
         return $sessionStorage.user != null;
     }
 
-    var checkLoginTime = function() {
-        var diffMin = getDifferent();
-        if ( diffMin > 2) {
-            delete $sessionStorage.user;
-            delete $sessionStorage.loginDay;
+    var checkIfLoginTimeHasNotExpire = function() {
+        var diffMin = calculateDifferentBetweenLoginAndNow();
+        if ( diffMin > 15) {
+            self.logout();
+        } else {
+            $sessionStorage.loginDay = new Date();
         }
-    }
+    };
 
-    var getDifferent = function(){
+    self.loginUser = function(email, password) {
+        return $http ({
+            method: "PUT",
+            url: '/department/rest/user/login',
+            headers: { "content-type": "application/json" },
+            data: { email: email, password: password }
+        });
+    };
+
+    self.logout = function() {
+        delete $sessionStorage.user;
+        delete $sessionStorage.loginDay;
+    };
+
+    var calculateDifferentBetweenLoginAndNow = function(){
         var loginTime = new Date($sessionStorage.loginDay);
         var currentTime = new Date();
 
