@@ -27,7 +27,7 @@ public class CommonConversions {
         return value.matches("[0-9]+");
     }
 
-    public Integer concertStringToInteger(String value) throws  DepartmentFaultService {
+    public Integer convertStringToInteger(String value) throws  DepartmentFaultService {
         if (isStringDigit(value)) {
             return Integer.valueOf(value);
         } else {

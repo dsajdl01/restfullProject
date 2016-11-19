@@ -2,15 +2,14 @@
 <html>
 	<head>
 		<title>Chooser Managment</title>
-<!--		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>-->
-<!--		<script src="AngularJS/controllers/homeController.js"></script>-->
 		<link rel="stylesheet" type="text/css" href="ccView/css/login.css" media="all" >
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/toaster.min.css">
 		<link rel="stylesheet" type="text/css" href="css/department/chooserStyle.css" media="all" >
 
 	</head>
-	<body ng-app="depApp" ng-cloak> <!-- ng-controller="MainCtrl as ctrl" ng-init="ctrl.init()">-->
-
+	<body ng-app="depApp" ng-cloak>
+		<toaster-container toaster-options="{'close-button': true}"></toaster-container>
 
 		<div class="content" ng-view > </div>
 
@@ -19,15 +18,12 @@
 		<script src="vendor/angular-route/angular-route.js"></script>
 		<script src="vendor/ngstorage/ngStorage.min.js"></script>
 		<script src="vendor/angular-messages/angular-messages.js"></script>
+		<script src="vendor/angularjs-toaster/toaster.min.js"></script>
 		<script src="vendor/angular-strap/dist/angular-strap.min.js"></script>
 
 		<script src="app.js"></script>
 		<script src="commonServices/authorizationSerivices.js"></script>
-		<script src="commonServices/commonServicesUser.js"></script>
-		<script src="commonServices/loginServices.js"></script>
 		<script src="controller/loginController.js"></script>
-
-
 	</body>
 
 </html>

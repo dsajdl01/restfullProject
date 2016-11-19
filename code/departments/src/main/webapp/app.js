@@ -1,4 +1,5 @@
 var departmentApp = angular.module('depApp', [
+        'toaster',
         'ngRoute',
         'ngResource',
         'ngMessages',

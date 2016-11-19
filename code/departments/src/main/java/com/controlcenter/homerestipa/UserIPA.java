@@ -1,17 +1,14 @@
 package com.controlcenter.homerestipa;
 
-import com.controlcenter.homerestipa.response.DepartmentErrorJson;
 import com.controlcenter.homerestipa.response.StaffJson;
 import com.controlcenter.homerestipa.response.UserLoginJson;
-import com.department.core.config.DepartmentProperties;
 import com.departments.ipa.data.LoginStaff;
-import com.departments.ipa.dep_dbo.DepartmentDBOConnection;
-import com.departments.ipa.dep_dbo.UserDBO;
 import com.departments.ipa.fault.exception.DepartmentFaultService;
-import dep.data.provider.UserImpl;
+import dep.data.provider.inter.provider.DepartmentCoreServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
@@ -31,7 +28,9 @@ import static com.controlcenter.homerestipa.cash.control.response.RestResponseHa
 public class UserIPA {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserIPA.class);
-    private UserImpl userImpl = new UserImpl(new UserDBO(new DepartmentDBOConnection(new DepartmentProperties().getPropertiesDataConfig()).getDbConnection()));
+
+    @Inject
+    DepartmentCoreServices coreServices;
 
 
     @PUT
@@ -41,8 +40,7 @@ public class UserIPA {
     public Response logInUser(UserLoginJson user, @Context HttpServletRequest request){
         try {
             LOGGER.info("logInUser: email= {}, password={}", user.getEmail(), user.getPassword());
-
-            LoginStaff staff = userImpl.logInUser(user.getEmail(), user.getPassword());
+            LoginStaff staff = coreServices.getUserImpl().logInUser(user.getEmail(), user.getPassword());
             HttpSession session = request.getSession(true);
 
             if(staff == null) {
@@ -55,7 +53,7 @@ public class UserIPA {
         }
         catch (DepartmentFaultService departmentFaultService) {
             LOGGER.error("loginUser: DepartmentFaultService = {} ", departmentFaultService);
-            return error( new DepartmentErrorJson(500, departmentFaultService.getMessage()));
+            return internalServerError(departmentFaultService.getMessage());
         } catch (Exception e ) {
             LOGGER.error("loginUser: Exception = {} ", e);
             return internalServerError("logInUser: error occur = " + e.getMessage());

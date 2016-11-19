@@ -1,6 +1,6 @@
 describe('Controller: loginController', function() {
 
-       	var ctrl, locationMock, authorizationMock, sessionStorageMock, userName = "Fred Smith";
+       	var ctrl, locationMock, authorizationMock, sessionStorageMock, toasterMock, userName = "Fred Smith";
 
        	beforeEach(module('depApp'));
 
@@ -14,7 +14,7 @@ describe('Controller: loginController', function() {
             }
          };
 
-         var failurePromise = {
+         var badRequestPromise = {
              then: function (m) {
                  return this;
              },
@@ -24,6 +24,16 @@ describe('Controller: loginController', function() {
              }
         };
 
+        var failurePromise = {
+            then: function (m) {
+               return this;
+            },
+            catch: function (m) {
+                m( {status: 500, data: { message: "Incorrect Error" }} );
+                return this;
+            }
+        }
+
        	beforeEach(module(function($provide) {
        	    locationMock = {
        	        path: function(path) {}
@@ -32,11 +42,16 @@ describe('Controller: loginController', function() {
        	    authorizationMock = {
        	        success: true,
        	        isLogin: false,
+       	        isBadRequest: true,
        	        loginUser: function(email, password) {
        	            if ( this.success ) {
        	                return successPromise;
        	            } else {
-       	                return failurePromise;
+       	                if ( this.isBadRequest ) {
+       	                    return badRequestPromise;
+       	                } else {
+       	                    return failurePromise
+       	                }
        	            }
        	        },
        	        logout: function(){},
@@ -49,9 +64,14 @@ describe('Controller: loginController', function() {
                 user: null
             };
 
+            toasterMock = {
+                pop: ""
+            };
+
        	    $provide.value('$sessionStorage', sessionStorageMock);
        	    $provide.value('Authorization', authorizationMock);
        	    $provide.value('$location', locationMock);
+       	    $provide.value('toaster', toasterMock);
        	}));
 
        	beforeEach(inject(function($controller) {
@@ -97,16 +117,37 @@ describe('Controller: loginController', function() {
 
         it('should redirect view to Chooser Management and set username when login() is called and is successful', function() {
              authorizationMock.success = false;
+             authorizationMock.isBadRequest = true;
              ctrl.email = "fred@example.com";
              ctrl.password = "password";
 
              spyOn(authorizationMock , 'loginUser').and.callThrough();
              spyOn(authorizationMock, 'logout');
-
+             spyOn(toasterMock, 'pop');
              ctrl.login();
 
              expect(ctrl.userName).toEqual("");
+             expect(ctrl.errorMessage).toEqual("Incorrect Email or Password");
              expect(authorizationMock.loginUser).toHaveBeenCalledWith("fred@example.com", "password");
              expect(authorizationMock.logout).toHaveBeenCalled();
+             expect(toasterMock.pop).not.toHaveBeenCalled();
+        });
+
+        it('should redirect view to Chooser Management and set username when login() is called and is successful', function() {
+            authorizationMock.success = false;
+            authorizationMock.isBadRequest = false;
+            ctrl.email = "fred@example.com";
+            ctrl.password = "password";
+
+            spyOn(authorizationMock , 'loginUser').and.callThrough();
+            spyOn(authorizationMock, 'logout');
+            spyOn(toasterMock, 'pop');
+            ctrl.login();
+
+            expect(ctrl.userName).toEqual("");
+            expect(ctrl.errorMessage).toBeNull();
+            expect(authorizationMock.loginUser).toHaveBeenCalledWith("fred@example.com", "password");
+            expect(authorizationMock.logout).toHaveBeenCalled();
+            expect(toasterMock.pop).toHaveBeenCalledWith("error","ERROR!","An internal error occer while login . Error status: 500");
         });
 });

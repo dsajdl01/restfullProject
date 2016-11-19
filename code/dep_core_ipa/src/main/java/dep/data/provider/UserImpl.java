@@ -4,11 +4,12 @@ package dep.data.provider;
 import com.departments.ipa.data.LoginStaff;
 import com.departments.ipa.dep_dbo.UserDBO;
 import com.departments.ipa.fault.exception.DepartmentFaultService;
+import dep.data.provider.inter.provider.UserInter;
 
 /**
  * Created by david on 13/11/16.
  */
-public class UserImpl {
+public class UserImpl implements UserInter {
 
     private UserDBO userDBO;
 

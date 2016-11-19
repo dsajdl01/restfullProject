@@ -1,5 +1,5 @@
-departmentApp.controller('loginController', ['$location', 'Authorization', '$sessionStorage',
-        function($location, authorization, $sessionStorage){
+departmentApp.controller('loginController', ['$location', 'Authorization', '$sessionStorage', 'toaster',
+        function($location, authorization, $sessionStorage, toaster) {
         var self = this;
         self.email = null;
         self.password = null;
@@ -8,7 +8,6 @@ departmentApp.controller('loginController', ['$location', 'Authorization', '$ses
 
         self.init = function () {
             if ( authorization.isUserLogin() ) {
-                console.log($sessionStorage.user);
               self.userName =  $sessionStorage.user.name;
             } else {
                 self.logout();
@@ -17,7 +16,6 @@ departmentApp.controller('loginController', ['$location', 'Authorization', '$ses
 
         self.login = function() {
              self.errorMessage = null
-             console.log("login values:", self.email, self.password)
              var promise = authorization.loginUser(self.email, self.password);
              return promise
                 .then(function (data) {
@@ -28,9 +26,12 @@ departmentApp.controller('loginController', ['$location', 'Authorization', '$ses
                 })
                 .catch( function(failure) {
                     authorization.logout();
-                    self.errorMessage =  failure.data.message;
+                    if ( failure.status == 400 ) {
+                        self.errorMessage =  failure.data.message;
+                    } else {
+                        toaster.pop("error","ERROR!","An internal error occer while login . Error status: "  + failure.status );
+                    }
                 })
-
         };
 
         self.logout = function() {

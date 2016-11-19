@@ -60,15 +60,15 @@ public class CommonConversionsTest {
 
     @Test
     public void concertStringToIntegerTest() throws DepartmentFaultService {
-        assertThat(commConversions.concertStringToInteger("11"), is(11));
-        assertThat(commConversions.concertStringToInteger("9742"), is(9742));
-        assertThat(commConversions.concertStringToInteger("75"), is(75));
+        assertThat(commConversions.convertStringToInteger("11"), is(11));
+        assertThat(commConversions.convertStringToInteger("9742"), is(9742));
+        assertThat(commConversions.convertStringToInteger("75"), is(75));
     }
 
     @Test
     public void concertStringToIntegerErrorTest() {
         try {
-            commConversions.concertStringToInteger("1-Y-1");
+            commConversions.convertStringToInteger("1-Y-1");
         } catch (DepartmentFaultService d) {
             assertThat(d.getMessage(), is ("String must contains only digits, 1-Y-1" ));
         }
