@@ -7,7 +7,8 @@ departmentApp.controller('loginController', ['$location', 'Authorization', '$ses
         self.errorMessage = null;
 
         self.init = function () {
-            if($sessionStorage.user != null) {
+            if ( authorization.isUserLogin() ) {
+                console.log($sessionStorage.user);
               self.userName =  $sessionStorage.user.name;
             } else {
                 self.logout();
@@ -26,8 +27,7 @@ departmentApp.controller('loginController', ['$location', 'Authorization', '$ses
                     $location.path('/chooserManagment');
                 })
                 .catch( function(failure) {
-                    delete $sessionStorage.user;
-                    delete $sessionStorage.loginDay;
+                    authorization.logout();
                     self.errorMessage =  failure.data.message;
                 })
 
