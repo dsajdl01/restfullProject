@@ -24,7 +24,7 @@ public class UserDBO {
     private String LOGIN_USER = "SELECT user_id FROM staff_login WHERE email = ? AND password = ? ";
 
     private String SQL_STAFF = "SELECT id as userId, name "
-                                + "FROM department_db.staff WHERE id = ?";
+                                + "FROM staff WHERE id = ?";
 
     public UserDBO(Connection con) {
         this.con = con;

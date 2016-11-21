@@ -11,6 +11,7 @@ import com.departments.ipa.fault.exception.DepartmentFaultService;
 import dep.data.provider.DepartmentImpl;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,19 +36,23 @@ public class DepartmentImplTest {
     private static HeplerDBO heplerDBO;
     private static final Logger LOGGER = LoggerFactory.getLogger(DepartmentImplTest.class);
 
-    @Before
-    public void setUp()
-    {
+    @BeforeClass
+    public static void setUpClass() throws Exception {
         try {
             heplerDBO = new HeplerDBO();
-            dbTestCon = heplerDBO.getDbTestConnection();
+            heplerDBO.getDbTestConnection();
             heplerDBO.addDepartmentValuesToTable(Arrays.asList(new DepartmentTable(null, "Department Team", 1), new DepartmentTable(null, "Finance", 2)));
-            heplerDBO.addStaffValuesToTable(getStaffData());
-            depImpl = new DepartmentImpl(new DepartmentDBO(new DepartmentDBOConnection(heplerDBO.getPropertiesTestDataConfig()).getDbConnection()));
+            heplerDBO.addStaffValuesToTable(new DepartmentImplTest().getStaffData());
         } catch (SQLException e){
-            LOGGER.error("SQL error: {}", e);
+            LOGGER.error("SQL DepartmentImplTest: erro= {}", e);
         }
     }
+
+    @Before
+    public void setUp() {
+            depImpl = new DepartmentImpl(new DepartmentDBO(new DepartmentDBOConnection(heplerDBO.getPropertiesTestDataConfig()).getDbConnection()));
+    }
+
     @AfterClass
     public static void afterClass(){
         try {
@@ -114,7 +119,7 @@ public class DepartmentImplTest {
         return -1;
     }
 
-    private List<StaffTable> getStaffData() {
+    protected List<StaffTable> getStaffData() {
         List<StaffTable> staff = new ArrayList<StaffTable>();
         CommonConversions convertion = new CommonConversions();
         try {

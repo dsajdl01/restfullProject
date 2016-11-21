@@ -25,10 +25,15 @@ public class HeplerDBO {
 
     private final String DB_PROPERTIES_CONNECTION = "db.connectionTest";
 
+    private final String SQL_TRUNCATE_STAFF_LOGIN_TABLE = "truncate table staff_login";
     private final String SQL_TRUNCATE_DETARTMENT_TABLE = "truncate table department";
     private final String SQL_TRUNCATE_STAFF_TABLE = "truncate table staff";
+
     private final String SQL_REMOVE_STAFF_CONSTRAINT = "ALTER TABLE staff DROP FOREIGN KEY db_04E4BC85_staff_id";
+    private final String SQL_REMOVE_STAFF_LOGIN_CONSTRAINT = "ALTER TABLE staff_login DROP FOREIGN KEY staff_login_ibfk_1";
+
     private final String SQL_ADD_STAFF_CONSTRAINT = "ALTER TABLE staff ADD CONSTRAINT db_04E4BC85_staff_id FOREIGN KEY (dep_id) REFERENCES department (id)";
+    private final String SQL_ADD_STAFF_LOGIN_CONSTRAINT = "ALTER TABLE staff_login ADD CONSTRAINT staff_login_ibfk_1 FOREIGN KEY (user_id) REFERENCES department (id)";
 
     private static final Logger LOGGER = LoggerFactory.getLogger( HeplerDBO.class);
     private static PropertiesDataConfig propertiesDataTestConfig;
@@ -39,6 +44,8 @@ public class HeplerDBO {
     private static final String SQL_QUARY_ADD_DEPARTMENT =  "INSERT INTO department(name, createdBy) VALUES(?,?)";
     private static final String SQL_QUARY_ADD_STAFF = "INSERT INTO staff (dep_id, name, dob, start_day, last_day, position, email, comments) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_QUERY_ADD_LOGIN_USER = "INSERT INTO staff_login( user_id, email, password ) "
+            + "VALUES (?, ?, ?)";
 
     public HeplerDBO (){
         System.out.println("HeplerDBO ()");
@@ -106,14 +113,33 @@ public class HeplerDBO {
             PreparedStatement preparedStatement = con.prepareStatement(SQL_REMOVE_STAFF_CONSTRAINT);
             preparedStatement.executeUpdate();
 
-            preparedStatement = con.prepareStatement(SQL_TRUNCATE_STAFF_TABLE);
+            preparedStatement = con.prepareStatement(SQL_REMOVE_STAFF_LOGIN_CONSTRAINT);
             preparedStatement.executeUpdate();
 
             preparedStatement = con.prepareStatement(SQL_TRUNCATE_DETARTMENT_TABLE);
             preparedStatement.executeUpdate();
 
+            preparedStatement = con.prepareStatement(SQL_TRUNCATE_STAFF_LOGIN_TABLE);
+            preparedStatement.executeUpdate();
+
+            preparedStatement = con.prepareStatement(SQL_TRUNCATE_STAFF_TABLE);
+            preparedStatement.executeUpdate();
+
+
+            preparedStatement = con.prepareStatement(SQL_ADD_STAFF_LOGIN_CONSTRAINT);
+            preparedStatement.executeUpdate();
+
             preparedStatement = con.prepareStatement(SQL_ADD_STAFF_CONSTRAINT);
             preparedStatement.executeUpdate();
+
+    }
+
+    public void addLoginStaff(int id, String email, String password) throws SQLException {
+        PreparedStatement preparedStatement = con.prepareStatement(SQL_QUERY_ADD_LOGIN_USER);
+        preparedStatement.setInt(1, id);
+        preparedStatement.setString(2, email);
+        preparedStatement.setString(3, password);
+        preparedStatement.executeUpdate();
     }
 
     public PropertiesDataConfig getPropertiesTestDataConfig(){
