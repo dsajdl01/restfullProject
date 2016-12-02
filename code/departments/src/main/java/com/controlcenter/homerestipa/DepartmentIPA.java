@@ -34,7 +34,7 @@ public class DepartmentIPA {
     DepartmentCoreServices coreServices;
 
     @GET
-    @Path("getListDepartment")
+    @Path("/getListDepartment")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDepartments() {
         LOGGER.info("getListDepartment()");
@@ -54,7 +54,7 @@ public class DepartmentIPA {
     }
 
     @GET
-    @Path("checkDepartmentName")
+    @Path("/checkDepartmentName")
     public Response checkdepartmentName(@QueryParam("depName") String depName) {
         try {
             LOGGER.info("checkDepartmentName: depName={}", depName);
@@ -71,7 +71,7 @@ public class DepartmentIPA {
     }
 
     @PUT
-    @Path("createDepartment")
+    @Path("/createDepartment")
     @Produces(MediaType.APPLICATION_JSON)
     public Response saveDepartment(DepartmentJson dep) {
         LOGGER.info("createDepartment: depId={} depName={}, depCreater={}", dep.getDepId(), dep.getDepName(), dep.getCreatedBy());

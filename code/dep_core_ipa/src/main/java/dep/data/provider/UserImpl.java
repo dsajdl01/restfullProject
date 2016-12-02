@@ -20,6 +20,8 @@ public class UserImpl implements UserInter {
         this.loginStaff = null;
     }
 
+    // http://stackoverflow.com/questions/2860943/how-can-i-hash-a-password-in-java
+    // http://stackoverflow.com/questions/18142745/how-do-i-generate-a-salt-in-java-for-salted-hash
     public LoginStaff logInUser(String email, String password) throws DepartmentFaultService {
         Integer userId = userDBO.loninUser(email, password);
         if ( userId == null ) return null;

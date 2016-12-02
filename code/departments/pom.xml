@@ -10,7 +10,7 @@
   	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
- 
+
 	<repositories>
 		<repository>
 			<id>maven2-repository.java.net</id>
@@ -19,15 +19,13 @@
 			<layout>default</layout>
 		</repository>
 	</repositories>
-  
-  	<dependencies>
 
+  	<dependencies>
   		 <dependency>
             <groupId>com.departments.ipa</groupId>
             <artifactId>dep_core_ipa</artifactId>
             <version>${project.version}</version>
         </dependency>
-
 		<dependency>
 			<groupId>com.jcabi</groupId>
 			<artifactId>jcabi-aether</artifactId>
@@ -38,26 +36,29 @@
 			<artifactId>maven-core</artifactId>
 			<version>3.0.3</version>
 		</dependency>
-  		
-	    <dependency>
-	      <groupId>junit</groupId>
-	      <artifactId>junit</artifactId>
-	      <version>3.8.1</version>
-	      <scope>test</scope>
-	    </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.0.110-beta</version>
+        </dependency>
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.21</version>
 		</dependency>
-
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>1.1.7</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
@@ -81,7 +82,6 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>2.8.1</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-multipart</artifactId>
@@ -107,12 +107,22 @@
 			<groupId>org.glassfish.jersey.test-framework.providers</groupId>
 			<artifactId>jersey-test-framework-provider-jetty</artifactId>
 			<version>2.22.2</version>
-			<!--<scope>test</scope>-->
 		</dependency>
+		<!--  https://mvnrepository.com/artifact/org.junit/com.springsource.org.juni -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.jayway.restassured/rest-assured -->
+		<dependency>
+			<groupId>com.jayway.restassured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>2.4.0</version>
+		</dependency>
+	</dependencies>
 
 
-  	</dependencies>
-  	
     <profiles>
         <profile>
             <id>Jetty</id>
@@ -125,8 +135,9 @@
             </dependencies>
          </profile>
    </profiles>
-  
-  <build>
+
+
+	<build>
 	  <finalName>departments</finalName>
 	  <sourceDirectory>src/main/java</sourceDirectory>
 	  <plugins>
@@ -143,7 +154,7 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>9.2.11.v20150529</version>
 		  </plugin>
- 
+
 		  <plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
@@ -153,8 +164,7 @@
 				</configuration>
 		  </plugin>
 
-
-          <!-- clean vendor styles and scripts dirs -->
+		  <!-- clean vendor styles and scripts dirs -->
           <plugin>
               <artifactId>maven-clean-plugin</artifactId>  <!-- clean javascript output folders -->
               <version>2.6.1</version>
@@ -172,7 +182,6 @@
               <groupId>com.github.eirslett</groupId>
               <artifactId>frontend-maven-plugin</artifactId>
               <version>1.0</version>
-
               <executions>
                   <execution>
                       <id>install node and npm</id>
@@ -188,7 +197,6 @@
                           <!-- <downloadRoot>http://myproxy.example.org/nodejs/dist/</downloadRoot> -->
                       </configuration>
                   </execution>
-
                   <!-- Load all npm packages into local folder -->
                   <execution>
                       <id>npm install</id>
@@ -204,18 +212,14 @@
                       <goals>
                           <goal>grunt</goal>
                       </goals>
-
                       <!-- optional: the default phase is "generate-resources" -->
                       <phase>generate-resources</phase>
-
                       <configuration>
                           <!-- optional: if not specified, it will run Grunt's default task
                               (and you can remove this whole <configuration> section.) -->
                           <arguments>bower-install</arguments>
                       </configuration>
                   </execution>
-
-
                   <!-- Run javascript tests through karma -->
                   <execution>
                       <id>javascript tests</id>
@@ -237,18 +241,13 @@
                       <goals>
                           <goal>grunt</goal>
                       </goals>
-
                       <phase>generate-resources</phase>
-
                       <configuration>
                           <arguments>build</arguments>
                       </configuration>
                   </execution>
               </executions>
-
           </plugin>
-
 		</plugins>
   </build>
-
 </project>
