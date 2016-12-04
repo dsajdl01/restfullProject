@@ -2,6 +2,7 @@ package com.controlcenter.homerestipa;
 
 import com.controlcenter.homerestipa.response.StaffJson;
 import com.controlcenter.homerestipa.response.UserLoginJson;
+import com.departments.ipa.common.lgb.CommonConversions;
 import com.departments.ipa.data.LoginStaff;
 import com.departments.ipa.fault.exception.DepartmentFaultService;
 import dep.data.provider.inter.provider.DepartmentCoreServices;
@@ -28,6 +29,7 @@ import static com.controlcenter.homerestipa.cash.control.response.RestResponseHa
 public class UserIPA {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserIPA.class);
+    private CommonConversions commonConv = new CommonConversions();
 
     @Inject
     DepartmentCoreServices coreServices;
@@ -37,8 +39,13 @@ public class UserIPA {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response logInUser(UserLoginJson user, @Context HttpServletRequest request){
+    public Response logInUser(UserLoginJson user, @Context HttpServletRequest request) {
         try {
+
+            if ( user == null || commonConv.hasStringValue(user.getEmail()) || commonConv.hasStringValue(user.getPassword()) ) {
+                return badRequest("Mandatory argument user name or password are missing");
+            }
+
             LOGGER.info("logInUser: email= {}, password={}", user.getEmail(), user.getPassword());
             LoginStaff staff = coreServices.getUserImpl().logInUser(user.getEmail(), user.getPassword());
             HttpSession session = request.getSession(true);
@@ -53,7 +60,7 @@ public class UserIPA {
         }
         catch (DepartmentFaultService departmentFaultService) {
             LOGGER.error("loginUser: DepartmentFaultService = {} ", departmentFaultService);
-            return internalServerError(departmentFaultService.getMessage());
+            return sqlConnectionError(departmentFaultService.getMessage());
         } catch (Exception e ) {
             LOGGER.error("loginUser: Exception = {} ", e);
             return internalServerError("logInUser: error occur = " + e.getMessage());

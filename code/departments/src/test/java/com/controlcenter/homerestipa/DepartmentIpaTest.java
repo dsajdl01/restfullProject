@@ -6,10 +6,7 @@ import com.departments.ipa.data.Department;
 import com.departments.ipa.fault.exception.DepartmentFaultService;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.jayway.restassured.RestAssured;
-import dep.data.provider.CoreServices;
-import dep.data.provider.DepartmentImpl;
 import dep.data.provider.inter.provider.DepartmentCoreServices;
-import dep.data.provider.inter.provider.DepartmentInter;
 import org.glassfish.hk2.api.Factory;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -24,6 +21,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.controlcenter.homerestipa.MockServices.*;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.Mockito.*;
@@ -31,15 +29,6 @@ import static org.mockito.Mockito.*;
  * Created by david on 21/11/16.
  */
 public class DepartmentIpaTest {
-
-    private static HttpServletRequest mockHttpServletRequest  = mock(HttpServletRequest.class);
-    private static DepartmentInter mockDepartmentInter  = mock(DepartmentImpl.class);
-    private static DepartmentCoreServices mockDepartmentCoreServices = mock(CoreServices.class);
-    private final int SERVICE_UNAVAILABLE = 503;
-    private final int INTERNAL_SERVER_ERROR = 500;
-    private final int HTML_OK = 200;
-    private final int CONFLICT = 409;
-    private final int BAD_REQUEST = 400;
 
     @ClassRule
     public static JerseyContainerJUnitRule jerseyProvider = new JerseyContainerJUnitRule() {
@@ -88,13 +77,12 @@ public class DepartmentIpaTest {
         // Jersey Test Framework starts Test Container up on port 9998
         RestAssured.port = 9998;
         RestAssured.basePath = "/dep";
-        mockDepartmentInter  = mock(DepartmentImpl.class);
+        MockServices.resetMocks();
     }
 
     @Test
     public void getDepartmentsTest() throws Exception {
         List<Department> departmentList = Arrays.asList( new Department(1, "IT Team", "Bob Marley") );
-        when(mockDepartmentCoreServices.getDepartmentImpl()).thenReturn(mockDepartmentInter);
         when(mockDepartmentInter.getDepartmentList()).thenReturn(departmentList);
 
         given()
@@ -110,7 +98,6 @@ public class DepartmentIpaTest {
     @Test
     public void getDepartmentsSQLErrorTest() throws Exception {
 
-        when(mockDepartmentCoreServices.getDepartmentImpl()).thenReturn(mockDepartmentInter);
         doThrow(new DepartmentFaultService("Inable to connect to database")).when(mockDepartmentInter).getDepartmentList();
 
         given()
@@ -124,7 +111,6 @@ public class DepartmentIpaTest {
     @Test
     public void getDepartmentsErrorTest() throws Exception {
 
-        when(mockDepartmentCoreServices.getDepartmentImpl()).thenReturn(mockDepartmentInter);
         doThrow(new RuntimeException()).when(mockDepartmentInter).getDepartmentList();
 
         given()
@@ -137,7 +123,6 @@ public class DepartmentIpaTest {
     @Test
     public void checkdepartmentNameTest() throws Exception {
         String name = "IT Deapartment";
-        when(mockDepartmentCoreServices.getDepartmentImpl()).thenReturn(mockDepartmentInter);
         when(mockDepartmentInter.checkDepartmenName(name)).thenReturn(true);
 
         given()
@@ -153,7 +138,6 @@ public class DepartmentIpaTest {
     @Test
     public void checkdepartmentNameSQLErrorTest() throws Exception {
         String name = "IT Deapartment";
-        when(mockDepartmentCoreServices.getDepartmentImpl()).thenReturn(mockDepartmentInter);
         doThrow(new DepartmentFaultService("Inable to connect to database")).when(mockDepartmentInter).checkDepartmenName(name);
 
         given()
@@ -168,7 +152,6 @@ public class DepartmentIpaTest {
     @Test
     public void checkdepartmentNameErrorTest() throws Exception {
         String name = "IT Deapartment";
-        when(mockDepartmentCoreServices.getDepartmentImpl()).thenReturn(mockDepartmentInter);
         doThrow(new RuntimeException()).when(mockDepartmentInter).checkDepartmenName(name);
 
         given()
@@ -182,7 +165,6 @@ public class DepartmentIpaTest {
     @Test
     public void saveDepartmentTest() throws Exception {
         String name = "Network Team";
-        when(mockDepartmentCoreServices.getDepartmentImpl()).thenReturn(mockDepartmentInter);
         doNothing().when(mockDepartmentInter).createNewDepartment(name, 1);
         DepartmentJson dep = new DepartmentJson(null, name, "1");
 
@@ -199,7 +181,6 @@ public class DepartmentIpaTest {
     @Test
     public void saveDepartment_ToModifyTest() throws Exception {
         String name = "Networking Team";
-        when(mockDepartmentCoreServices.getDepartmentImpl()).thenReturn(mockDepartmentInter);
         doNothing().when(mockDepartmentInter).modifyDepartmentName(1, name);
         DepartmentJson dep = new DepartmentJson(1, name, "1");
 
@@ -245,7 +226,6 @@ public class DepartmentIpaTest {
     @Test
     public void saveDepartment_SQLErrorTest() throws Exception {
         String name = "Network Team";
-        when(mockDepartmentCoreServices.getDepartmentImpl()).thenReturn(mockDepartmentInter);
         doThrow(new DepartmentFaultService("Enable to connect to database")).when(mockDepartmentInter).createNewDepartment(name, 1);
         DepartmentJson dep = new DepartmentJson(null, name, "1");
 
@@ -262,7 +242,6 @@ public class DepartmentIpaTest {
     @Test
     public void saveDepartment_InternalErrorTest() throws Exception {
         String name = "Network Team";
-        when(mockDepartmentCoreServices.getDepartmentImpl()).thenReturn(mockDepartmentInter);
         doThrow(new RuntimeException()).when(mockDepartmentInter).createNewDepartment(name, 1);
         DepartmentJson dep = new DepartmentJson(null, name, "1");
 
