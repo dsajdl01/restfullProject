@@ -1,9 +1,6 @@
 package com.controlcenter.homerestipa.cash.control.response;
 
-import javax.ws.rs.core.CacheControl;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import javax.ws.rs.core.Response.Status;
 
 /**
@@ -29,12 +26,8 @@ public class RestResponseHandler {
                 .build();
     }
 
-    public static Response error(final Object response) {
-
-        return Response.ok(response, MediaType.APPLICATION_JSON)
-                .cacheControl(getCacheControl())
-                .header("Pragma", "no-cache")
-                .header(HttpHeaders.EXPIRES, HEADER_EXPIRE_DATE).build();
+    public static Response sqlConnectionError(final String message) {
+        return error(Status.SERVICE_UNAVAILABLE, message);
     }
 
     public  static Response badRequest(String message) {
@@ -47,6 +40,10 @@ public class RestResponseHandler {
 
     public static  Response forbidden(String message) {
         return error(Status.FORBIDDEN, message);
+    }
+
+    public static Response conflict(String message) {
+        return error(Status.CONFLICT, message);
     }
 
 

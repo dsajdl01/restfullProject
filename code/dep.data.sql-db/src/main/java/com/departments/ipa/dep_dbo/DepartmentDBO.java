@@ -43,7 +43,7 @@ public class DepartmentDBO implements DepartmentDBOInter {
             return  departmentList;
         } catch (SQLException sqlE){
             LOGGER.error("getDepartments: {}", sqlE);
-            throw new DepartmentFaultService("Inable to connect to databese");
+            throw new DepartmentFaultService("Inable to connect to database");
         }
     }
 
@@ -57,7 +57,7 @@ public class DepartmentDBO implements DepartmentDBOInter {
         }
             catch (SQLException sqlE){
             LOGGER.error("checkDepartmenName: {}", sqlE);
-            throw new DepartmentFaultService("Inable to connect to databese");
+            throw new DepartmentFaultService("Inable to connect to database");
         }
     }
 
@@ -70,7 +70,7 @@ public class DepartmentDBO implements DepartmentDBOInter {
         }
         catch (SQLException sqlE){
             LOGGER.error("modify department name: {}", sqlE);
-            throw new DepartmentFaultService("Inable to connect to databese");
+            throw new DepartmentFaultService("Inable to connect to database");
         }
     }
 
@@ -83,7 +83,7 @@ public class DepartmentDBO implements DepartmentDBOInter {
         }
         catch (SQLException sqlE){
             LOGGER.error("checkDepartmenName: {}", sqlE);
-            throw new DepartmentFaultService("Inable to connect to databese");
+            throw new DepartmentFaultService("Inable to connect to database");
         }
     }
 }

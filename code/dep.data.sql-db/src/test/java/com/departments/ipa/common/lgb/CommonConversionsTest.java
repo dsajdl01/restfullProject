@@ -1,6 +1,6 @@
 package com.departments.ipa.common.lgb;
 
-import com.departments.ipa.fault.exception.DepartmentFaultService;
+import com.departments.ipa.fault.exception.DepartmentValueConversionFault;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -59,7 +59,7 @@ public class CommonConversionsTest {
     }
 
     @Test
-    public void concertStringToIntegerTest() throws DepartmentFaultService {
+    public void concertStringToIntegerTest() throws DepartmentValueConversionFault {
         assertThat(commConversions.convertStringToInteger("11"), is(11));
         assertThat(commConversions.convertStringToInteger("9742"), is(9742));
         assertThat(commConversions.convertStringToInteger("75"), is(75));
@@ -69,7 +69,7 @@ public class CommonConversionsTest {
     public void concertStringToIntegerErrorTest() {
         try {
             commConversions.convertStringToInteger("1-Y-1");
-        } catch (DepartmentFaultService d) {
+        } catch (DepartmentValueConversionFault d) {
             assertThat(d.getMessage(), is ("String must contains only digits, 1-Y-1" ));
         }
     }
@@ -79,6 +79,8 @@ public class CommonConversionsTest {
         assertThat(commConversions.hasStringValue(null), is(true));
         assertThat(commConversions.hasStringValue(""), is(true));
         assertThat(commConversions.hasStringValue("null"), is(true));
+        assertThat(commConversions.hasStringValue("NULL"), is(true));
+        assertThat(commConversions.hasStringValue("NuLl"), is(true));
     }
 
     @Test

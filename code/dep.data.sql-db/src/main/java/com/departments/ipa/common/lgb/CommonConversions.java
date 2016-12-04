@@ -1,6 +1,6 @@
 package com.departments.ipa.common.lgb;
 
-import com.departments.ipa.fault.exception.DepartmentFaultService;
+import com.departments.ipa.fault.exception.DepartmentValueConversionFault;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -27,15 +27,15 @@ public class CommonConversions {
         return value.matches("[0-9]+");
     }
 
-    public Integer convertStringToInteger(String value) throws  DepartmentFaultService {
+    public Integer convertStringToInteger(String value) throws  DepartmentValueConversionFault {
         if (isStringDigit(value)) {
             return Integer.valueOf(value);
         } else {
-           throw new DepartmentFaultService("String must contains only digits, " + value);
+           throw new DepartmentValueConversionFault("String must contains only digits, " + value);
         }
     }
 
     public boolean hasStringValue(String val) {
-        return val == null || (val.equals("")) || (val.equals("null"));
+        return val == null || val.trim().length() == 0|| (val.equalsIgnoreCase("null"));
     }
 }

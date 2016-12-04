@@ -1,22 +1,18 @@
 package com.controlcenter.homerestipa;
 
-import com.controlcenter.homerestipa.response.DepartmentErrorJson;
 import com.controlcenter.homerestipa.response.DepartmentJson;
 import com.controlcenter.homerestipa.response.DepartmentSuccessJson;
 import com.controlcenter.homerestipa.response.ListDepartmentsJson;
 import com.departments.ipa.common.lgb.CommonConversions;
 import com.departments.ipa.data.Department;
 import com.departments.ipa.fault.exception.DepartmentFaultService;
+import com.departments.ipa.fault.exception.DepartmentValueConversionFault;
 import dep.data.provider.inter.provider.DepartmentCoreServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -49,7 +45,11 @@ public class DepartmentIPA {
             return success(new ListDepartmentsJson(department));
         } catch (DepartmentFaultService e) {
             LOGGER.error("DepartmentFaultService: {}", e);
-            return error(new DepartmentErrorJson(500, e.getMessage()));
+            return sqlConnectionError(e.getMessage());
+        }
+        catch (Exception e ) {
+            LOGGER.error("Exception: {}", e);
+            return internalServerError(e.getMessage());
         }
     }
 
@@ -62,11 +62,11 @@ public class DepartmentIPA {
         }
         catch (DepartmentFaultService e) {
             LOGGER.error("DepartmentFaultService: {}", e);
-            return error(false);
+            return sqlConnectionError(e.getMessage());
         }
         catch (Exception e ) {
             LOGGER.error("Exception: {}", e);
-            return error(false);
+            return internalServerError(e.getMessage());
         }
     }
 
@@ -76,21 +76,30 @@ public class DepartmentIPA {
     public Response saveDepartment(DepartmentJson dep) {
         LOGGER.info("createDepartment: depId={} depName={}, depCreater={}", dep.getDepId(), dep.getDepName(), dep.getCreatedBy());
         try {
+            String message;
+            if ( dep == null || commonConv.hasStringValue(dep.getDepName())) {
+                return  badRequest("Mandatory argument department name is missing");
+            }
+
             if(dep.getDepId() == null)
             {
                 Integer createrId = commonConv.convertStringToInteger(dep.getCreatedBy());
                 coreServices.getDepartmentImpl().createNewDepartment(dep.getDepName(), createrId);
+                message = dep.getDepName() + " is successfully saved";
             }
             else
             {
-                if(!commonConv.hasStringValue(dep.getDepName())) {
-                    coreServices.getDepartmentImpl().modifyDepartmentName(dep.getDepId(), dep.getDepName());
-                } else {
-                    LOGGER.error("Modify Department name is empty");
-                    return badRequest("Depatrment name cannot be empty");
-                }
+                coreServices.getDepartmentImpl().modifyDepartmentName(dep.getDepId(), dep.getDepName());
+                message = dep.getDepName() + " is successfully updated";
             }
-            return success( new DepartmentSuccessJson(200, "Ok"));
+            return success( new DepartmentSuccessJson(200, message));
+        }
+        catch (DepartmentValueConversionFault e) {
+            return conflict(e.getMessage());
+        }
+        catch (DepartmentFaultService e) {
+            LOGGER.error("DepartmentFaultService: {}", e);
+            return sqlConnectionError(e.getMessage());
         }
         catch (Exception e) {
             LOGGER.error("Exception fault: {} ", e);
