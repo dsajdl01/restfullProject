@@ -25,7 +25,7 @@ describe('Controller: departmentCreaterController', function() {
                     if ( this.success ) {
                         response();
                     } else {
-                        fail();
+                        fail({ status: 500});
                     }
                 },
             };
@@ -85,7 +85,7 @@ describe('Controller: departmentCreaterController', function() {
             ctrl.save();
             expect(ctrl.depName).toEqual("Development Team");
             expect(depServiceMock.saveDepartment).toHaveBeenCalled();
-            expect(toasterMock.pop).toHaveBeenCalledWith("error", "ERROR!", "An internal error occer while getting depatrment data.");
+            expect(toasterMock.pop).toHaveBeenCalledWith("error", "ERROR!", "An internal error occur while getting department data.");
             expect(ctrl.btnName).toEqual("Save");
        });
 
@@ -111,7 +111,7 @@ describe('Controller: departmentCreaterController', function() {
 
             ctrl.modify();
             expect(depServiceMock.saveDepartment).toHaveBeenCalled();
-            expect(toasterMock.pop).toHaveBeenCalledWith("error", "ERROR!", "An internal error occer while saving.");
+            expect(toasterMock.pop).toHaveBeenCalledWith("error", "ERROR!", "An internal error occur while saving. Status error: 500");
             expect(modalDialogBoxServiceMock.hideDialog).toHaveBeenCalled();
         });
 

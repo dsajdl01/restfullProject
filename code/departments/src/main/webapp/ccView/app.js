@@ -4,6 +4,7 @@ var controlCenterApp = angular.module('ccApp', [
         'ngResource',
         'ngMessages',
         'ngStorage',
+        'ui.validate',
         'mgcrea.ngStrap'
 ]);
 
@@ -17,6 +18,9 @@ controlCenterApp.config(['$routeProvider', function($routeProvider) {
 	  .when('/report', {
 	        templateUrl: 'ccView/views/reportview.html',
 	  })
+	  .when('/addSingleStaff',{
+            templateUrl: 'ccView/views/addSingleStaff.html',
+	  })
 	  .when('/createdepartment', {
       	        templateUrl: 'ccView/views/createDepartment.html',
       	  })
@@ -25,3 +29,13 @@ controlCenterApp.config(['$routeProvider', function($routeProvider) {
       	  })
         .otherwise({redirectTo: '/home'})
 }]);
+
+
+var UTILS = {
+    responseErrorHandler: function(message , responseError) {
+        if ( responseError.data && responseError.data.message ) {
+            return message + " Error message: " + responseError.data.message;
+        }
+        return message + " Status error: " + responseError.status
+    }
+}

@@ -19,7 +19,7 @@ controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonS
                 self.containTable = !(commonService.isLengtsmallerOrEqualToZero(self.commonService.departmentList.length));
             } else {
                 // display error message
-                toaster.pop("error","ERROR!","An internal error occer while getting depatrment data.");
+                toaster.pop("error","ERROR!","An internal error occur while getting department data.");
                 self.showPage = false;
                 self.supportMessage = "ERROR occur! Please contact help support team.";
             }
@@ -56,12 +56,7 @@ controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonS
 	self.addStaff = function(depId){
 	    if ( isDepartmentSelected(depId) ) {
 	        getSelectedDepartment( depId );
-            modalDialogBoxService.setTemplate("ccView/views/commonTemplateView.html");
-            modalDialogBoxService.shareModalData = {
-                templateTitle: "Add Staff to " +  commonService.selectedDepartment.depName,
-                templateUrl: "ccView/views/addSingleStaffTamplate.html"
-            };
-            modalDialogBoxService.showDialog();
+	        $location.path('/addSingleStaff')
         }
 	}
 

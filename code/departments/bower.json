@@ -19,7 +19,8 @@
     "angular-motion": "0.4.3",
     "angular-ui-utils": "0.1.1",
     "angular-mocks": "1.4.9",
-    "ngstorage": "0.3.6"
+    "ngstorage": "0.3.6",
+    "angular-ui-validate": "1.2.2"
 
 
   }

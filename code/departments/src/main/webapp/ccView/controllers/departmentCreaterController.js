@@ -24,7 +24,7 @@ controlCenterApp.controller('departmentCreaterController', ['DepService', 'commo
             toaster.pop("success", "Done", name + " is successfully added to the system.");
         },
         function(){
-            toaster.pop("error","ERROR!","An internal error occer while getting depatrment data.");
+            toaster.pop("error","ERROR!","An internal error occur while getting department data.");
         });
     };
 
@@ -35,7 +35,7 @@ controlCenterApp.controller('departmentCreaterController', ['DepService', 'commo
             toaster.pop("success", "Done",  self.depName + " is successfully added to the system.");
         },
         function(error) {
-            toaster.pop("error","ERROR!","An internal error occer while saving.");
+            toaster.pop("error","ERROR!", UTILS.responseErrorHandler("An internal error occur while saving.", error));
         });
         modalDialogBoxService.hideDialog();
     };

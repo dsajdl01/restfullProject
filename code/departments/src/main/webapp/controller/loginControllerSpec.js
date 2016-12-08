@@ -29,10 +29,21 @@ describe('Controller: loginController', function() {
                return this;
             },
             catch: function (m) {
-                m( {status: 500, data: { message: "Incorrect Error" }} );
+                m( { status: 500 });
                 return this;
             }
         }
+
+        var failurePromiseWithMessage = {
+            then: function (m) {
+                return this;
+            },
+            catch: function (m) {
+                m( {status: 503, data: { message: "Enable to connect to database" }} );
+                return this;
+            }
+        }
+
 
        	beforeEach(module(function($provide) {
        	    locationMock = {
@@ -43,14 +54,17 @@ describe('Controller: loginController', function() {
        	        success: true,
        	        isLogin: false,
        	        isBadRequest: true,
+       	        withMessage: false,
        	        loginUser: function(email, password) {
        	            if ( this.success ) {
        	                return successPromise;
        	            } else {
        	                if ( this.isBadRequest ) {
        	                    return badRequestPromise;
+       	                } else if ( !this.withMessage ) {
+       	                    return failurePromise;
        	                } else {
-       	                    return failurePromise
+       	                    return failurePromiseWithMessage;
        	                }
        	            }
        	        },
@@ -133,7 +147,7 @@ describe('Controller: loginController', function() {
              expect(toasterMock.pop).not.toHaveBeenCalled();
         });
 
-        it('should redirect view to Chooser Management and set username when login() is called and is successful', function() {
+        it('should pop up error toaster message with error status code when login is called and failed', function() {
             authorizationMock.success = false;
             authorizationMock.isBadRequest = false;
             ctrl.email = "fred@example.com";
@@ -148,6 +162,25 @@ describe('Controller: loginController', function() {
             expect(ctrl.errorMessage).toBeNull();
             expect(authorizationMock.loginUser).toHaveBeenCalledWith("fred@example.com", "password");
             expect(authorizationMock.logout).toHaveBeenCalled();
-            expect(toasterMock.pop).toHaveBeenCalledWith("error","ERROR!","An internal error occer while login . Error status: 500");
+            expect(toasterMock.pop).toHaveBeenCalledWith("error","ERROR!","An internal error occur while login. Error status: 500");
+        });
+
+        it('should pop up error toaster message when login is called and failed', function() {
+            authorizationMock.success = false;
+            authorizationMock.isBadRequest = false;
+            authorizationMock.withMessage = true;
+            ctrl.email = "fred@example.com";
+            ctrl.password = "password";
+
+            spyOn(authorizationMock , 'loginUser').and.callThrough();
+            spyOn(authorizationMock, 'logout');
+            spyOn(toasterMock, 'pop');
+            ctrl.login();
+
+            expect(ctrl.userName).toEqual("");
+            expect(ctrl.errorMessage).toBeNull();
+            expect(authorizationMock.loginUser).toHaveBeenCalledWith("fred@example.com", "password");
+            expect(authorizationMock.logout).toHaveBeenCalled();
+            expect(toasterMock.pop).toHaveBeenCalledWith("error","ERROR!","An internal error occur while login. Error message: Enable to connect to database");
         });
 });

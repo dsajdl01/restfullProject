@@ -1,0 +1,172 @@
+<div>
+    <div bs-tabs nav-class="nav nav-tabs noselect" class="col-md-12">
+
+        <div bs-pane title="User Management" >
+            <div title="">
+                <br />
+                <div class="controller" ng-controller="departmentCreaterController as ctrl">
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <h4>Add a New Staff</h4>
+                            <div class="addStaffFormContainer">
+                                <ng-form role="form" name="form">
+                                    <div class="form-group row white-bgr">
+                                        <label class="col-xs-3 col-form-label">Full Name</label>
+                                        <div class="col-xs-8">
+                                        <input text="text"
+                                               class="form-control"
+                                               placeholder=" Enter full name"
+                                               ng-required="true"
+                                               name="ctrl.fullName"
+                                               ng-nodel="ctrl.fullName"
+                                               ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row grey-bgr">
+                                        <label class="col-xs-3 col-form-label">Data of Birthday</label>
+                                        <div class="col-xs-8">
+                                        <input text="text"
+                                               class="form-control"
+                                               placeholder=" Enter yyyy-mm-dd"
+                                               ng-maxlength="10"
+                                               ng-required="false"
+                                               name="ctrl.dbo"
+                                               ng-nodel="ctrl.dbo"
+                                               ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
+                                    </div>
+                                    </div>
+                                    <div class="form-group row white-bgr">
+                                        <label class="col-xs-3 col-form-label">Starting day</label>
+                                        <div class="col-xs-8">
+                                        <input text="text"
+                                               class="form-control"
+                                               placeholder=" Enter yyyy-mm-dd"
+                                               ng-maxlength="10"
+                                               ng-required="true"
+                                               name="ctrl.startDate"
+                                               ng-nodel="ctrl.startDay"
+                                               ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
+                                    </div>
+                                    </div>
+                                    <div class="form-group row grey-bgr">
+                                        <label class="col-xs-3 col-form-label">Position</label>
+                                        <div class="col-xs-8">
+                                        <input text="text"
+                                               class="form-control"
+                                               placeholder="Enter position"
+                                               ng-maxlength="10"
+                                               ng-required="true"
+                                               name="ctrl.position"
+                                               ng-nodel="ctrl.position"
+                                               ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
+                                    </div>
+                                    </div>
+                                    <div class="form-group row white-bgr">
+                                        <label class="col-xs-3 col-form-label">Email</label>
+                                        <div class="col-xs-8">
+                                        <input text="text"
+                                               class="form-control"
+                                               placeholder="Enter optional email"
+                                               ng-required="false"
+                                               name="ctrl.email"
+                                               ng-nodel="ctrl.email"
+                                               ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
+                                    </div>
+                                    </div>
+                                    <div class="form-group row grey-bgr">
+                                        <label class="col-xs-3 col-form-label">Comments</label>
+                                        <div class="col-xs-8">
+                                        <textarea
+                                                rows="4"
+                                                cols="50"
+                                                class="form-control"
+                                                placeholder="..."
+                                                ng-required="false"
+                                                name="ctrl.comment"
+                                                ng-model="ctrl.comment">
+                                         </textarea>
+                                    </div>
+                                    </div>
+                                    <p class="formLoginText">Staff login</p>
+                                    <div class="userLoginContainer">
+                                        <div class="form-group row white-bgr">
+                                            <label class="col-xs-3 col-form-label">Email</label>
+                                            <div class="col-xs-8">
+                                                <input text="email"
+                                                       class="form-control"
+                                                       placeholder="Enter login email"
+                                                       required="true"
+                                                       name="ctrl.loginEmail"
+                                                       autocomplete="off"
+                                                       ng-maxlength="1000"
+                                                       ng-model="ctrl.loginEmail"
+                                                       ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
+                                            </div>
+                                            <div class="message-help-block" ng-messages="form.loginEmail.$error" ng-if="form.loginEmail.$dirty">
+                                                <div class="form_error_messages" ng-message="required">Email is required.</div>
+                                                <span class="form_error_messages" ng-message="email">This is not a valid email.</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row grey-bgr">
+                                            <label class="col-xs-3 col-form-label">Password</label>
+                                            <div class="col-xs-8">
+                                                <input type="password"
+                                                       class="form-control"
+                                                       id="newPassword"
+                                                       name="newPassword"
+                                                       autocomplete="off"
+                                                       placeholder="New Password"
+                                                       maxlength="255"
+                                                       minlength="8"
+                                                       title="Minimum 8 characters"
+                                                       ng-model="ctrl.newPassword"
+                                                       ng-change="ctrl.makeChange()"
+                                                       ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"/>
+                                            </div>
+                                            <div  class="message-help-block" ng-show="form.newPassword.$dirty && form.newPassword.$invalid">
+                                                <div class="form_error_messages_ps" ng-show="form.newPassword.$dirty && form.newPassword.$error.minlength">Password is too short</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row white-bgr">
+                                            <label class="col-xs-3 col-form-label">Confirm Password</label>
+                                            <div class="col-xs-8">
+                                                <input type="password"
+                                                       class="form-control"
+                                                       id="confirmPassword"
+                                                       name="confirmPassword"
+                                                       autocomplete="off"
+                                                       placeholder="Confirm Password"
+                                                       ng-model="ctrl.confirmPassword"
+                                                       ng-change="ctrl.makeChange()"
+                                                       ui-validate=" '$value==ctrl.newPassword' "
+                                                       ui-vatidate-watch=" 'ctrl.newPassword' " >
+                                            </div>
+                                            <div class="message-help-block" ng-show="form.confirmPassword.$dirty && form.confirmPassword.$invalid">
+                                                <div class="form_error_messages_ps"   ng-show="form.confirmPassword.$error.validator">Passwords do not match</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                    <div class="col-xs-11">
+                                        <button class="btn btn-default pull-right" type="button" title="Save new User"
+                                                ng-disabled=""
+                                                ng-click="ctrl.save()"> Save </button>
+                                        </div>
+                                    </div>
+                                </ng-form>
+                            </div> <!-- end of createDepContent class -->
+                        </div> <!-- end of col-md-8 class -->
+                    </div> <!--end of the row class -->
+                </div> <!--end of controller-->
+
+            </div>
+        </div>
+
+        <div bs-pane title="User Role Management">
+            <div class="row" title="">
+                <br />
+                <p>hello from User Role Management </p>
+            </div>
+        </div>
+    </div>
+</div>

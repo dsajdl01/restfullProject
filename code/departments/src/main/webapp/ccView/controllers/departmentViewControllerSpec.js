@@ -81,7 +81,7 @@ describe('Controller: departmentViewController', function() {
             spyOn(toasterMock, 'pop');
             ctrl.init();
             expect(ctrl.showPage).toBeFalsy();
-            expect(toasterMock.pop).toHaveBeenCalledWith("error","ERROR!","An internal error occer while getting depatrment data.")
+            expect(toasterMock.pop).toHaveBeenCalledWith("error","ERROR!","An internal error occur while getting department data.")
             expect(ctrl.supportMessage).toEqual("ERROR occur! Please contact help support team.");
         });
 
@@ -122,27 +122,19 @@ describe('Controller: departmentViewController', function() {
               expect(locationMock.path).not.toHaveBeenCalled();
          });
 
-         it('should open dialog box when addStaff() is called with id', function() {
-              spyOn(modalDialogBoxServiceMock, "setTemplate");
-              spyOn(modalDialogBoxServiceMock.shareModalData, "templateTitle");
-              spyOn(modalDialogBoxServiceMock.shareModalData, "templateUrl");
-              spyOn(modalDialogBoxServiceMock, "showDialog");
-
+         it('should relocate view by location.path when addStaff() is called with id', function() {
+              spyOn(locationMock, 'path');
+              spyOn(toasterMock, 'pop');
               ctrl.addStaff(101);
-              expect(modalDialogBoxServiceMock.setTemplate).toHaveBeenCalledWith("ccView/views/commonTemplateView.html");
-              expect(modalDialogBoxServiceMock.shareModalData.templateTitle).toEqual("Add Staff to IT Department");
-              expect(modalDialogBoxServiceMock.shareModalData.templateUrl).toEqual("ccView/views/addSingleStaffTamplate.html");
-              expect(modalDialogBoxServiceMock.showDialog).toHaveBeenCalled();
+              expect(locationMock.path).toHaveBeenCalledWith('/addSingleStaff');
+              expect(toasterMock.pop).not.toHaveBeenCalled();
          });
 
-         it('should not open dialog box when addStaff() is called without id', function() {
-             spyOn(modalDialogBoxServiceMock, "setTemplate");
-             spyOn(modalDialogBoxServiceMock.shareModalData, "templateTitle");
-             spyOn(modalDialogBoxServiceMock.shareModalData, "templateUrl");
-             spyOn(modalDialogBoxServiceMock, "showDialog");
-
+         it('should not relocate view and it should pop up toaster when addStaff() is called without id', function() {
+             spyOn(toasterMock, 'pop');
+             spyOn(locationMock, 'path');
              ctrl.addStaff();
-             expect(modalDialogBoxServiceMock.setTemplate).not.toHaveBeenCalled();
-             expect(modalDialogBoxServiceMock.showDialog).not.toHaveBeenCalled();
+             expect(toasterMock.pop).toHaveBeenCalledWith('warning', 'Please select depertment.');
+             expect(locationMock.path).not.toHaveBeenCalled();
          });
 });

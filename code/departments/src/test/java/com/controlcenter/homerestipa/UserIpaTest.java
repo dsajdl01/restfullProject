@@ -128,7 +128,7 @@ public class UserIpaTest {
             .put("/login")
         .then()//.log().all()
             .statusCode(BAD_REQUEST)
-            .body("message", equalTo("Mandatory argument user name or password are missing"));
+            .body("message", equalTo("Mandatory argument email or password are missing"));
     }
 
     @Test

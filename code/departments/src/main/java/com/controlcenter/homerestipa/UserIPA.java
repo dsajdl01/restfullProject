@@ -43,7 +43,7 @@ public class UserIPA {
         try {
 
             if ( user == null || commonConv.hasStringValue(user.getEmail()) || commonConv.hasStringValue(user.getPassword()) ) {
-                return badRequest("Mandatory argument user name or password are missing");
+                return badRequest("Mandatory argument email or password are missing");
             }
 
             LOGGER.info("logInUser: email= {}, password={}", user.getEmail(), user.getPassword());

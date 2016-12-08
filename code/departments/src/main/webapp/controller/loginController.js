@@ -29,7 +29,13 @@ departmentApp.controller('loginController', ['$location', 'Authorization', '$ses
                     if ( failure.status == 400 ) {
                         self.errorMessage =  failure.data.message;
                     } else {
-                        toaster.pop("error","ERROR!","An internal error occer while login . Error status: "  + failure.status );
+                        var message;
+                        if ( failure.data && failure.data.message ) {
+                            message = "An internal error occur while login. Error message: " + failure.data.message;
+                        } else {
+                            message = "An internal error occur while login. Error status: "  + failure.status;
+                        }
+                        toaster.pop("error","ERROR!", message );
                     }
                 })
         };

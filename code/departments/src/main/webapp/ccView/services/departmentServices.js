@@ -27,12 +27,12 @@ function DepService($http, commonService)
 
     self.doesDepartmentExist = function(depName, callback){
            return $http(
-                       {
-                           url: '/department/rest/dep/checkDepartmentName',
-                           params: {'depName': depName}
-                       }).then(function (response) {
-                           callback(response.data);
-                       }
+                {
+                    url: '/department/rest/dep/checkDepartmentName',
+                    params: {'depName': depName}
+                }).then(function (response) {
+                    callback(response.data);
+                }
                        // Errors are ignored here, since it's just a convenience operation
            );
     }
@@ -53,7 +53,7 @@ function DepService($http, commonService)
                 callbackSuccess();
             },
             function(response) {
-                callbackFailure();
+                callbackFailure(response);
             });
     }
  }

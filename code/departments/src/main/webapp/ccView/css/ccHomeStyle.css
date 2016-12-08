@@ -160,3 +160,42 @@ a {
     margin: -82px 0px 82px 0px;
     background: #ffffff;
 }
+
+textarea.form-control {
+    resize: none;
+}
+
+/*************************************
+***      add new staff view        ***
+**************************************/
+
+.addStaffFormContainer {
+    border: 1px solid #5D5B5B;
+    padding: 24px 10px 20px 30px;
+    border-radius: 10px;
+    margin-bottom: 60px;
+    margin-top: 30px;
+}
+
+.grey-bgr {
+    background: #f3f3f3;
+    padding: 10px 0px;
+    margin-right: 0px;
+}
+
+.white-bgr {
+    background: #ffffff;
+    margin-right: 0px;
+}
+
+.userLoginContainer {
+     border-top: 1px solid #5D5B5B;
+     padding-top: 30px;
+}
+
+.formLoginText {
+    margin-top: 25px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 1px;
+}
