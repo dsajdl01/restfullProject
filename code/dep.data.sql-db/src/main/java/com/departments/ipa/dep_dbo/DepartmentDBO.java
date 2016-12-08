@@ -20,11 +20,14 @@ public class DepartmentDBO implements DepartmentDBOInter {
     private Connection con;
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(DepartmentDBO.class);
-    private static final String ALL_DEPARTMENT_QUERY = "select dep.id as id, dep.name as name, " +
-            "staff.name as creater from department dep, staff staff where dep.createdBy = staff.dep_id and dep.name != 'root'";
+    private static  final String selectDepartmetsQuery = "select dep.id as id, dep.name as name, " +
+            "staff.name as creater from department dep, staff staff where dep.createdBy = staff.dep_id";
+
+    private static final String ALL_DEPARTMENT_QUERY = selectDepartmetsQuery +" and dep.name != 'root'";
     private static final String CHECK_DEP_NAME_QUARY = "select count(name) as numberOfDepNames from department where name like ?";
     private static final String ADD_NEW_DEPARTMENT_QUERY = "insert into department (name, createdBy) values (?, ?);";
     private static final String MODIFY_DEPARTMENT_NAME_QUERY = "UPDATE department SET name= ? where id = ?";
+    private static final String GET_DEPARTMENT_BY_ID =  selectDepartmetsQuery + " AND dep.id = ?";
 
     public DepartmentDBO(Connection con){
         this.con = con;
@@ -74,6 +77,19 @@ public class DepartmentDBO implements DepartmentDBOInter {
         }
     }
 
+    public Department getDepartment(Integer depId) throws DepartmentFaultService {
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement(GET_DEPARTMENT_BY_ID);
+            preparedStatement.setInt(1, depId);
+
+            ResultSet resSet = preparedStatement.executeQuery();
+            resSet.next();
+            return new Department(resSet.getInt("id"), resSet.getString("name"), resSet.getString("creater"));
+        }catch (SQLException sqlE){
+            LOGGER.error("getDepartment: {}", sqlE);
+            throw new DepartmentFaultService("Inable to connect to database");
+        }
+    }
     public void createNewDepartment(String depName, Integer creater) throws DepartmentFaultService {
         try {
             PreparedStatement preparedStatement = con.prepareStatement(ADD_NEW_DEPARTMENT_QUERY);

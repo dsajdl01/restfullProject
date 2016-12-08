@@ -13,6 +13,7 @@ controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonS
 	self.init = function() {
 	    var user = $sessionStorage.user;
 	    self.commonService.init();
+        delete $sessionStorage.depId;
         DepService.getDepartmentList(function(responce) {
             if ( responce ) {
                 self.showPage = true;
@@ -55,6 +56,7 @@ controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonS
 
 	self.addStaff = function(depId){
 	    if ( isDepartmentSelected(depId) ) {
+	        $sessionStorage.depId =  depId;
 	        getSelectedDepartment( depId );
 	        $location.path('/addSingleStaff')
         }

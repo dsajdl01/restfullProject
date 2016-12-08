@@ -15,5 +15,7 @@ public interface DepartmentDBOInter {
 
     void modifyDepartmentName(Integer depId, String name) throws DepartmentFaultService;
 
+    Department getDepartment(Integer depId) throws DepartmentFaultService;
+
     void createNewDepartment(String depName, Integer creater) throws DepartmentFaultService;
 }

@@ -25,6 +25,10 @@ public class DepartmentImpl implements DepartmentInter {
         return depDBO.checkDepartmenName(name);
     }
 
+    public Department getDepartment(Integer depId) throws DepartmentFaultService {
+        return depDBO.getDepartment(depId);
+    }
+
     public void createNewDepartment(String depName, Integer creater) throws DepartmentFaultService {
         depDBO.createNewDepartment(depName, creater);
     }

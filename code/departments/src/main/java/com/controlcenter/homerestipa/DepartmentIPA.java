@@ -30,6 +30,26 @@ public class DepartmentIPA {
     DepartmentCoreServices coreServices;
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDepartment(@QueryParam("depId") Integer depId) {
+        try {
+            if (depId == null || depId < 0) {
+                return badRequest("Invalid department id " + depId);
+            }
+            Department dep = coreServices.getDepartmentImpl().getDepartment(depId);
+            return success(new DepartmentJson(dep.getId(), dep.getName(), dep.getCreater()));
+        }
+        catch (DepartmentFaultService e) {
+            LOGGER.error("DepartmentFaultService: {}", e);
+            return sqlConnectionError(e.getMessage());
+        }
+        catch (Exception e ) {
+            LOGGER.error("Exception: {}", e);
+            return internalServerError(e.getMessage());
+        }
+    }
+
+    @GET
     @Path("/getListDepartment")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDepartments() {

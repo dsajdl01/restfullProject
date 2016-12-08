@@ -38,6 +38,7 @@ function Authorization ($sessionStorage, $http){
     };
 
     self.logout = function() {
+        delete $sessionStorage.depId;
         delete $sessionStorage.user;
         delete $sessionStorage.loginDay;
     };

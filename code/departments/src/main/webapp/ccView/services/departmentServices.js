@@ -56,4 +56,12 @@ function DepService($http, commonService)
                 callbackFailure(response);
             });
     }
+
+    self.getDepartment = function(depId) {
+            return $http ({
+                method: "GET",
+                url: '/department/rest/dep',
+                params: {'depId': depId}
+            });
+        };
  }

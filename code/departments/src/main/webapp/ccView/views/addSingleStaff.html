@@ -1,13 +1,13 @@
 <div>
     <div bs-tabs nav-class="nav nav-tabs noselect" class="col-md-12">
 
-        <div bs-pane title="User Management" >
+        <div bs-pane title="Staff Management" ng-controller="addStaffController as ctrl">
             <div title="">
                 <br />
-                <div class="controller" ng-controller="departmentCreaterController as ctrl">
+                <div class="controller">
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1">
-                            <h4>Add a New Staff</h4>
+                            <h4>Add a New Staff for {{ ctrl.depName }}</h4>
                             <div class="addStaffFormContainer">
                                 <ng-form role="form" name="form">
                                     <div class="form-group row white-bgr">
@@ -162,7 +162,7 @@
             </div>
         </div>
 
-        <div bs-pane title="User Role Management">
+        <div bs-pane title="Staff Role Management">
             <div class="row" title="">
                 <br />
                 <p>hello from User Role Management </p>

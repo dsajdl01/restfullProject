@@ -14,6 +14,8 @@ public interface DepartmentInter {
 
     Boolean checkDepartmenName(String name) throws DepartmentFaultService;
 
+    Department getDepartment(Integer depId) throws DepartmentFaultService;
+
     void createNewDepartment(String depName, Integer creater) throws DepartmentFaultService;
 
     void modifyDepartmentName(Integer depId, String name) throws DepartmentFaultService;
