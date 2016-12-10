@@ -9,4 +9,6 @@ import com.departments.ipa.fault.exception.DepartmentFaultService;
 public interface UserInter {
 
     LoginStaff logInUser(String email, String password) throws DepartmentFaultService;
+
+    boolean doesEmailExist(String email) throws  DepartmentFaultService;
 }

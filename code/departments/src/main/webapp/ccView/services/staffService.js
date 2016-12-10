@@ -7,8 +7,11 @@ function staffService($http)
 {
     var self = this;
 
-//    self.doesStaffExist = function(callback){
-//        var url = "someURL";
-//        callback(true);
-//    }
+    self.doesEmailExist = function(email){
+        return $http ({
+            method: "GET",
+            url: '/department/rest/user/emailExist',
+            params: { 'email': email }
+        });
+    }
 }

@@ -22,6 +22,7 @@ public class UserDBO {
     private Connection con;
 
     private String LOGIN_USER = "SELECT user_id FROM staff_login WHERE email = ? AND password = ? ";
+    private String CHECK_EMAIL_QUERY = "SELECT count(email) AS numOfMails FROM staff_login WHERE email like ? ";
 
     private String SQL_STAFF = "SELECT id as userId, name "
                                 + "FROM staff WHERE id = ?";
@@ -39,6 +40,20 @@ public class UserDBO {
             ResultSet resSet = preparedStatement.executeQuery();
             resSet.next();
             return resSet.getRow() <= 0 ? null :  resSet.getInt("user_id");
+        } catch (SQLException sqlE) {
+            LOGGER.error("loninUser: {}", sqlE);
+            throw new DepartmentFaultService("Inable to connect to databese");
+        }
+    }
+
+    public boolean doesEmailExist(String email) throws  DepartmentFaultService {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = con.prepareStatement(CHECK_EMAIL_QUERY);
+            preparedStatement.setString(1, email);
+            ResultSet resSet = preparedStatement.executeQuery();
+            resSet.next();
+            return resSet.getInt("numOfMails") == 0 ? false : true;
         } catch (SQLException sqlE) {
             LOGGER.error("loninUser: {}", sqlE);
             throw new DepartmentFaultService("Inable to connect to databese");

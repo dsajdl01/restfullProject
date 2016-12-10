@@ -12,10 +12,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -64,6 +61,25 @@ public class UserIPA {
         } catch (Exception e ) {
             LOGGER.error("loginUser: Exception = {} ", e);
             return internalServerError("logInUser: error occur = " + e.getMessage());
+        }
+    }
+
+    @GET
+    @Path("/emailExist")
+    public Response doesEmailExist(@QueryParam("email") String email) {
+        try {
+            if ( commonConv.hasStringValue(email)) {
+                return badRequest("Mandatory argument email is missing");
+            }
+            return success(coreServices.getUserImpl().doesEmailExist(email));
+        }
+        catch (DepartmentFaultService e) {
+            LOGGER.error("DepartmentFaultService: {}", e);
+            return sqlConnectionError(e.getMessage());
+        }
+        catch (Exception e ) {
+            LOGGER.error("Exception: {}", e);
+            return internalServerError(e.getMessage());
         }
     }
 }

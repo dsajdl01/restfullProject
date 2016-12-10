@@ -199,3 +199,10 @@ textarea.form-control {
     font-weight: bold;
     margin-bottom: 1px;
 }
+.required {
+    color: #FF0000;
+}
+.message-error-help {
+
+    color: #FF0000;
+}

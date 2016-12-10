@@ -28,4 +28,8 @@ public class UserImpl implements UserInter {
         loginStaff = userDBO.getStaffDetails(userId);
         return loginStaff;
     }
+
+    public boolean doesEmailExist(String email) throws  DepartmentFaultService {
+        return userDBO.doesEmailExist(email);
+    }
 }

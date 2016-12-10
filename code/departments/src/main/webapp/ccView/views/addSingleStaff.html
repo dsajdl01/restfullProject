@@ -9,68 +9,95 @@
                         <div class="col-md-10 col-md-offset-1">
                             <h4>Add a New Staff for {{ ctrl.depName }}</h4>
                             <div class="addStaffFormContainer">
-                                <ng-form role="form" name="form">
+                                <form role="form" name="form" novalidate ng-submit="ctrl.save()">
                                     <div class="form-group row white-bgr">
                                         <label class="col-xs-3 col-form-label">Full Name</label>
+                                        <span ng-if="!form.fullName.$valid" class="required">*</span>
                                         <div class="col-xs-8">
                                         <input text="text"
                                                class="form-control"
                                                placeholder=" Enter full name"
-                                               ng-required="true"
-                                               name="ctrl.fullName"
-                                               ng-nodel="ctrl.fullName"
+                                               required="true"
+                                               name="fullName"
+                                               ng-model="ctrl.fullName"
                                                ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
+                                            <div class="message-help-block" ng-messages="form.fullName.$error" ng-if="form.fullName.$dirty">
+                                                <span class="message-error-help" ng-message="required">Full name is required.</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group row grey-bgr">
                                         <label class="col-xs-3 col-form-label">Data of Birthday</label>
+                                        <span ng-if="!form.dob.$valid" class="required">*</span>
                                         <div class="col-xs-8">
                                         <input text="text"
                                                class="form-control"
                                                placeholder=" Enter yyyy-mm-dd"
+                                               date-validation="{ctrl:ctrl}"
                                                ng-maxlength="10"
-                                               ng-required="false"
-                                               name="ctrl.dbo"
-                                               ng-nodel="ctrl.dbo"
+                                               required="true"
+                                               name="dob"
+                                               ng-model="ctrl.dob"
                                                ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
+                                            <div class="message-help-block" ng-messages="form.dob.$error" ng-if="form.dob.$dirty">
+                                                <span class="message-error-help" ng-message="required">Date of birthday is required.</span>
+                                                <div class="form_error_messages" ng-message="dateValidation">{{ ctrl.dateErrorMessage }} </div>
+                                                <div class="form_error_messages" ng-message="maxlength">The length too long. Format: yyyy-mm-dd</div>
+                                            </div>
                                     </div>
                                     </div>
                                     <div class="form-group row white-bgr">
                                         <label class="col-xs-3 col-form-label">Starting day</label>
+                                        <span ng-if="!form.startDate.$valid" class="required">*</span>
                                         <div class="col-xs-8">
                                         <input text="text"
                                                class="form-control"
                                                placeholder=" Enter yyyy-mm-dd"
+                                               date-validation="{ctrl:ctrl}"
                                                ng-maxlength="10"
                                                ng-required="true"
-                                               name="ctrl.startDate"
-                                               ng-nodel="ctrl.startDay"
+                                               name="startDate"
+                                               ng-model="ctrl.startDay"
                                                ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
+                                            <div class="message-help-block" ng-messages="form.startDate.$error" ng-if="form.startDate.$dirty">
+                                                <span class="message-error-help" ng-message="required">Starting date is required.</span>
+                                                <div class="form_error_messages" ng-message="dateValidation">{{ ctrl.dateErrorMessage }} </div>
+                                                <div class="form_error_messages" ng-message="maxlength">The length too long. Format: yyyy-mm-dd</div>
+                                            </div>
                                     </div>
                                     </div>
                                     <div class="form-group row grey-bgr">
                                         <label class="col-xs-3 col-form-label">Position</label>
+                                        <span ng-if="!form.position.$valid" class="required">*</span>
                                         <div class="col-xs-8">
                                         <input text="text"
                                                class="form-control"
                                                placeholder="Enter position"
                                                ng-maxlength="10"
-                                               ng-required="true"
-                                               name="ctrl.position"
-                                               ng-nodel="ctrl.position"
+                                               required="true"
+                                               ng-maxlength="255"
+                                               name="position"
+                                               ng-model="ctrl.position"
                                                ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
+                                            <div class="message-help-block" ng-messages="form.position.$error" ng-if="form.position.$dirty">
+                                                <span class="message-error-help" ng-message="required">Position is required.</span>
+                                            </div>
                                     </div>
                                     </div>
                                     <div class="form-group row white-bgr">
                                         <label class="col-xs-3 col-form-label">Email</label>
                                         <div class="col-xs-8">
-                                        <input text="text"
+                                        <input type="email"
                                                class="form-control"
                                                placeholder="Enter optional email"
                                                ng-required="false"
-                                               name="ctrl.email"
-                                               ng-nodel="ctrl.email"
+                                               name="email"
+                                               ng-maxlength="255"
+                                               ng-model="ctrl.email"
                                                ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
+                                            <div class="message-help-block" ng-messages="form.email.$error" ng-if="form.email.$dirty">
+                                                <span class="message-error-help" ng-message="email">This is not a valid email.</span>
+                                            </div>
                                     </div>
                                     </div>
                                     <div class="form-group row grey-bgr">
@@ -90,21 +117,25 @@
                                     <p class="formLoginText">Staff login</p>
                                     <div class="userLoginContainer">
                                         <div class="form-group row white-bgr">
-                                            <label class="col-xs-3 col-form-label">Email</label>
+                                            <label for="loginEmail" class="col-xs-3 col-form-label">Email</label>
+                                            <span ng-if="!form.loginEmail.$valid" class="required">*</span>
                                             <div class="col-xs-8">
-                                                <input text="email"
+                                                <input type="email"
                                                        class="form-control"
+                                                       id="loginEmail"
                                                        placeholder="Enter login email"
                                                        required="true"
-                                                       name="ctrl.loginEmail"
+                                                       name="loginEmail"
                                                        autocomplete="off"
-                                                       ng-maxlength="1000"
+                                                       ng-maxlength="255"
+                                                       email-validation="{ctrl:ctrl}"
                                                        ng-model="ctrl.loginEmail"
                                                        ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
-                                            </div>
-                                            <div class="message-help-block" ng-messages="form.loginEmail.$error" ng-if="form.loginEmail.$dirty">
-                                                <div class="form_error_messages" ng-message="required">Email is required.</div>
-                                                <span class="form_error_messages" ng-message="email">This is not a valid email.</span>
+                                                <div class="message-help-block" ng-messages="form.loginEmail.$error" ng-if="form.loginEmail.$dirty">
+                                                    <div class="message-error-help" ng-message="required">Email is required.</div>
+                                                    <span class="message-error-help" ng-message="email">This is not a valid email.</span>
+                                                    <div class="message-error-help" ng-message="emailExitValidation">Email already exist.</div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group row grey-bgr">
@@ -122,11 +153,13 @@
                                                        ng-model="ctrl.newPassword"
                                                        ng-change="ctrl.makeChange()"
                                                        ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"/>
+                                                <div  class="message-error-help" ng-show="form.newPassword.$dirty && form.newPassword.$invalid">
+                                                    <div class="message-error-help" ng-show="form.newPassword.$dirty && form.newPassword.$error.minlength">Password is too short</div>
+                                                </div>
                                             </div>
-                                            <div  class="message-help-block" ng-show="form.newPassword.$dirty && form.newPassword.$invalid">
-                                                <div class="form_error_messages_ps" ng-show="form.newPassword.$dirty && form.newPassword.$error.minlength">Password is too short</div>
-                                            </div>
+
                                         </div>
+
                                         <div class="form-group row white-bgr">
                                             <label class="col-xs-3 col-form-label">Confirm Password</label>
                                             <div class="col-xs-8">
@@ -140,20 +173,20 @@
                                                        ng-change="ctrl.makeChange()"
                                                        ui-validate=" '$value==ctrl.newPassword' "
                                                        ui-vatidate-watch=" 'ctrl.newPassword' " >
-                                            </div>
-                                            <div class="message-help-block" ng-show="form.confirmPassword.$dirty && form.confirmPassword.$invalid">
-                                                <div class="form_error_messages_ps"   ng-show="form.confirmPassword.$error.validator">Passwords do not match</div>
+                                                <div class="message-error-help" ng-show="form.confirmPassword.$dirty && form.confirmPassword.$invalid">
+                                                    <div class="message-error-help"   ng-show="form.confirmPassword.$error.validator">Passwords do not match</div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                     <div class="col-xs-11">
                                         <button class="btn btn-default pull-right" type="button" title="Save new User"
-                                                ng-disabled=""
+                                                ng-disabled="form.$invalid"
                                                 ng-click="ctrl.save()"> Save </button>
                                         </div>
                                     </div>
-                                </ng-form>
+                                </form>
                             </div> <!-- end of createDepContent class -->
                         </div> <!-- end of col-md-8 class -->
                     </div> <!--end of the row class -->
