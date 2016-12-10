@@ -81,7 +81,58 @@ public class DepartmentIpaTest {
     }
 
     @Test
-    public void getDepartmentsTest() throws Exception {
+    public void getDepartmentTest() throws Exception {
+        Department department = new Department(1, "IT Team", "Bob Marley");
+        when(mockDepartmentInter.getDepartment(1)).thenReturn(department);
+
+        given()
+            .queryParam("depId", 1)
+        .when()
+            .get()
+        .then().log().all()
+            .statusCode(HTML_OK)
+            .body("depId",  equalTo(1))
+            .body("depName",  equalTo("IT Team"))
+            .body("createdBy",  equalTo("Bob Marley"));
+    }
+
+    @Test
+    public void getDepartment_negativeDepIdTest() throws Exception {
+
+        given()
+            .queryParam("depId", -3)
+        .when()
+            .get()
+        .then().log().all()
+            .statusCode(BAD_REQUEST)
+            .body("message", equalTo("Invalid department id -3"));
+    }
+
+    @Test
+    public void getDepartment_SQLErrorTest() throws Exception {
+        doThrow(new DepartmentFaultService("Inable to connect to database")).when(mockDepartmentInter).getDepartment( 1);
+        given()
+            .queryParam("depId", 1)
+        .when()
+            .get()
+        .then().log().all()
+            .statusCode(SERVICE_UNAVAILABLE)
+            .body("message", equalTo("Inable to connect to database"));
+    }
+
+    @Test
+    public void getDepartment_InternalErrorTest() throws Exception {
+        doThrow( new RuntimeException()).when(mockDepartmentInter).getDepartment(1);
+        given()
+            .queryParam("depId", 1)
+        .when()
+            .get()
+        .then().log().all()
+            .statusCode(INTERNAL_SERVER_ERROR);
+    }
+
+    @Test
+    public void getDepartmentsListTest() throws Exception {
         List<Department> departmentList = Arrays.asList( new Department(1, "IT Team", "Bob Marley") );
         when(mockDepartmentInter.getDepartmentList()).thenReturn(departmentList);
 

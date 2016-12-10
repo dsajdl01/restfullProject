@@ -52,7 +52,7 @@ public class DepartmentIPA {
     @GET
     @Path("/getListDepartment")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDepartments() {
+    public Response getDepartmentsList() {
         LOGGER.info("getListDepartment()");
         try {
             LOGGER.info("List of Department");

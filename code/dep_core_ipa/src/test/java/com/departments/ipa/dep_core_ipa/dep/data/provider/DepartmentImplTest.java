@@ -63,6 +63,19 @@ public class DepartmentImplTest {
     }
 
     @Test
+    public void getDepartmentTest() throws DepartmentFaultService {
+        List<Department> departmentList = depImpl.getDepartmentList();
+        final Integer id = departmentList.get(0).getId();
+        final String name = departmentList.get(0).getName();
+        String creater = departmentList.get(0).getCreater();
+        Department department = depImpl.getDepartment(id);
+
+        assertThat(department.getId(), is(id));
+        assertThat(department.getName(), is(name));
+        assertThat(department.getCreater(), is(creater));
+    }
+
+    @Test
     public void getDepartmentListTest() throws DepartmentFaultService {
 
         List<Department> departmentList = depImpl.getDepartmentList();
