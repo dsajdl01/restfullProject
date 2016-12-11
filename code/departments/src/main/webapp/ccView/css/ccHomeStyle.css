@@ -206,3 +206,9 @@ textarea.form-control {
 
     color: #FF0000;
 }
+.textLogin {
+    margin: 0px 80px 40px 0px;
+    color: #737379;
+    font-family: "Times New Roman", Times, serif;
+    font-weight: bold;
+}

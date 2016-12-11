@@ -1,10 +1,14 @@
-controlCenterApp.controller('addStaffController', ['commonService', '$sessionStorage', 'DepService', 'toaster', '$location',
-        function(commonService, $sessionStorage, depService, toaster, $location) {
+controlCenterApp.controller('addStaffController', ['commonService', '$sessionStorage', 'staffService', 'DepService', 'toaster', '$location',
+        function(commonService, $sessionStorage, staffService, depService, toaster, $location) {
         var self = this;
         self.origineStartDay = null;
         self.dateErrorMessage = null;
+        self.originelEmail = null;
+        self.user  = {};
 
         self.init = function() {
+            self.user.startDay = getCurrentDay();
+
             if ( commonService.selectedDepartment ) {
                 self.depName = commonService.selectedDepartment.depName;
             }  else {
@@ -20,7 +24,31 @@ controlCenterApp.controller('addStaffController', ['commonService', '$sessionSto
             }
         }
 
+        self.save = function() {
+            var promise = staffService.seveStaff( user, $sessionStorage.depId );
+            return promise
+                .then(function (){
+                    toaster.pop("success","Done","User " + self.user.fullName + " is successfully saved");
+                })
+                .catch( function(failure) {
+                    toaster.pop("error", "ERROR", UTILS.responseErrorHandler("Error occur while getting department id.",failure));
+                    $location.path('/home');
+                })
+            console.log("user:", self.user);
+        }
 
+       var getCurrentDay = function () {
+            var dateTime = new Date();
+            var date = dateTime.getDate();
+            var month = ( dateTime.getMonth() + 1 );
+            var year =  dateTime.getFullYear();
+            return year + "-" + addZeroIfMissing(month) + "-" + addZeroIfMissing(date);
+       }
+
+       var addZeroIfMissing = function(val) {
+            val = val.toString();
+            return (val.length == 1 ) ? "0"+val : val;
+       }
 
         self.init();
 }]);
