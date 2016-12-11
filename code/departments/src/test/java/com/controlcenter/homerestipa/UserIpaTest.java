@@ -154,11 +154,65 @@ public class UserIpaTest {
         UserLoginJson userLogin = new UserLoginJson("smith@fred.com","password");
 
         given()
-                .contentType("application/json")
-                .body( userLogin )
-                .when()//.log().all()
-                .put("/login")
-                .then()//.log().all()
-                .statusCode(INTERNAL_SERVER_ERROR);
+            .contentType("application/json")
+            .body( userLogin )
+        .when()//.log().all()
+            .put("/login")
+        .then()//.log().all()
+            .statusCode(INTERNAL_SERVER_ERROR);
+    }
+
+    @Test
+    public void doesEmailExistTest() throws Exception {
+        String email = "example@co.uk";
+        when(mockUseInter.doesEmailExist(email)).thenReturn(true);
+        given()
+            .queryParam("email", email)
+        .when()//.log().all()
+            .get("/emailExist")
+        .then()//.log().all()
+            .statusCode(HTML_OK)
+            .body(equalTo("true"));
+
+    }
+
+    @Test
+    public void doesEmailExistBedRequestTest() throws Exception {
+        String email = "";
+        given()
+            .queryParam("email", email)
+        .when()//.log().all()
+            .get("/emailExist")
+        .then()//.log().all()
+            .statusCode(BAD_REQUEST)
+            .body("message", equalTo("Mandatory argument email is missing"));
+
+    }
+
+    @Test
+    public void doesEmailExistError() throws Exception {
+        String email = "example@co.uk";
+        doThrow(new RuntimeException()).when(mockUseInter).doesEmailExist(email);
+
+        given()
+            .queryParam("email", email)
+        .when()//.log().all()
+            .get("/emailExist")
+        .then()//.log().all()
+             .statusCode(INTERNAL_SERVER_ERROR);
+    }
+
+    @Test
+    public void doesEmailExistSQLError() throws Exception {
+        String email = "example@co.uk";
+        doThrow(new DepartmentFaultService("Enable to connect to database")).when(mockUseInter).doesEmailExist(email);
+
+        given()
+            .queryParam("email", email)
+        .when()//.log().all()
+             .get("/emailExist")
+        .then()//.log().all()
+            .statusCode(SERVICE_UNAVAILABLE)
+            .body("message", equalTo("Enable to connect to database"));
     }
 }

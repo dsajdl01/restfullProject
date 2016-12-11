@@ -66,4 +66,9 @@ public class UserImplTest {
         LoginStaff staffDetails = userImp.logInUser("jolita@diez.com", "password");
         assertThat(staffDetails.getName(), is("Jolita Diez"));
     }
+    @Test
+    public void doesEmailExistTest() throws Exception {
+        assertThat(userImp.doesEmailExist("jolita@diez.com"), is(true));
+        assertThat(userImp.doesEmailExist("jolitaka@co.uk"), is(false));
+    }
 }

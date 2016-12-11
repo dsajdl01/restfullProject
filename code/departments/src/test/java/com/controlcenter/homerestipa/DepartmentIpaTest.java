@@ -89,7 +89,7 @@ public class DepartmentIpaTest {
             .queryParam("depId", 1)
         .when()
             .get()
-        .then().log().all()
+        .then()//.log().all()
             .statusCode(HTML_OK)
             .body("depId",  equalTo(1))
             .body("depName",  equalTo("IT Team"))
@@ -103,7 +103,7 @@ public class DepartmentIpaTest {
             .queryParam("depId", -3)
         .when()
             .get()
-        .then().log().all()
+        .then()//.log().all()
             .statusCode(BAD_REQUEST)
             .body("message", equalTo("Invalid department id -3"));
     }
@@ -115,7 +115,7 @@ public class DepartmentIpaTest {
             .queryParam("depId", 1)
         .when()
             .get()
-        .then().log().all()
+        .then()//.log().all()
             .statusCode(SERVICE_UNAVAILABLE)
             .body("message", equalTo("Inable to connect to database"));
     }
@@ -127,7 +127,7 @@ public class DepartmentIpaTest {
             .queryParam("depId", 1)
         .when()
             .get()
-        .then().log().all()
+        .then()//.log().all()
             .statusCode(INTERNAL_SERVER_ERROR);
     }
 
