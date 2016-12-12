@@ -81,28 +81,52 @@ describe('Service: DepService', function() {
          httpBackend.whenPUT('/department/rest/dep/createDepartment', dep).respond(200, true);
          httpBackend.expectPUT('/department/rest/dep/createDepartment', dep);
 
-          var callbackCalled = false;
-                 var callback = function() {
-                    callbackCalled = true;
-                 };
+        var callbackCalled = false;
+            var callback = function() {
+                callbackCalled = true;
+            };
 
-          service.saveDepartment(127, "Network team", "David", callback, function(){});
-          httpBackend.flush();
-          expect(callbackCalled).toBeTruthy();
+        service.saveDepartment(127, "Network team", "David", callback, "DammyFunction");
+        httpBackend.flush();
+        expect(callbackCalled).toBeTruthy();
     });
 
     it('should not save department when saveDepartment() is called and any error occur', function(){
-           var dep = { "depId": 127, "depName": "Network team", "createdBy": "David"}
-           httpBackend.whenPUT('/department/rest/dep/createDepartment', dep).respond(500, false);
-           httpBackend.expectPUT('/department/rest/dep/createDepartment', dep);
+        var dep = { "depId": 127, "depName": "Network team", "createdBy": "David"}
+        httpBackend.whenPUT('/department/rest/dep/createDepartment', dep).respond(500, false);
+        httpBackend.expectPUT('/department/rest/dep/createDepartment', dep);
 
-           var callbackCalled = false;
-           var callback = function() {
+        var callbackCalled = false;
+        var callback = function() {
                   callbackCalled = true;
-           };
+        };
 
-           service.saveDepartment(127, "Network team", "David", function(){}, callback);
-           httpBackend.flush();
-           expect(callbackCalled).toBeTruthy();
-        });
+        service.saveDepartment(127, "Network team", "David", "DammyFunction", callback);
+        httpBackend.flush();
+        expect(callbackCalled).toBeTruthy();
+    });
+
+    it('should return promise with department when getDepartment() is called', function(){
+        var dep = { "depId": 127, "depName": "Network team", "createdBy": "David"};
+        httpBackend.whenGET('/department/rest/dep', 127).respond( 200, dep );
+        httpBackend.expectGET('/department/rest/dep', 127);
+
+
+         service.getDepartment(127)
+                .then(function(response) {
+                expect(response.data).toEqual(dep);
+         });
+    });
+
+     it('should return promise with error when getDepartment() is called and faild', function(){
+            httpBackend.whenGET('/department/rest/dep', 127).respond( 500, {"message": "some error"} );
+            httpBackend.expectGET('/department/rest/dep', 127);
+
+            service.getDepartment(127)
+                 .then(function(response) {})
+                 .catch(function (fail) {
+                    expect(fail.status).toBe(500);
+                    expect(fail.data).toBe({"message": "some error"} );
+            });
+     });
 })
