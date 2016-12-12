@@ -11,15 +11,17 @@ function staffService($http)
         return $http ({
             method: "GET",
             url: '/department/rest/user/emailExist',
+            headers: { "content-type": "application/json" },
             params: { 'email': email }
         });
     }
 
-    self.seveStaff = function(user, createrId) {
-        return $http ({
+    self.saveStaff = function(user, createrId) {
+        return $http  ({
             method: "PUT",
             url: '/department/rest/user/' + createrId + '/newStaff',
-            params: { newStaff: user }
+            headers: { "content-type": "application/json" },
+            data: { 'newStaff': user }
         });
     }
 }

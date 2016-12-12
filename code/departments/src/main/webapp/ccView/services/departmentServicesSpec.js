@@ -108,25 +108,29 @@ describe('Service: DepService', function() {
 
     it('should return promise with department when getDepartment() is called', function(){
         var dep = { "depId": 127, "depName": "Network team", "createdBy": "David"};
-        httpBackend.whenGET('/department/rest/dep', 127).respond( 200, dep );
-        httpBackend.expectGET('/department/rest/dep', 127);
+        httpBackend.whenGET('/department/rest/dep?depId=' + 127).respond( 200, dep );
+        httpBackend.expectGET('/department/rest/dep?depId=' + 127);
 
 
          service.getDepartment(127)
                 .then(function(response) {
                 expect(response.data).toEqual(dep);
          });
+
+         httpBackend.flush();
     });
 
      it('should return promise with error when getDepartment() is called and faild', function(){
-            httpBackend.whenGET('/department/rest/dep', 127).respond( 500, {"message": "some error"} );
-            httpBackend.expectGET('/department/rest/dep', 127);
+            httpBackend.whenGET('/department/rest/dep?depId=127').respond( 500, {"message": "some error"} );
+            httpBackend.expectGET('/department/rest/dep?depId=127');
 
             service.getDepartment(127)
                  .then(function(response) {})
                  .catch(function (fail) {
                     expect(fail.status).toBe(500);
-                    expect(fail.data).toBe({"message": "some error"} );
+                    expect(fail.data).toEqual({"message": "some error"} );
             });
+
+            httpBackend.flush();
      });
 })

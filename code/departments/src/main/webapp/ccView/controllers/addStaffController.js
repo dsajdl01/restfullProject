@@ -25,7 +25,7 @@ controlCenterApp.controller('addStaffController', ['commonService', '$sessionSto
         }
 
         self.save = function() {
-            var promise = staffService.seveStaff( user, $sessionStorage.depId );
+            var promise = staffService.saveStaff( user, $sessionStorage.depId );
             return promise
                 .then(function (){
                     toaster.pop("success","Done","User " + self.user.fullName + " is successfully saved");
