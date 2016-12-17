@@ -25,11 +25,9 @@ controlCenterApp.directive('dateValidation', ['$q',function($q) {
                             var d;
                             if ( (d = new Date( viewValue ))|0 ) {
                                 res =  d.toISOString().slice(0,10) == viewValue;
-                                if ( !res ) setErrorMessage("Invalid Date! The date '" + viewValue + "' does not exist");
-                        } else {
-                            setErrorMessage("Invalid Date! The date '" + viewValue + "' does not exist") ;
+                            }
+                            if ( !res ) setErrorMessage("Invalid Date! The date '" + viewValue + "' does not exist");
                         }
-                      }
                       ngModel.$setValidity('dateValidation', res );
                   }
                   return $q.when([]);

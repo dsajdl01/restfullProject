@@ -1,5 +1,5 @@
 'use strict';
-controlCenterApp.directive('emailValidation', ['$q','staffService', function($q, staffService) {
+controlCenterApp.directive('emailValidation', ['$q','staffService', 'toaster', function($q, staffService, toaster) {
   return {
         restrict: 'A',
         require: 'ngModel',
@@ -14,15 +14,16 @@ controlCenterApp.directive('emailValidation', ['$q','staffService', function($q,
                     }
 
                     var promise = staffService.doesEmailExist(viewValue);
-                     return promise
-                            .then(function (data) {
+                    return promise
+                        .then(function (data) {
                                 ngModel.$setValidity('emailExitValidation', (!data.data));
                                 return $q.when([]);
-                            })
-                            .catch( function(failure) {
-                                toaster.pop("error", "ERROR", UTILS.responseErrorHandler("Error occur while getting department id.",failure));
+                        })
+                        .catch( function(failure) {
+                                toaster.pop("error", "ERROR", UTILS.responseErrorHandler("Error occur while compering email.",failure));
+                                ngModel.$setValidity('emailExitValidation', false); //it can connot be save if email is not unique.
                                 return $q.when([]);
-                            })
+                        })
               };
         }}
 }]);
