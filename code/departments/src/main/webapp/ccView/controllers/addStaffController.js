@@ -8,7 +8,6 @@ controlCenterApp.controller('addStaffController', ['commonService', '$sessionSto
 
         self.init = function() {
             self.user.startDay = getCurrentDay();
-
             if ( commonService.selectedDepartment ) {
                 self.depName = commonService.selectedDepartment.depName;
             }  else {
@@ -25,16 +24,16 @@ controlCenterApp.controller('addStaffController', ['commonService', '$sessionSto
         }
 
         self.save = function() {
-            var promise = staffService.saveStaff( user, $sessionStorage.depId );
+            var promise = staffService.saveStaff( self.user, $sessionStorage.depId );
             return promise
                 .then(function (){
                     toaster.pop("success","Done","User " + self.user.fullName + " is successfully saved");
+                    $location.path('/home');
                 })
                 .catch( function(failure) {
                     toaster.pop("error", "ERROR", UTILS.responseErrorHandler("Error occur while getting department id.",failure));
                     $location.path('/home');
                 })
-            console.log("user:", self.user);
         }
 
        var getCurrentDay = function () {
