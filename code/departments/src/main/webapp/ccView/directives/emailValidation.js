@@ -8,7 +8,7 @@ controlCenterApp.directive('emailValidation', ['$q','staffService', 'toaster', f
 
                     var controller = scope.$eval(attrs.emailValidation).ctrl;
 
-                    if (controller.originelEmail === viewValue) {
+                    if (controller.originalEmail === viewValue) {
                         ngModel.$setValidity('emailExitValidation', true);
                         return $q.when([]);
                     }
