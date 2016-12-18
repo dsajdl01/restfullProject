@@ -1,7 +1,7 @@
 package com.departments.ipa.dep_dbo;
 
 import com.departments.ipa.data.LoginStaff;
-import com.departments.ipa.fault.exception.DepartmentFaultService;
+import com.departments.ipa.fault.exception.SQLFaultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +31,7 @@ public class UserDBO {
         this.con = con;
     }
 
-    public Integer loninUser(String email, String password) throws DepartmentFaultService {
+    public Integer loninUser(String email, String password) throws SQLFaultException {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = con.prepareStatement(LOGIN_USER);
@@ -42,11 +42,11 @@ public class UserDBO {
             return resSet.getRow() <= 0 ? null :  resSet.getInt("user_id");
         } catch (SQLException sqlE) {
             LOGGER.error("loninUser: {}", sqlE);
-            throw new DepartmentFaultService("Inable to connect to databese");
+            throw new SQLFaultException("Inable to connect to databese");
         }
     }
 
-    public boolean doesEmailExist(String email) throws  DepartmentFaultService {
+    public boolean doesEmailExist(String email) throws SQLFaultException {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = con.prepareStatement(CHECK_EMAIL_QUERY);
@@ -56,11 +56,11 @@ public class UserDBO {
             return resSet.getInt("numOfMails") == 0 ? false : true;
         } catch (SQLException sqlE) {
             LOGGER.error("loninUser: {}", sqlE);
-            throw new DepartmentFaultService("Inable to connect to databese");
+            throw new SQLFaultException("Inable to connect to databese");
         }
     }
 
-    public LoginStaff getStaffDetails(Integer userId) throws DepartmentFaultService {
+    public LoginStaff getStaffDetails(Integer userId) throws SQLFaultException {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = con.prepareStatement(SQL_STAFF);
@@ -71,11 +71,11 @@ public class UserDBO {
             return new LoginStaff(res.getInt("userId"), res.getString("name"));
         } catch (SQLException sqlE){
             LOGGER.error("loninUser: {}", sqlE);
-            throw new DepartmentFaultService("Inable to connect to databese");
+            throw new SQLFaultException("Inable to connect to databese");
         }
     }
 
-    private Date getDate(String date) throws DepartmentFaultService {
+    private Date getDate(String date) throws SQLFaultException {
         try {
             if(date == null ) return null;
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-dd-mm");
@@ -83,7 +83,7 @@ public class UserDBO {
             return d;
         } catch (ParseException e) {
             LOGGER.error("getDate: format.parse error: " + e);
-            throw new DepartmentFaultService( date + " can not be converted into Date");
+            throw new SQLFaultException( date + " can not be converted into Date");
         }
     }
 }

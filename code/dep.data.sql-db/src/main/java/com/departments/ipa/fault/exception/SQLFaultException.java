@@ -3,13 +3,13 @@ package com.departments.ipa.fault.exception;
 /**
  * Created by david on 14/08/16.
  */
-public class DepartmentFaultService extends Exception {
+public class SQLFaultException extends Exception {
 
-    public DepartmentFaultService(){
+    public SQLFaultException(){
         super();
     }
 
-    public DepartmentFaultService(String message){
+    public SQLFaultException(String message){
         super(message);
     }
 }

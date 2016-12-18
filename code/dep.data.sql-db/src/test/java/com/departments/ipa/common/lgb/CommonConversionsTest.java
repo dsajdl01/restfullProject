@@ -1,6 +1,6 @@
 package com.departments.ipa.common.lgb;
 
-import com.departments.ipa.fault.exception.DepartmentValueConversionFault;
+import com.departments.ipa.fault.exception.ValueConversionFaultException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -59,7 +59,7 @@ public class CommonConversionsTest {
     }
 
     @Test
-    public void concertStringToIntegerTest() throws DepartmentValueConversionFault {
+    public void concertStringToIntegerTest() throws ValueConversionFaultException {
         assertThat(commConversions.convertStringToInteger("11"), is(11));
         assertThat(commConversions.convertStringToInteger("9742"), is(9742));
         assertThat(commConversions.convertStringToInteger("75"), is(75));
@@ -69,24 +69,24 @@ public class CommonConversionsTest {
     public void concertStringToIntegerErrorTest() {
         try {
             commConversions.convertStringToInteger("1-Y-1");
-        } catch (DepartmentValueConversionFault d) {
+        } catch (ValueConversionFaultException d) {
             assertThat(d.getMessage(), is ("String must contains only digits, 1-Y-1" ));
         }
     }
 
     @Test
-    public void hasStringValueTestTrue(){
-        assertThat(commConversions.hasStringValue(null), is(true));
-        assertThat(commConversions.hasStringValue(""), is(true));
-        assertThat(commConversions.hasStringValue("null"), is(true));
-        assertThat(commConversions.hasStringValue("NULL"), is(true));
-        assertThat(commConversions.hasStringValue("NuLl"), is(true));
+    public void stringIsNullOrEmptyTrue_Test(){
+        assertThat(commConversions.stringIsNullOrEmpty(null), is(true));
+        assertThat(commConversions.stringIsNullOrEmpty(""), is(true));
+        assertThat(commConversions.stringIsNullOrEmpty("null"), is(true));
+        assertThat(commConversions.stringIsNullOrEmpty("NULL"), is(true));
+        assertThat(commConversions.stringIsNullOrEmpty("NuLl"), is(true));
     }
 
     @Test
-    public void hasStringValueTestFalse(){
-        assertThat(commConversions.hasStringValue("value"), is(false));
-        assertThat(commConversions.hasStringValue("David"), is(false));
-        assertThat(commConversions.hasStringValue("Java"), is(false));
+    public void stringIsNullOrEmptyFalse_Test(){
+        assertThat(commConversions.stringIsNullOrEmpty("value"), is(false));
+        assertThat(commConversions.stringIsNullOrEmpty("David"), is(false));
+        assertThat(commConversions.stringIsNullOrEmpty("Java"), is(false));
     }
 }

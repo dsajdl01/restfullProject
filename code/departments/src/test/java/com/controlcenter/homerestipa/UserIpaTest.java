@@ -1,9 +1,10 @@
 package com.controlcenter.homerestipa;
 
+import com.controlcenter.homerestipa.provider.RestServices;
 import com.controlcenter.homerestipa.response.UserLoginJson;
 import com.department.testutils.JerseyContainerJUnitRule;
 import com.departments.ipa.data.LoginStaff;
-import com.departments.ipa.fault.exception.DepartmentFaultService;
+import com.departments.ipa.fault.exception.SQLFaultException;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.jayway.restassured.RestAssured;
 import dep.data.provider.inter.provider.DepartmentCoreServices;
@@ -52,6 +53,7 @@ public class UserIpaTest {
                     @Override
                     protected void configure() {
                         bind(mockDepartmentCoreServices).to(DepartmentCoreServices.class);
+                        bind(mockRestServices).to(RestServices.class);
                         bindFactory(new HttpServletRequestFactory()).to(HttpServletRequest.class);
                     }
                 }
@@ -134,7 +136,7 @@ public class UserIpaTest {
     @Test
     public void logInUserSQLError() throws Exception {
         LoginStaff loginStaff = new LoginStaff(1, "Fred Smith");
-        doThrow(new DepartmentFaultService("Enable to connect to database")).when(mockUseInter).logInUser("smith@fred.com","password");
+        doThrow(new SQLFaultException("Enable to connect to database")).when(mockUseInter).logInUser("smith@fred.com","password");
         UserLoginJson userLogin = new UserLoginJson("smith@fred.com","password");
 
         given()
@@ -205,7 +207,7 @@ public class UserIpaTest {
     @Test
     public void doesEmailExistSQLError() throws Exception {
         String email = "example@co.uk";
-        doThrow(new DepartmentFaultService("Enable to connect to database")).when(mockUseInter).doesEmailExist(email);
+        doThrow(new SQLFaultException("Enable to connect to database")).when(mockUseInter).doesEmailExist(email);
 
         given()
             .queryParam("email", email)

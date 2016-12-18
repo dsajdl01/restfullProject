@@ -24,7 +24,7 @@ controlCenterApp.controller('addStaffController', ['commonService', '$sessionSto
         }
 
         self.save = function() {
-            var promise = staffService.saveStaff( self.user, $sessionStorage.depId );
+            var promise = staffService.saveStaff( createStaffInstance(self.user), $sessionStorage.depId );
             return promise
                 .then(function (){
                     toaster.pop("success","Done","User " + self.user.fullName + " is successfully saved");
@@ -47,6 +47,24 @@ controlCenterApp.controller('addStaffController', ['commonService', '$sessionSto
        var addZeroIfMissing = function(val) {
             val = val.toString();
             return (val.length == 1 ) ? "0"+val : val;
+       }
+
+       var createStaffInstance = function(user) {
+              try {
+                    var newStaffInstance = {
+                         fullName: user.fullName.trim(),
+                         dob: user.dob.trim(),
+                         startDay: user.startDay.trim(),
+                         position: user.position.trim(),
+                         staffEmail: user.email.trim(),
+                         comment: user.comment.trim(),
+                         loginEmail: user.loginEmail.trim(),
+                         password: user.newPassword.trim(),
+                     };
+                    return newStaffInstance;
+              } catch (e) {
+                    return null
+              }
        }
 
         self.init();

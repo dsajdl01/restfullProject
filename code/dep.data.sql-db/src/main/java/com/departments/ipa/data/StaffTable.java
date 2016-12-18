@@ -6,6 +6,7 @@ import java.util.Date;
  * Created by david on 26/08/16.
  */
 public class StaffTable {
+
     private final Integer id;
 
     private final Integer depId;

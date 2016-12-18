@@ -7,7 +7,7 @@ import com.departments.ipa.data.StaffTable;
 import com.departments.ipa.dep_core_ipa.com.provider.helper.HeplerDBO;
 import com.departments.ipa.dep_dbo.DepartmentDBO;
 import com.departments.ipa.dep_dbo.DepartmentDBOConnection;
-import com.departments.ipa.fault.exception.DepartmentFaultService;
+import com.departments.ipa.fault.exception.SQLFaultException;
 import dep.data.provider.DepartmentImpl;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -63,7 +63,7 @@ public class DepartmentImplTest {
     }
 
     @Test
-    public void getDepartmentTest() throws DepartmentFaultService {
+    public void getDepartmentTest() throws SQLFaultException {
         List<Department> departmentList = depImpl.getDepartmentList();
         final Integer id = departmentList.get(0).getId();
         final String name = departmentList.get(0).getName();
@@ -76,7 +76,7 @@ public class DepartmentImplTest {
     }
 
     @Test
-    public void getDepartmentListTest() throws DepartmentFaultService {
+    public void getDepartmentListTest() throws SQLFaultException {
 
         List<Department> departmentList = depImpl.getDepartmentList();
         assertThat(departmentList.size(), is(2));
@@ -94,23 +94,23 @@ public class DepartmentImplTest {
     }
 
     @Test
-    public void checkDepartmenNameExistTest() throws DepartmentFaultService {
+    public void checkDepartmenNameExistTest() throws SQLFaultException {
         assertThat(depImpl.checkDepartmenName("Department Team"), is(true));
     }
 
     @Test
-    public void checkDepartmenNameNotExistTest() throws DepartmentFaultService {
+    public void checkDepartmenNameNotExistTest() throws SQLFaultException {
         assertThat(depImpl.checkDepartmenName("Unknow Department"), is(false));
     }
 
     @Test
-    public void createNewDepartmentTest() throws DepartmentFaultService {
+    public void createNewDepartmentTest() throws SQLFaultException {
         depImpl.createNewDepartment("new department", 2);
         assertThat(depImpl.checkDepartmenName("new department"), is(true));
     }
 
     @Test
-    public void modifyDepartmentNameTest() throws DepartmentFaultService {
+    public void modifyDepartmentNameTest() throws SQLFaultException {
         // create a new  departemnt
         depImpl.createNewDepartment("add department", 2);
         assertThat(depImpl.checkDepartmenName("add department"), is(true));
@@ -121,7 +121,7 @@ public class DepartmentImplTest {
         assertThat(depImpl.checkDepartmenName("old department"), is(true));
     }
 
-    private Integer getDepartmentId(String depName) throws DepartmentFaultService{
+    private Integer getDepartmentId(String depName) throws SQLFaultException {
         List<Department> departmentList = depImpl.getDepartmentList();
         for(Department dep : departmentList){
             if(dep.getName().equals(depName)){

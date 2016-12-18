@@ -1,7 +1,8 @@
 package com.departments.ipa.dep_dbo_interface;
 
 import com.departments.ipa.data.Department;
-import com.departments.ipa.fault.exception.DepartmentFaultService;
+import com.departments.ipa.fault.exception.SQLFaultException;
+
 import java.util.List;
 
 /**
@@ -9,13 +10,13 @@ import java.util.List;
  */
 public interface DepartmentDBOInter {
 
-    List<Department> getDepartments() throws DepartmentFaultService;
+    List<Department> getDepartments() throws SQLFaultException;
 
-    boolean checkDepartmenName(String depName) throws DepartmentFaultService;
+    boolean checkDepartmenName(String depName) throws SQLFaultException;
 
-    void modifyDepartmentName(Integer depId, String name) throws DepartmentFaultService;
+    void modifyDepartmentName(Integer depId, String name) throws SQLFaultException;
 
-    Department getDepartment(Integer depId) throws DepartmentFaultService;
+    Department getDepartment(Integer depId) throws SQLFaultException;
 
-    void createNewDepartment(String depName, Integer creater) throws DepartmentFaultService;
+    void createNewDepartment(String depName, Integer creater) throws SQLFaultException;
 }

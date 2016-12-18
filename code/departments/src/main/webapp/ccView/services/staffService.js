@@ -16,12 +16,12 @@ function staffService($http)
         });
     }
 
-    self.saveStaff = function(user, createrId) {
+    self.saveStaff = function(user, depId) {
         return $http  ({
             method: "PUT",
-            url: '/department/rest/user/' + createrId + '/newStaff',
+            url: '/department/rest/user/' + depId + '/addNewStaff',
             headers: { "content-type": "application/json" },
-            data: { 'newStaff': user }
+            data: user
         });
     }
 }

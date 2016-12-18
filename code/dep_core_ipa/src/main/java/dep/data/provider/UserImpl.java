@@ -3,7 +3,7 @@ package dep.data.provider;
 
 import com.departments.ipa.data.LoginStaff;
 import com.departments.ipa.dep_dbo.UserDBO;
-import com.departments.ipa.fault.exception.DepartmentFaultService;
+import com.departments.ipa.fault.exception.SQLFaultException;
 import dep.data.provider.inter.provider.UserInter;
 
 /**
@@ -22,14 +22,14 @@ public class UserImpl implements UserInter {
 
     // http://stackoverflow.com/questions/2860943/how-can-i-hash-a-password-in-java
     // http://stackoverflow.com/questions/18142745/how-do-i-generate-a-salt-in-java-for-salted-hash
-    public LoginStaff logInUser(String email, String password) throws DepartmentFaultService {
+    public LoginStaff logInUser(String email, String password) throws SQLFaultException {
         Integer userId = userDBO.loninUser(email, password);
         if ( userId == null ) return null;
         loginStaff = userDBO.getStaffDetails(userId);
         return loginStaff;
     }
 
-    public boolean doesEmailExist(String email) throws  DepartmentFaultService {
+    public boolean doesEmailExist(String email) throws SQLFaultException {
         return userDBO.doesEmailExist(email);
     }
 }

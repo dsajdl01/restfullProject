@@ -1,7 +1,7 @@
 package dep.data.provider.inter.provider;
 
 import com.departments.ipa.data.Department;
-import com.departments.ipa.fault.exception.DepartmentFaultService;
+import com.departments.ipa.fault.exception.SQLFaultException;
 
 import java.util.List;
 
@@ -10,13 +10,13 @@ import java.util.List;
  */
 public interface DepartmentInter {
 
-    List<Department> getDepartmentList() throws DepartmentFaultService;
+    List<Department> getDepartmentList() throws SQLFaultException;
 
-    Boolean checkDepartmenName(String name) throws DepartmentFaultService;
+    Boolean checkDepartmenName(String name) throws SQLFaultException;
 
-    Department getDepartment(Integer depId) throws DepartmentFaultService;
+    Department getDepartment(Integer depId) throws SQLFaultException;
 
-    void createNewDepartment(String depName, Integer creater) throws DepartmentFaultService;
+    void createNewDepartment(String depName, Integer creater) throws SQLFaultException;
 
-    void modifyDepartmentName(Integer depId, String name) throws DepartmentFaultService;
+    void modifyDepartmentName(Integer depId, String name) throws SQLFaultException;
 }

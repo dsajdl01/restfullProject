@@ -3,7 +3,7 @@ package com.departments.ipa.dep_dbo;
 
 import com.departments.ipa.data.Department;
 import com.departments.ipa.dep_dbo_interface.DepartmentDBOInter;
-import com.departments.ipa.fault.exception.DepartmentFaultService;
+import com.departments.ipa.fault.exception.SQLFaultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +33,7 @@ public class DepartmentDBO implements DepartmentDBOInter {
         this.con = con;
     }
 
-    public List<Department> getDepartments() throws  DepartmentFaultService {
+    public List<Department> getDepartments() throws SQLFaultException {
         List<Department> departmentList = new ArrayList<Department>();
         PreparedStatement preparedStatement = null;
         try {
@@ -46,11 +46,11 @@ public class DepartmentDBO implements DepartmentDBOInter {
             return  departmentList;
         } catch (SQLException sqlE){
             LOGGER.error("getDepartments: {}", sqlE);
-            throw new DepartmentFaultService("Inable to connect to database");
+            throw new SQLFaultException("Inable to connect to database");
         }
     }
 
-    public boolean checkDepartmenName(String depName) throws DepartmentFaultService {
+    public boolean checkDepartmenName(String depName) throws SQLFaultException {
         try {
             PreparedStatement preparedStatement = con.prepareStatement(CHECK_DEP_NAME_QUARY);
             preparedStatement.setString(1, depName);
@@ -60,11 +60,11 @@ public class DepartmentDBO implements DepartmentDBOInter {
         }
             catch (SQLException sqlE){
             LOGGER.error("checkDepartmenName: {}", sqlE);
-            throw new DepartmentFaultService("Inable to connect to database");
+            throw new SQLFaultException("Inable to connect to database");
         }
     }
 
-    public void modifyDepartmentName(Integer depId, String name) throws DepartmentFaultService {
+    public void modifyDepartmentName(Integer depId, String name) throws SQLFaultException {
         try {
             PreparedStatement preparedStatement = con.prepareStatement(MODIFY_DEPARTMENT_NAME_QUERY);
             preparedStatement.setString(1, name);
@@ -73,11 +73,11 @@ public class DepartmentDBO implements DepartmentDBOInter {
         }
         catch (SQLException sqlE){
             LOGGER.error("modify department name: {}", sqlE);
-            throw new DepartmentFaultService("Inable to connect to database");
+            throw new SQLFaultException("Inable to connect to database");
         }
     }
 
-    public Department getDepartment(Integer depId) throws DepartmentFaultService {
+    public Department getDepartment(Integer depId) throws SQLFaultException {
         try {
             PreparedStatement preparedStatement = con.prepareStatement(GET_DEPARTMENT_BY_ID);
             preparedStatement.setInt(1, depId);
@@ -87,10 +87,10 @@ public class DepartmentDBO implements DepartmentDBOInter {
             return new Department(resSet.getInt("id"), resSet.getString("name"), resSet.getString("creater"));
         }catch (SQLException sqlE){
             LOGGER.error("getDepartment: {}", sqlE);
-            throw new DepartmentFaultService("Inable to connect to database");
+            throw new SQLFaultException("Inable to connect to database");
         }
     }
-    public void createNewDepartment(String depName, Integer creater) throws DepartmentFaultService {
+    public void createNewDepartment(String depName, Integer creater) throws SQLFaultException {
         try {
             PreparedStatement preparedStatement = con.prepareStatement(ADD_NEW_DEPARTMENT_QUERY);
             preparedStatement.setString(1, depName);
@@ -99,7 +99,7 @@ public class DepartmentDBO implements DepartmentDBOInter {
         }
         catch (SQLException sqlE){
             LOGGER.error("checkDepartmenName: {}", sqlE);
-            throw new DepartmentFaultService("Inable to connect to database");
+            throw new SQLFaultException("Inable to connect to database");
         }
     }
 }

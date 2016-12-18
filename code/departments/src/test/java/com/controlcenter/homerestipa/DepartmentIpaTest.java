@@ -3,7 +3,7 @@ package com.controlcenter.homerestipa;
 import com.controlcenter.homerestipa.response.DepartmentJson;
 import com.department.testutils.JerseyContainerJUnitRule;
 import com.departments.ipa.data.Department;
-import com.departments.ipa.fault.exception.DepartmentFaultService;
+import com.departments.ipa.fault.exception.SQLFaultException;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.jayway.restassured.RestAssured;
 import dep.data.provider.inter.provider.DepartmentCoreServices;
@@ -110,7 +110,7 @@ public class DepartmentIpaTest {
 
     @Test
     public void getDepartment_SQLErrorTest() throws Exception {
-        doThrow(new DepartmentFaultService("Inable to connect to database")).when(mockDepartmentInter).getDepartment( 1);
+        doThrow(new SQLFaultException("Inable to connect to database")).when(mockDepartmentInter).getDepartment( 1);
         given()
             .queryParam("depId", 1)
         .when()
@@ -149,7 +149,7 @@ public class DepartmentIpaTest {
     @Test
     public void getDepartmentsSQLErrorTest() throws Exception {
 
-        doThrow(new DepartmentFaultService("Inable to connect to database")).when(mockDepartmentInter).getDepartmentList();
+        doThrow(new SQLFaultException("Inable to connect to database")).when(mockDepartmentInter).getDepartmentList();
 
         given()
             .when()//.log().all()
@@ -189,7 +189,7 @@ public class DepartmentIpaTest {
     @Test
     public void checkdepartmentNameSQLErrorTest() throws Exception {
         String name = "IT Deapartment";
-        doThrow(new DepartmentFaultService("Inable to connect to database")).when(mockDepartmentInter).checkDepartmenName(name);
+        doThrow(new SQLFaultException("Inable to connect to database")).when(mockDepartmentInter).checkDepartmenName(name);
 
         given()
             .queryParam("depName", name)
@@ -277,7 +277,7 @@ public class DepartmentIpaTest {
     @Test
     public void saveDepartment_SQLErrorTest() throws Exception {
         String name = "Network Team";
-        doThrow(new DepartmentFaultService("Enable to connect to database")).when(mockDepartmentInter).createNewDepartment(name, 1);
+        doThrow(new SQLFaultException("Enable to connect to database")).when(mockDepartmentInter).createNewDepartment(name, 1);
         DepartmentJson dep = new DepartmentJson(null, name, "1");
 
         given()

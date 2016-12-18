@@ -5,8 +5,8 @@ import com.controlcenter.homerestipa.response.DepartmentSuccessJson;
 import com.controlcenter.homerestipa.response.ListDepartmentsJson;
 import com.departments.ipa.common.lgb.CommonConversions;
 import com.departments.ipa.data.Department;
-import com.departments.ipa.fault.exception.DepartmentFaultService;
-import com.departments.ipa.fault.exception.DepartmentValueConversionFault;
+import com.departments.ipa.fault.exception.SQLFaultException;
+import com.departments.ipa.fault.exception.ValueConversionFaultException;
 import dep.data.provider.inter.provider.DepartmentCoreServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,8 +39,8 @@ public class DepartmentIPA {
             Department dep = coreServices.getDepartmentImpl().getDepartment(depId);
             return success(new DepartmentJson(dep.getId(), dep.getName(), dep.getCreater()));
         }
-        catch (DepartmentFaultService e) {
-            LOGGER.error("DepartmentFaultService: {}", e);
+        catch (SQLFaultException e) {
+            LOGGER.error("SQLFaultException: {}", e);
             return sqlConnectionError(e.getMessage());
         }
         catch (Exception e ) {
@@ -63,8 +63,8 @@ public class DepartmentIPA {
                 department.add(new DepartmentJson(d.getId(), d.getName(), d.getCreater()));
             }
             return success(new ListDepartmentsJson(department));
-        } catch (DepartmentFaultService e) {
-            LOGGER.error("DepartmentFaultService: {}", e);
+        } catch (SQLFaultException e) {
+            LOGGER.error("SQLFaultException: {}", e);
             return sqlConnectionError(e.getMessage());
         }
         catch (Exception e ) {
@@ -80,8 +80,8 @@ public class DepartmentIPA {
             LOGGER.info("checkDepartmentName: depName={}", depName);
             return success(coreServices.getDepartmentImpl().checkDepartmenName(depName));
         }
-        catch (DepartmentFaultService e) {
-            LOGGER.error("DepartmentFaultService: {}", e);
+        catch (SQLFaultException e) {
+            LOGGER.error("SQLFaultException: {}", e);
             return sqlConnectionError(e.getMessage());
         }
         catch (Exception e ) {
@@ -97,7 +97,7 @@ public class DepartmentIPA {
         LOGGER.info("createDepartment: depId={} depName={}, depCreater={}", dep.getDepId(), dep.getDepName(), dep.getCreatedBy());
         try {
             String message;
-            if ( dep == null || commonConv.hasStringValue(dep.getDepName())) {
+            if ( dep == null || commonConv.stringIsNullOrEmpty(dep.getDepName())) {
                 return  badRequest("Mandatory argument department name is missing");
             }
 
@@ -114,11 +114,11 @@ public class DepartmentIPA {
             }
             return success( new DepartmentSuccessJson(200, message));
         }
-        catch (DepartmentValueConversionFault e) {
+        catch (ValueConversionFaultException e) {
             return conflict(e.getMessage());
         }
-        catch (DepartmentFaultService e) {
-            LOGGER.error("DepartmentFaultService: {}", e);
+        catch (SQLFaultException e) {
+            LOGGER.error("SQLFaultException: {}", e);
             return sqlConnectionError(e.getMessage());
         }
         catch (Exception e) {

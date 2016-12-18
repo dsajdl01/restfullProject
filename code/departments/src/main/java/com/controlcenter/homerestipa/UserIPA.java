@@ -1,10 +1,15 @@
 package com.controlcenter.homerestipa;
 
+import com.controlcenter.homerestipa.provider.RestServices;
+import com.controlcenter.homerestipa.response.StaffDetailsJson;
 import com.controlcenter.homerestipa.response.StaffJson;
 import com.controlcenter.homerestipa.response.UserLoginJson;
 import com.departments.ipa.common.lgb.CommonConversions;
+import com.departments.ipa.data.LoginDetails;
 import com.departments.ipa.data.LoginStaff;
-import com.departments.ipa.fault.exception.DepartmentFaultService;
+import com.departments.ipa.data.StaffTable;
+import com.departments.ipa.fault.exception.SQLFaultException;
+import com.departments.ipa.fault.exception.ValidationException;
 import dep.data.provider.inter.provider.DepartmentCoreServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +36,9 @@ public class UserIPA {
     @Inject
     DepartmentCoreServices coreServices;
 
+    @Inject
+    RestServices validationStaffHepler;
+
 
     @PUT
     @Path("/login")
@@ -38,8 +46,9 @@ public class UserIPA {
     @Produces(MediaType.APPLICATION_JSON)
     public Response logInUser(UserLoginJson user, @Context HttpServletRequest request) {
         try {
-
-            if ( user == null || commonConv.hasStringValue(user.getEmail()) || commonConv.hasStringValue(user.getPassword()) ) {
+            LOGGER.info("logInUser: user.mail={}", user.getEmail());
+            if ( user == null || commonConv.stringIsNullOrEmpty(user.getEmail()) || commonConv.stringIsNullOrEmpty(user.getPassword()) ) {
+                LOGGER.error("logInUse: attempt to login without either mail or password");
                 return badRequest("Mandatory argument email or password are missing");
             }
 
@@ -55,11 +64,35 @@ public class UserIPA {
             session.setAttribute("userId", staff.getUserId());
             return success( new StaffJson(staff.getUserId(), staff.getName()));
         }
-        catch (DepartmentFaultService departmentFaultService) {
-            LOGGER.error("loginUser: DepartmentFaultService = {} ", departmentFaultService);
+        catch (SQLFaultException departmentFaultService) {
+            LOGGER.error("loginUser: SQLFaultException = {} ", departmentFaultService);
             return sqlConnectionError(departmentFaultService.getMessage());
         } catch (Exception e ) {
             LOGGER.error("loginUser: Exception = {} ", e);
+            return internalServerError("logInUser: error occur = " + e.getMessage());
+        }
+    }
+
+    @PUT
+    @Path("/{depId}/addNewStaff")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addNewStaff(@PathParam("depId") final Integer depId, StaffDetailsJson newStaff, @Context HttpServletRequest request) {
+        try {
+            validationStaffHepler.getValidationStaffHepler().basicValidateDepartmentId(depId);
+            validationStaffHepler.getValidationStaffHepler().basicValidateStaffObject(newStaff);
+
+            LOGGER.info("addNewStaff: depId={}, new staff fullName={}", depId, newStaff.getFullName());
+
+            LoginDetails loginDetail = validationStaffHepler.getValidationStaffHepler().validateLoginDetails(newStaff.getLoginEmail(), newStaff.getPassword());
+            StaffTable staff = validationStaffHepler.getValidationStaffHepler().getStaffTable(depId, newStaff);
+
+            return null;
+        } catch (ValidationException e) {
+            LOGGER.error("addNewStaff: ValidationException = {} ", e.getMessage());
+            return badRequest(e.getMessage());
+        }catch (Exception e ) {
+            LOGGER.error("addNewStaff: Exception = {} ", e);
             return internalServerError("logInUser: error occur = " + e.getMessage());
         }
     }
@@ -68,13 +101,13 @@ public class UserIPA {
     @Path("/emailExist")
     public Response doesEmailExist(@QueryParam("email") String email) {
         try {
-            if ( commonConv.hasStringValue(email)) {
+            if ( commonConv.stringIsNullOrEmpty(email)) {
                 return badRequest("Mandatory argument email is missing");
             }
             return success(coreServices.getUserImpl().doesEmailExist(email));
         }
-        catch (DepartmentFaultService e) {
-            LOGGER.error("DepartmentFaultService: {}", e);
+        catch (SQLFaultException e) {
+            LOGGER.error("SQLFaultException: {}", e);
             return sqlConnectionError(e.getMessage());
         }
         catch (Exception e ) {
