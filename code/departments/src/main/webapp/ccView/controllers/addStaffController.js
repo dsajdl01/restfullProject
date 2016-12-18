@@ -56,8 +56,8 @@ controlCenterApp.controller('addStaffController', ['commonService', '$sessionSto
                          dob: user.dob.trim(),
                          startDay: user.startDay.trim(),
                          position: user.position.trim(),
-                         staffEmail: user.email.trim(),
-                         comment: user.comment.trim(),
+                         staffEmail: (user.email) ? user.email.trim() : "",
+                         comment: (user.comment) ? user.comment.trim() : "",
                          loginEmail: user.loginEmail.trim(),
                          password: user.newPassword.trim(),
                      };

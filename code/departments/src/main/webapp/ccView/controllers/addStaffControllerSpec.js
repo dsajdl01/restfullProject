@@ -131,7 +131,7 @@ describe('Controller: addStaffController', function() {
         });
 
         it('should save staff details and pop up success toaster when save() is called', function() {
-            ctrl.user.fullName = "Bob Marley";
+            generateStaff("Bob Marley", "ds@example.com", "some text");
             spyOn(staffServiceMock, "saveStaff").and.callThrough();
             spyOn(toasterMock, "pop");
             spyOn(locationMock, "path");
@@ -142,9 +142,21 @@ describe('Controller: addStaffController', function() {
             expect(toasterMock.pop).toHaveBeenCalledWith("success", "Done", "User Bob Marley is successfully saved");
         });
 
+        it('should save staff details and pop up success toaster when save() is called II', function() {
+            generateStaff("Yadira Diez", "", "");
+            spyOn(staffServiceMock, "saveStaff").and.callThrough();
+            spyOn(toasterMock, "pop");
+            spyOn(locationMock, "path");
+
+            ctrl.save();
+            expect(staffServiceMock.saveStaff).toHaveBeenCalled();
+            expect(locationMock.path).toHaveBeenCalledWith("/home");
+            expect(toasterMock.pop).toHaveBeenCalledWith("success", "Done", "User Yadira Diez is successfully saved");
+        });
+
         it('should save staff details and pop up success toaster when save() is called', function() {
             staffServiceMock.success = false;
-            ctrl.user.fullName = "Bob Marley";
+            generateStaff(null, "", "");
             spyOn(staffServiceMock, "saveStaff").and.callThrough();
             spyOn(toasterMock, "pop");
             spyOn(locationMock, "path");
@@ -155,4 +167,14 @@ describe('Controller: addStaffController', function() {
             expect(toasterMock.pop).toHaveBeenCalledWith("error", "ERROR", "Error occur while getting department id. Error message: Unable to connect to database");
         });
 
+        var generateStaff = function(name, email, comment) {
+             ctrl.user.fullName = name;
+             ctrl.user.dob = "1990-01-10";
+             ctrl.user.startDay = "2016-01-01";
+             ctrl.user.position = "IT";
+             ctrl.user.email = email;
+             ctrl.user.comment = comment;
+             ctrl.user.loginEmail = "ds@co.uk";
+             ctrl.user.newPassword = "password";
+        }
 })
