@@ -1,6 +1,6 @@
 package com.department.core.config;
 
-import com.departments.ipa.data.PropertiesDataConfig;
+import com.departments.dto.data.PropertiesDataConfig;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

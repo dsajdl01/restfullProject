@@ -1,6 +1,6 @@
 package com.department.core.config;
 
-import com.departments.ipa.data.PropertiesDataConfig;
+import com.departments.dto.data.PropertiesDataConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

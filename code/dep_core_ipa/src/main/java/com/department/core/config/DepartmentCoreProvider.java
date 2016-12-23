@@ -1,6 +1,6 @@
 package com.department.core.config;
 
-import dep.data.provider.inter.provider.DepartmentCoreServices;
+import dep.data.core.provider.inter.provider.DepartmentCoreServices;
 import org.glassfish.hk2.api.Factory;
 
 /**

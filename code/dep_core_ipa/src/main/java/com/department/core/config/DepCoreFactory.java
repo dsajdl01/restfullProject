@@ -1,7 +1,7 @@
 package com.department.core.config;
 
-import dep.data.provider.CoreServices;
-import dep.data.provider.inter.provider.DepartmentCoreServices;
+import dep.data.core.provider.CoreServices;
+import dep.data.core.provider.inter.provider.DepartmentCoreServices;
 
 /**
  * Created by david on 19/11/16.

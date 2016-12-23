@@ -3,12 +3,12 @@ package com.controlcenter.homerestipa;
 import com.controlcenter.homerestipa.provider.RestCenterServices;
 import com.controlcenter.homerestipa.provider.RestServices;
 import com.controlcenter.homerestipa.utils.ValidationStaffHepler;
-import dep.data.provider.CoreServices;
-import dep.data.provider.DepartmentImpl;
-import dep.data.provider.UserImpl;
-import dep.data.provider.inter.provider.DepartmentCoreServices;
-import dep.data.provider.inter.provider.DepartmentInter;
-import dep.data.provider.inter.provider.UserInter;
+import dep.data.core.provider.CoreServices;
+import dep.data.core.provider.DepartmentImpl;
+import dep.data.core.provider.UserImpl;
+import dep.data.core.provider.inter.provider.DepartmentCoreServices;
+import dep.data.core.provider.inter.provider.DepartmentInter;
+import dep.data.core.provider.inter.provider.UserInter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

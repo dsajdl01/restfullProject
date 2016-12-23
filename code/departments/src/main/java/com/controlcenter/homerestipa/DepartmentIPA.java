@@ -3,11 +3,11 @@ package com.controlcenter.homerestipa;
 import com.controlcenter.homerestipa.response.DepartmentJson;
 import com.controlcenter.homerestipa.response.DepartmentSuccessJson;
 import com.controlcenter.homerestipa.response.ListDepartmentsJson;
-import com.departments.ipa.common.lgb.CommonConversions;
-import com.departments.ipa.data.Department;
-import com.departments.ipa.fault.exception.SQLFaultException;
-import com.departments.ipa.fault.exception.ValueConversionFaultException;
-import dep.data.provider.inter.provider.DepartmentCoreServices;
+import com.departments.dto.common.lgb.CommonConversions;
+import com.departments.dto.data.Department;
+import com.departments.dto.fault.exception.SQLFaultException;
+import com.departments.dto.fault.exception.ValueConversionFaultException;
+import dep.data.core.provider.inter.provider.DepartmentCoreServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

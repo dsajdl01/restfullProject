@@ -1,5 +1,8 @@
 <root>
-  <item name='java.util.Objects'>
-    <annotation name='java.lang.annotation.Deprecated'/>
-  </item>
+    <item name='java.util.Base64'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+    <item name='java.util.Objects'>
+      <annotation name='java.lang.annotation.Deprecated'/>
+    </item>
 </root>

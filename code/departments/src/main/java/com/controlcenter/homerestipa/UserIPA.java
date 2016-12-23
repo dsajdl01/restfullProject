@@ -4,13 +4,13 @@ import com.controlcenter.homerestipa.provider.RestServices;
 import com.controlcenter.homerestipa.response.StaffDetailsJson;
 import com.controlcenter.homerestipa.response.StaffJson;
 import com.controlcenter.homerestipa.response.UserLoginJson;
-import com.departments.ipa.common.lgb.CommonConversions;
-import com.departments.ipa.data.LoginDetails;
-import com.departments.ipa.data.LoginStaff;
-import com.departments.ipa.data.StaffTable;
-import com.departments.ipa.fault.exception.SQLFaultException;
-import com.departments.ipa.fault.exception.ValidationException;
-import dep.data.provider.inter.provider.DepartmentCoreServices;
+import com.departments.dto.common.lgb.CommonConversions;
+import com.departments.dto.data.LoginDetails;
+import com.departments.dto.data.LoginStaff;
+import com.departments.dto.data.StaffTable;
+import com.departments.dto.fault.exception.SQLFaultException;
+import com.departments.dto.fault.exception.ValidationException;
+import dep.data.core.provider.inter.provider.DepartmentCoreServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +52,7 @@ public class UserIPA {
                 return badRequest("Mandatory argument email or password are missing");
             }
 
-            LOGGER.info("logInUser: email= {}, password={}", user.getEmail(), user.getPassword());
+            LOGGER.info("logInUser: email= {}", user.getEmail());
             LoginStaff staff = coreServices.getUserImpl().logInUser(user.getEmail(), user.getPassword());
             HttpSession session = request.getSession(true);
 
@@ -79,23 +79,30 @@ public class UserIPA {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addNewStaff(@PathParam("depId") final Integer depId, StaffDetailsJson newStaff, @Context HttpServletRequest request) {
         try {
-            validationStaffHepler.getValidationStaffHepler().basicValidateDepartmentId(depId);
-            validationStaffHepler.getValidationStaffHepler().basicValidateStaffObject(newStaff);
+
+            validationStaffHepler.getValidationStaffHepler().basicStaffValidation(depId, newStaff);
 
             LOGGER.info("addNewStaff: depId={}, new staff fullName={}", depId, newStaff.getFullName());
 
-            LoginDetails loginDetail = validationStaffHepler.getValidationStaffHepler().validateLoginDetails(newStaff.getLoginEmail(), newStaff.getPassword());
-            StaffTable staff = validationStaffHepler.getValidationStaffHepler().getStaffTable(depId, newStaff);
+            LoginDetails loginDetail = validationStaffHepler.getValidationStaffHepler().validateAndGetLoginDetails(newStaff.getLoginEmail(), newStaff.getPassword());
+            StaffTable staff = validationStaffHepler.getValidationStaffHepler().validateAndGetStaffTable(depId, newStaff);
+
+            coreServices.getUserImpl().saveNewStaff(staff);
+            coreServices.getUserImpl().saveLoginDetails(loginDetail);
 
             return null;
         } catch (ValidationException e) {
             LOGGER.error("addNewStaff: ValidationException = {} ", e.getMessage());
             return badRequest(e.getMessage());
+        } catch (SQLFaultException e) {
+                LOGGER.error("SQLFaultException: {}", e);
+                return sqlConnectionError(e.getMessage());
         }catch (Exception e ) {
             LOGGER.error("addNewStaff: Exception = {} ", e);
             return internalServerError("logInUser: error occur = " + e.getMessage());
         }
     }
+
 
     @GET
     @Path("/emailExist")

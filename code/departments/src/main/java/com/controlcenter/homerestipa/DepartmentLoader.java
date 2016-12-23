@@ -6,7 +6,7 @@ import com.department.core.config.DepartmentCoreProvider;
 import com.department.core.config.DepartmentWebLoaderProperties;
 import com.department.core.config.DepartmentWebProperties;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-import dep.data.provider.inter.provider.DepartmentCoreServices;
+import dep.data.core.provider.inter.provider.DepartmentCoreServices;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;

@@ -1,10 +1,11 @@
 package com.controlcenter.homerestipa.utils;
 
 import com.controlcenter.homerestipa.response.StaffDetailsJson;
-import com.departments.ipa.common.lgb.CommonConversions;
-import com.departments.ipa.data.LoginDetails;
-import com.departments.ipa.data.StaffTable;
-import com.departments.ipa.fault.exception.ValidationException;
+import com.department.core.data.PasswordAuthentication;
+import com.departments.dto.common.lgb.CommonConversions;
+import com.departments.dto.data.LoginDetails;
+import com.departments.dto.data.StaffTable;
+import com.departments.dto.fault.exception.ValidationException;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -17,8 +18,19 @@ import java.util.List;
 public class ValidationStaffHepler{
 
     private CommonConversions commonConv = new CommonConversions();
+    private PasswordAuthentication passwordAuth;
 
-    public ValidationStaffHepler() {}
+    private static final int MAX_PASSWORD_LENGTH = 8;
+
+    public ValidationStaffHepler(PasswordAuthentication passwordAuth) {
+        this.passwordAuth = passwordAuth;
+    }
+
+    public void basicStaffValidation(Integer depId, StaffDetailsJson newStaff) throws ValidationException {
+        basicValidateDepartmentId(depId);
+        basicValidateStaffObject(newStaff);
+    }
+
 
     public void basicValidateDepartmentId(Integer depId) throws ValidationException {
         if (depId == null ) {
@@ -34,7 +46,7 @@ public class ValidationStaffHepler{
         }
     }
 
-    public LoginDetails validateLoginDetails(String email, String password) throws ValidationException {
+    public LoginDetails validateAndGetLoginDetails(String email, String password) throws ValidationException {
         String message = "";
         if ( commonConv.stringIsNullOrEmpty(email) ) {
             message = "Mandatory login email is missing. ";
@@ -42,6 +54,8 @@ public class ValidationStaffHepler{
 
         if ( commonConv.stringIsNullOrEmpty(password) ) {
             message += "Mandatory password is missing. ";
+        } else if ( !commonConv.hasStringMaxLength(password, MAX_PASSWORD_LENGTH)) {
+             message += "Password must be at least " + MAX_PASSWORD_LENGTH + " characters long. ";
         }
 
         if ( ! commonConv.emailValidation(email) ) {
@@ -52,10 +66,10 @@ public class ValidationStaffHepler{
             throw new ValidationException( message );
         }
 
-        return new LoginDetails(email, password);
+        return new DataMapper().mapLoginDetails(email,passwordAuth.hashPassword(password));
     }
 
-    public StaffTable getStaffTable(int depId, StaffDetailsJson staff) throws  ValidationException {
+    public StaffTable validateAndGetStaffTable(int depId, StaffDetailsJson staff) throws  ValidationException {
 
         List<String> valResponseList = validateStaffDetails(staff);
         Date dob = convertDates(staff.getDob(), "", valResponseList);
@@ -69,7 +83,7 @@ public class ValidationStaffHepler{
             throw new ValidationException( errorMsg );
         }
 
-        return new StaffTable(null, depId, staff.getFullName(), dob, startDay,null, staff.getPosition(), staff.getLoginEmail(), staff.getComment());
+        return new DataMapper().mapStaffTable(depId, staff, dob, startDay);
     }
 
     private Date convertDates(String date, String message, List<String> buildResponseList) {
