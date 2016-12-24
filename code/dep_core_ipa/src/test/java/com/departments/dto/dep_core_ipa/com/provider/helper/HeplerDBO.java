@@ -3,7 +3,7 @@ package com.departments.dto.dep_core_ipa.com.provider.helper;
 import com.departments.dto.common.lgb.CommonConversions;
 import com.departments.dto.data.DepartmentTable;
 import com.departments.dto.data.PropertiesDataConfig;
-import com.departments.dto.data.StaffTable;
+import com.departments.dto.data.Staff;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +33,7 @@ public class HeplerDBO {
     private final String SQL_REMOVE_STAFF_LOGIN_CONSTRAINT = "ALTER TABLE staff_login DROP FOREIGN KEY staff_login_ibfk_1";
 
     private final String SQL_ADD_STAFF_CONSTRAINT = "ALTER TABLE staff ADD CONSTRAINT db_04E4BC85_staff_id FOREIGN KEY (dep_id) REFERENCES department (id)";
-    private final String SQL_ADD_STAFF_LOGIN_CONSTRAINT = "ALTER TABLE staff_login ADD CONSTRAINT staff_login_ibfk_1 FOREIGN KEY (user_id) REFERENCES department (id)";
+    private final String SQL_ADD_STAFF_LOGIN_CONSTRAINT = "ALTER TABLE staff_login ADD CONSTRAINT staff_login_ibfk_1 FOREIGN KEY (user_id) REFERENCES staff (id)";
 
     private static final Logger LOGGER = LoggerFactory.getLogger( HeplerDBO.class);
     private static PropertiesDataConfig propertiesDataTestConfig;
@@ -92,9 +92,27 @@ public class HeplerDBO {
             preparedStatement.executeBatch();
     }
 
-    public void addStaffValuesToTable(List<StaffTable> staffTables) throws SQLException {
+    private String DELETE_STAFF_LOGIN_DETAILS = "DELETE FROM staff_login WHERE user_id = ?";
+    private String DELETE_STAFF_DETAILS = "DELETE FROM staff WHERE id = ?";
+
+    public void deleteStaffDetails(List<Integer> staffIds) throws SQLException {
+        PreparedStatement preparedStatement = con.prepareStatement(DELETE_STAFF_LOGIN_DETAILS);
+        for (Integer id : staffIds) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.addBatch();
+        }
+        preparedStatement.executeBatch();
+        preparedStatement = con.prepareStatement(DELETE_STAFF_DETAILS);
+        for (Integer id : staffIds) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.addBatch();
+        }
+        preparedStatement.executeBatch();
+    }
+
+    public void addStaffValuesToTable(List<Staff> staffTables) throws SQLException {
         PreparedStatement preparedStatement = con.prepareStatement(SQL_QUARY_ADD_STAFF);
-        for (StaffTable staff : staffTables) {
+        for (Staff staff : staffTables) {
             preparedStatement.setInt(1, staff.getDepId());
             preparedStatement.setString(2, staff.getName());
             preparedStatement.setString(3, convertion.convartDateToString(staff.getDob()));

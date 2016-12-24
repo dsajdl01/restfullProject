@@ -3,7 +3,7 @@ package com.departments.dto.dep_core_ipa.dep.data.provider;
 import com.departments.dto.common.lgb.CommonConversions;
 import com.departments.dto.data.Department;
 import com.departments.dto.data.DepartmentTable;
-import com.departments.dto.data.StaffTable;
+import com.departments.dto.data.Staff;
 import com.departments.dto.dep_core_ipa.com.provider.helper.HeplerDBO;
 import com.departments.dto.dep_dbo.DepartmentDBO;
 import com.departments.dto.dep_dbo.DepartmentDBOConnection;
@@ -132,12 +132,12 @@ public class DepartmentImplTest {
         return -1;
     }
 
-    protected List<StaffTable> getStaffData() {
-        List<StaffTable> staff = new ArrayList<StaffTable>();
+    protected List<Staff> getStaffData() {
+        List<Staff> staff = new ArrayList<Staff>();
         CommonConversions convertion = new CommonConversions();
         try {
-            staff.add(new StaffTable(null, 1, "David Sajdl", convertion.getDateFromString("2009-11-24"), convertion.getDateFromString("2009-11-24"), null, "Developer", "ds@example.co.uk", null));
-            staff.add(new StaffTable(null, 2, "Jolita Diez", convertion.getDateFromString("1984-05-17"), convertion.getDateFromString("2004-01-02"), null, "Economist", "jd@example.com", "Exelent communication"));
+            staff.add(new Staff(null, 1, "David Sajdl", convertion.getDateFromString("2009-11-24"), convertion.getDateFromString("2009-11-24"), null, "Developer", "ds@example.co.uk", null));
+            staff.add(new Staff(null, 2, "Jolita Diez", convertion.getDateFromString("1984-05-17"), convertion.getDateFromString("2004-01-02"), null, "Economist", "jd@example.com", "Exelent communication"));
             return staff;
         } catch (ParseException e){
             LOGGER.error("DepartmentImplTest class, Date convertion error: {}", e);

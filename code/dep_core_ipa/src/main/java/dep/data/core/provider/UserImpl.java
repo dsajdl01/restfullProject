@@ -5,7 +5,7 @@ import com.department.core.data.PasswordAuthentication;
 import com.departments.dto.common.lgb.CommonConversions;
 import com.departments.dto.data.LoginDetails;
 import com.departments.dto.data.LoginStaff;
-import com.departments.dto.data.StaffTable;
+import com.departments.dto.data.Staff;
 import com.departments.dto.dep_dbo.UserDBO;
 import com.departments.dto.fault.exception.SQLFaultException;
 import dep.data.core.provider.inter.provider.UserInter;
@@ -43,17 +43,38 @@ public class UserImpl implements UserInter {
     private LoginStaff getLoginStaffDetails(String email) throws SQLFaultException {
         Integer userId = userDBO.loninUserId(email);
         if (userId == null) return null;
-        loginStaff = userDBO.getStaffDetails(userId);
+        loginStaff = userDBO.getLogInStaffDetails(userId);
         return loginStaff;
     }
 
-    public void saveNewStaff(StaffTable staff) throws SQLFaultException {
-        userDBO.saveNewStaff(staff);
-
+    public Staff getStaffDetails(int staffId) throws SQLFaultException {
+       return userDBO.getStaffDetails(staffId);
     }
 
-    public void saveLoginDetails(LoginDetails loginDetail) throws SQLFaultException {
-        userDBO.saveLoginDetails(loginDetail);
+    public void saveNewStaffAndLoginDetails(Staff staff, LoginDetails loginDetail) throws SQLFaultException {
+        saveNewStaff(staff);
+        final int newStaffId = getNewStaffId();
+        if ( newStaffId <= 0 ){
+            throw new SQLFaultException("Error occur when getting new staff id");
+        }
+        saveLoginDetails(loginDetail, newStaffId);
+    }
+
+    public int getNewStaffId() throws SQLFaultException {
+        return userDBO.getNewStaffId();
+    }
+
+    public void deleteStaff(int staffId) throws SQLFaultException{
+        userDBO.deleteStaffLoginDetails(staffId);
+        userDBO.deleteStaffDetails(staffId);
+    }
+
+    public void saveNewStaff(Staff staff) throws SQLFaultException {
+        userDBO.saveNewStaff(staff);
+    }
+
+    public void saveLoginDetails(LoginDetails loginDetail, int staffId) throws SQLFaultException {
+        userDBO.saveLoginDetails(loginDetail, staffId);
     }
 
     public boolean doesEmailExist(String email) throws SQLFaultException {

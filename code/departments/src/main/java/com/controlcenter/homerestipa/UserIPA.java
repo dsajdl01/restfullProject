@@ -7,7 +7,7 @@ import com.controlcenter.homerestipa.response.UserLoginJson;
 import com.departments.dto.common.lgb.CommonConversions;
 import com.departments.dto.data.LoginDetails;
 import com.departments.dto.data.LoginStaff;
-import com.departments.dto.data.StaffTable;
+import com.departments.dto.data.Staff;
 import com.departments.dto.fault.exception.SQLFaultException;
 import com.departments.dto.fault.exception.ValidationException;
 import dep.data.core.provider.inter.provider.DepartmentCoreServices;
@@ -85,10 +85,9 @@ public class UserIPA {
             LOGGER.info("addNewStaff: depId={}, new staff fullName={}", depId, newStaff.getFullName());
 
             LoginDetails loginDetail = validationStaffHepler.getValidationStaffHepler().validateAndGetLoginDetails(newStaff.getLoginEmail(), newStaff.getPassword());
-            StaffTable staff = validationStaffHepler.getValidationStaffHepler().validateAndGetStaffTable(depId, newStaff);
+            Staff staff = validationStaffHepler.getValidationStaffHepler().validateAndGetStaffTable(depId, newStaff);
 
-            coreServices.getUserImpl().saveNewStaff(staff);
-            coreServices.getUserImpl().saveLoginDetails(loginDetail);
+            coreServices.getUserImpl().saveNewStaffAndLoginDetails(staff, loginDetail);
 
             return null;
         } catch (ValidationException e) {

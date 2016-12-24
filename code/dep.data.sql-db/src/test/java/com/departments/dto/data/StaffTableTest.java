@@ -17,7 +17,7 @@ import java.text.ParseException;
  */
 public class StaffTableTest {
 
-    private StaffTable staff;
+    private Staff staff;
     private static final Logger LOGGER = LoggerFactory.getLogger(StaffTableTest.class);
     private CommonConversions convertion;
 
@@ -25,7 +25,7 @@ public class StaffTableTest {
     public void setUp(){
         try {
             convertion = new CommonConversions();
-            staff = new StaffTable(1, 1, "Fred Marly", convertion.getDateFromString("1998-02-03"), convertion.getDateFromString("2011-07-26"), null, "Fron End", "fm@example.com", "Good also in design");
+            staff = new Staff(1, 1, "Fred Marly", convertion.getDateFromString("1998-02-03"), convertion.getDateFromString("2011-07-26"), null, "Fron End", "fm@example.com", "Good also in design");
         } catch (ParseException e){
             LOGGER.error("StaffTableTest class, data convertion error: {}", e);
         }

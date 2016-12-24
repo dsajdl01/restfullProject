@@ -4,7 +4,7 @@ import com.controlcenter.homerestipa.response.StaffDetailsJson;
 import com.department.core.data.PasswordAuthentication;
 import com.departments.dto.common.lgb.CommonConversions;
 import com.departments.dto.data.LoginDetails;
-import com.departments.dto.data.StaffTable;
+import com.departments.dto.data.Staff;
 import com.departments.dto.fault.exception.ValidationException;
 
 import java.text.ParseException;
@@ -69,11 +69,11 @@ public class ValidationStaffHepler{
         return new DataMapper().mapLoginDetails(email,passwordAuth.hashPassword(password));
     }
 
-    public StaffTable validateAndGetStaffTable(int depId, StaffDetailsJson staff) throws  ValidationException {
+    public Staff validateAndGetStaffTable(int depId, StaffDetailsJson staff) throws  ValidationException {
 
         List<String> valResponseList = validateStaffDetails(staff);
-        Date dob = convertDates(staff.getDob(), "", valResponseList);
-        Date startDay = convertDates(staff.getStartDay(), "", valResponseList);;
+        Date dob = convertDates(staff.getDob(), "Date of birthday", valResponseList);
+        Date startDay = convertDates(staff.getStartDay(), "Start day", valResponseList);
 
         String errorMsg = "";
         if ( !valResponseList.isEmpty() ) {
@@ -82,15 +82,18 @@ public class ValidationStaffHepler{
             }
             throw new ValidationException( errorMsg );
         }
-
         return new DataMapper().mapStaffTable(depId, staff, dob, startDay);
     }
 
-    private Date convertDates(String date, String message, List<String> buildResponseList) {
+    private Date convertDates(String date, String valueName, List<String> buildResponseList) {
         try {
+            if(commonConv.stringIsNullOrEmpty(date)) {
+                buildResponseList.add("Mandatory " + valueName.toLowerCase() + " is missing.");
+                return null;
+            }
             return commonConv.getDateFromString(date);
         } catch ( ParseException e ) {
-            buildResponseList.add(message);
+            buildResponseList.add(valueName + " is invalid. Try format yyyy-mm-dd");
         }
         return null;
     }
@@ -100,14 +103,6 @@ public class ValidationStaffHepler{
 
         if (commonConv.stringIsNullOrEmpty(staff.getFullName())) {
             errorMessage.add("Mandatory name is missing.");
-        }
-
-        if (commonConv.stringIsNullOrEmpty(staff.getDob())) {
-            errorMessage.add("Mandatory date of birthday is missing.");
-        }
-
-        if (commonConv.stringIsNullOrEmpty(staff.getStartDay())) {
-            errorMessage.add("Mandatory start day is missing.");
         }
 
         if (commonConv.stringIsNullOrEmpty(staff.getPosition())) {
