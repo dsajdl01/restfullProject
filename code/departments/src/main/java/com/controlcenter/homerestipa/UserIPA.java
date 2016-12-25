@@ -62,7 +62,7 @@ public class UserIPA {
             }
 
             session.setAttribute("userId", staff.getUserId());
-            return success( new StaffJson(staff.getUserId(), staff.getName()));
+            return success( new StaffJson(staff.getUserId(), staff.getName(), staff.getFirstLogin()));
         }
         catch (SQLFaultException departmentFaultService) {
             LOGGER.error("loginUser: SQLFaultException = {} ", departmentFaultService);
@@ -79,17 +79,12 @@ public class UserIPA {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addNewStaff(@PathParam("depId") final Integer depId, StaffDetailsJson newStaff, @Context HttpServletRequest request) {
         try {
-
             validationStaffHepler.getValidationStaffHepler().basicStaffValidation(depId, newStaff);
-
             LOGGER.info("addNewStaff: depId={}, new staff fullName={}", depId, newStaff.getFullName());
-
             LoginDetails loginDetail = validationStaffHepler.getValidationStaffHepler().validateAndGetLoginDetails(newStaff.getLoginEmail(), newStaff.getPassword());
-            Staff staff = validationStaffHepler.getValidationStaffHepler().validateAndGetStaffTable(depId, newStaff);
-
+            Staff staff = validationStaffHepler.getValidationStaffHepler().validateAndGetStaffDetails(depId, newStaff);
             coreServices.getUserImpl().saveNewStaffAndLoginDetails(staff, loginDetail);
-
-            return null;
+            return success();
         } catch (ValidationException e) {
             LOGGER.error("addNewStaff: ValidationException = {} ", e.getMessage());
             return badRequest(e.getMessage());

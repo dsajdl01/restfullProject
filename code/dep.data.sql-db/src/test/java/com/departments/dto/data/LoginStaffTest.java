@@ -15,7 +15,7 @@ public class LoginStaffTest {
     @Before
     public void setUp()
     {
-        loginStaff = new LoginStaff(1, "Fred Marley");
+        loginStaff = new LoginStaff(1, "Fred Marley", true);
     }
 
     @After
@@ -31,5 +31,10 @@ public class LoginStaffTest {
     @Test
     public void getNameTest() {
         assertThat(loginStaff.getName(), is("Fred Marley"));
+    }
+
+    @Test
+    public void getFirstLogin() {
+        assertThat(loginStaff.getFirstLogin(), is(true));
     }
 }

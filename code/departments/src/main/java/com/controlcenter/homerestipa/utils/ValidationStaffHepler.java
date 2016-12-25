@@ -69,7 +69,7 @@ public class ValidationStaffHepler{
         return new DataMapper().mapLoginDetails(email,passwordAuth.hashPassword(password));
     }
 
-    public Staff validateAndGetStaffTable(int depId, StaffDetailsJson staff) throws  ValidationException {
+    public Staff validateAndGetStaffDetails(int depId, StaffDetailsJson staff) throws  ValidationException {
 
         List<String> valResponseList = validateStaffDetails(staff);
         Date dob = convertDates(staff.getDob(), "Date of birthday", valResponseList);

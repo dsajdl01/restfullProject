@@ -77,6 +77,7 @@ public class UserImplTest {
     public void logInUserTest() throws Exception {
         LoginStaff staffDetails = userImp.logInUser("jolita@diez.com", "password");
         assertThat(staffDetails.getName(), is("Jolita Diez"));
+        assertThat(staffDetails.getFirstLogin(), is(true));
     }
     @Test
     public void doesEmailExistTest() throws Exception {
@@ -86,12 +87,12 @@ public class UserImplTest {
 
     @Test
     public void saveNewStaffTest() throws Exception  {
-        userImp.saveNewStaff(generateStaff("New Name", "2000-01-01", "2016-06-06", "Sale Force"));
+        userImp.saveNewStaff(generateStaff("New Name", "2000-01-01", "2016-06-06", "Sales"));
         final int staffId = userImp.getNewStaffId();
         Staff staffDetails = userImp.getStaffDetails(staffId);
 
         assertThat(staffDetails.getName(), is("New Name"));
-        assertThat(staffDetails.getPosition(), is("Sale Force"));
+        assertThat(staffDetails.getPosition(), is("Sales"));
         assertThat(commonConv.convartDateToString(staffDetails.getDob()), is("2000-01-01"));
         assertThat(commonConv.convartDateToString(staffDetails.getStartDay()), is("2016-06-06"));
 
@@ -100,7 +101,7 @@ public class UserImplTest {
 
     @Test
     public void saveLoginDetailsTest() throws Exception {
-        userImp.saveNewStaff(generateStaff("New Full Name", "2000-02-02", "2016-07-07", "H&R"));
+        userImp.saveNewStaff(generateStaff("New Full Name", "2000-02-02", "2016-07-07", "Assistant"));
         final int staffId = userImp.getNewStaffId();
         LoginDetails loginDetails = new LoginDetails("newfullname@email.com", passwordAuth.hashPassword("somePassword"));
         userImp.saveLoginDetails(loginDetails, staffId);
@@ -142,6 +143,7 @@ public class UserImplTest {
         final int staffId = userImp.getNewStaffId();
         Staff staffDetails = userImp.getStaffDetails(staffId);
 
+        assertThat(staffDetails.getId(), is(staffId));
         assertThat(staffDetails.getName(), is("John Smith"));
         assertThat(staffDetails.getPosition(), is("Manager"));
         assertThat(commonConv.convartDateToString(staffDetails.getDob()), is("2000-03-03"));

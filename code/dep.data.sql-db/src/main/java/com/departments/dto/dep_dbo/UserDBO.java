@@ -32,7 +32,7 @@ public class UserDBO {
                                             + "VALUES (?, ?, ?, ?, null, ?, ?, ?)";
     private String ADD_NEW_STAFF_LOGIN = "INSERT INTO staff_login (user_id, email, password, first_login) "
                                                         + "VALUES (?, ?, ?, 1)";
-    private String SQL_STAFF_ID_AND_NAME = "SELECT id as userId, name FROM staff WHERE id = ?";
+    private String SQL_LOGIN_STAFF_ID_AND_NAME = "SELECT s.id AS userId, s.name, l.first_login FROM staff AS s join staff_login AS l ON s.id = l.user_id WHERE s.id = ?";
     private String ALL_SATFF_DETAILS = "select id, dep_id, name, dob, start_day, last_day, position, email, comments from staff where id = ?";
 
     private String DELETE_STAFF_LOGIN_DETAILS = "DELETE FROM staff_login WHERE user_id = ?";
@@ -87,16 +87,20 @@ public class UserDBO {
     public LoginStaff getLogInStaffDetails(Integer userId) throws SQLFaultException {
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = con.prepareStatement(SQL_STAFF_ID_AND_NAME);
+            preparedStatement = con.prepareStatement(SQL_LOGIN_STAFF_ID_AND_NAME);
             preparedStatement.setInt(1, userId);
             ResultSet res = preparedStatement.executeQuery();
             res.next();
             if (res.getRow() <= 0 ) return null;
-            return new LoginStaff(res.getInt("userId"), res.getString("name"));
+            return new LoginStaff(res.getInt("userId"), res.getString("name"), isFirstLogin(res.getInt("first_login")));
         } catch (SQLException sqlE){
             LOGGER.error("loninUserId: {}", sqlE);
             throw new SQLFaultException("Enable to connect to database");
         }
+    }
+
+    public boolean isFirstLogin(int firstLogin) {
+        return firstLogin == 1;
     }
 
     public Staff getStaffDetails(int staffId) throws SQLFaultException {

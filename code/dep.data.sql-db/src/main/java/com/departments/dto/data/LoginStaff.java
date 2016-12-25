@@ -9,9 +9,12 @@ public class LoginStaff {
 
     private String  name;
 
-    public LoginStaff(Integer userId, String name) {
+    private boolean firstLogin;
+
+    public LoginStaff(Integer userId, String name, boolean firstLogin) {
         this.userId = userId;
         this.name = name;
+        this.firstLogin = firstLogin;
     }
 
     public Integer getUserId() {
@@ -20,5 +23,9 @@ public class LoginStaff {
 
     public String getName() {
         return name;
+    }
+
+    public boolean getFirstLogin() {
+        return firstLogin;
     }
 }

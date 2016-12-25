@@ -1,10 +1,14 @@
 package com.controlcenter.homerestipa;
 
 import com.controlcenter.homerestipa.provider.RestServices;
+import com.controlcenter.homerestipa.response.StaffDetailsJson;
 import com.controlcenter.homerestipa.response.UserLoginJson;
 import com.department.testutils.JerseyContainerJUnitRule;
+import com.departments.dto.data.LoginDetails;
 import com.departments.dto.data.LoginStaff;
+import com.departments.dto.data.Staff;
 import com.departments.dto.fault.exception.SQLFaultException;
+import com.departments.dto.fault.exception.ValidationException;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.jayway.restassured.RestAssured;
 import dep.data.core.provider.inter.provider.DepartmentCoreServices;
@@ -23,8 +27,9 @@ import java.util.HashMap;
 import static com.controlcenter.homerestipa.MockServices.*;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by david on 04/12/16.
@@ -84,7 +89,7 @@ public class UserIpaTest {
 
     @Test
     public void logInUserSuccess() throws Exception {
-        LoginStaff loginStaff = new LoginStaff(1, "Fred Smith");
+        LoginStaff loginStaff = new LoginStaff(1, "Fred Smith", true);
         when(mockUseInter.logInUser("smith@fred.com","password")).thenReturn(loginStaff);
         when(mockHttpServletRequest.getSession(true)).thenReturn(httpSessionMock);
         UserLoginJson userLogin = new UserLoginJson("smith@fred.com","password");
@@ -97,7 +102,8 @@ public class UserIpaTest {
         .then()//.log().all()
             .statusCode(HTML_OK)
             .body("userId", equalTo(1))
-            .body("name", equalTo("Fred Smith"));
+            .body("name", equalTo("Fred Smith"))
+            .body("firstLogin", equalTo(true));
 
     }
 
@@ -135,7 +141,7 @@ public class UserIpaTest {
 
     @Test
     public void logInUserSQLError() throws Exception {
-        LoginStaff loginStaff = new LoginStaff(1, "Fred Smith");
+        LoginStaff loginStaff = new LoginStaff(1, "Fred Smith", true);
         doThrow(new SQLFaultException("Enable to connect to database")).when(mockUseInter).logInUser("smith@fred.com","password");
         UserLoginJson userLogin = new UserLoginJson("smith@fred.com","password");
 
@@ -151,7 +157,7 @@ public class UserIpaTest {
 
     @Test
     public void logInUserError() throws Exception {
-        LoginStaff loginStaff = new LoginStaff(1, "Fred Smith");
+        LoginStaff loginStaff = new LoginStaff(1, "Fred Smith", true);
         doThrow(new RuntimeException()).when(mockUseInter).logInUser("smith@fred.com","password");
         UserLoginJson userLogin = new UserLoginJson("smith@fred.com","password");
 
@@ -216,5 +222,85 @@ public class UserIpaTest {
         .then()//.log().all()
             .statusCode(SERVICE_UNAVAILABLE)
             .body("message", equalTo("Enable to connect to database"));
+    }
+
+    @Test
+    public void addNewStaffSuccessTest() throws Exception {
+        LoginDetails loginDetails = new LoginDetails("some@email.com", "$3728bdkjabddbeqnrrekop");
+        Staff staff = new Staff.Builder().build();
+        int depId = 2;
+        doNothing().when(mockValidationStaffHepler).basicStaffValidation(eq(depId), any(StaffDetailsJson.class));
+        when(mockValidationStaffHepler.validateAndGetLoginDetails("some@email.com", "somepassword120")).thenReturn(loginDetails);
+        when(mockValidationStaffHepler.validateAndGetStaffDetails(eq(depId), any(StaffDetailsJson.class))).thenReturn(staff);
+        doNothing().when(mockUseInter).saveNewStaffAndLoginDetails(staff, loginDetails);
+
+        given()
+            .contentType("application/json")
+            .body( generateStaffDetails() )
+        .when()//.log().all()
+            .put("/" + depId + "/addNewStaff")
+        .then()//.log().all()
+            .statusCode(HTML_OK);
+    }
+
+    @Test
+    public void addNewStaffValidationErrorTest() throws Exception {
+        LoginDetails loginDetails = new LoginDetails("some@email.com", "$3728bdkjabddbeqnrrekop");
+        Staff staff = new Staff.Builder().build();
+        int depId = 2;
+        doThrow(new ValidationException("Invalid Email Address")).when(mockValidationStaffHepler).basicStaffValidation(eq(depId), any(StaffDetailsJson.class));
+
+        given()
+            .contentType("application/json")
+            .body( generateStaffDetails() )
+        .when()//.log().all()
+            .put("/" + depId + "/addNewStaff")
+        .then()//.log().all()
+            .statusCode(BAD_REQUEST)
+            .body("message", equalTo("Invalid Email Address"));
+    }
+
+    @Test
+    public void addNewStaffSQLErrorTest() throws Exception {
+        LoginDetails loginDetails = new LoginDetails("some@email.com", "$3728bdkjabddbeqnrrekop");
+        Staff staff = new Staff.Builder().build();
+        int depId = 2;
+        doNothing().when(mockValidationStaffHepler).basicStaffValidation(eq(depId), any(StaffDetailsJson.class));
+        when(mockValidationStaffHepler.validateAndGetLoginDetails("some@email.com", "somepassword120")).thenReturn(loginDetails);
+        when(mockValidationStaffHepler.validateAndGetStaffDetails(eq(depId), any(StaffDetailsJson.class))).thenReturn(staff);
+        doThrow( new SQLFaultException("Enable to connect database")).when(mockUseInter).saveNewStaffAndLoginDetails(staff, loginDetails);
+
+        given()
+            .contentType("application/json")
+            .body( generateStaffDetails() )
+        .when()//.log().all()
+            .put("/" + depId + "/addNewStaff")
+        .then()//.log().all()
+            .statusCode(SERVICE_UNAVAILABLE)
+            .body("message", equalTo("Enable to connect database"));
+    }
+
+    @Test
+    public void addNewStaffFailerTest() throws Exception {
+        LoginDetails loginDetails = new LoginDetails("some@email.com", "$3728bdkjabddbeqnrrekop");
+        Staff staff = new Staff.Builder().build();
+        int depId = 2;
+        doNothing().when(mockValidationStaffHepler).basicStaffValidation(eq(depId), any(StaffDetailsJson.class));
+        when(mockValidationStaffHepler.validateAndGetLoginDetails("some@email.com", "somepassword120")).thenReturn(loginDetails);
+        when(mockValidationStaffHepler.validateAndGetStaffDetails(eq(depId), any(StaffDetailsJson.class))).thenReturn(staff);
+        doThrow( new RuntimeException()).when(mockUseInter).saveNewStaffAndLoginDetails(staff, loginDetails);
+
+        given()
+            .contentType("application/json")
+            .body( generateStaffDetails() )
+        .when()//.log().all()
+            .put("/" + depId + "/addNewStaff")
+        .then()//.log().all()
+            .statusCode(INTERNAL_SERVER_ERROR);
+    }
+
+    private StaffDetailsJson generateStaffDetails() {
+        return new StaffDetailsJson("Full Name", "1990-01-01", "2016-01-01",
+                "Developer", null, null, "some@email.com", "somepassword120");
     }
 }

@@ -13,9 +13,13 @@ public class StaffJson {
     @JsonProperty("name")
     private final String name;
 
+    @JsonProperty("firstLogin")
+    private final boolean firstLogin;
 
-    public StaffJson( Integer userId, String name ) {
+
+    public StaffJson( Integer userId, String name, boolean firstLogin ) {
         this.userId = userId;
         this.name = name;
+        this.firstLogin = firstLogin;
     }
 }
