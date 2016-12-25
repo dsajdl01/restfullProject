@@ -150,7 +150,7 @@ public class UserDBO {
 
     private String getString(Date date) {
         if (date == null) return null;
-        return commonConv.convartDateToString(date);
+        return commonConv.convertDateToString(date);
     }
 
     private final String GET_HIGHST_ID_SQL = "SELECT max(id) AS staff_id FROM staff";

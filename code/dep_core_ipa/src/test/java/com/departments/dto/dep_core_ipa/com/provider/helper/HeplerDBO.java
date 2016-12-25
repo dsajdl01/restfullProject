@@ -115,9 +115,9 @@ public class HeplerDBO {
         for (Staff staff : staffTables) {
             preparedStatement.setInt(1, staff.getDepId());
             preparedStatement.setString(2, staff.getName());
-            preparedStatement.setString(3, convertion.convartDateToString(staff.getDob()));
-            preparedStatement.setString(4, convertion.convartDateToString(staff.getStartDay()));
-            preparedStatement.setString(5, convertion.convartDateToString(staff.getLastDay()));
+            preparedStatement.setString(3, convertion.convertDateToString(staff.getDob()));
+            preparedStatement.setString(4, convertion.convertDateToString(staff.getStartDay()));
+            preparedStatement.setString(5, convertion.convertDateToString(staff.getLastDay()));
             preparedStatement.setString(6, staff.getPosition());
             preparedStatement.setString(7, staff.getEmail());
             preparedStatement.setString(8, staff.getComment());

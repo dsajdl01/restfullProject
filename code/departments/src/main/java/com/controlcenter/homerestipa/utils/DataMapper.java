@@ -14,7 +14,7 @@ public class DataMapper {
 
 
     public Staff mapStaffTable(int depId, StaffDetailsJson staff, Date dob, Date startDay) {
-        return new Staff(null, depId, staff.getFullName(), dob, startDay,null, staff.getPosition(), staff.getLoginEmail(), staff.getComment());
+        return new Staff(null, depId, staff.getFullName(), dob, startDay,null, staff.getPosition(), staff.getStaffEmail(), staff.getComment());
     }
 
     public LoginDetails mapLoginDetails(String email, String password) {

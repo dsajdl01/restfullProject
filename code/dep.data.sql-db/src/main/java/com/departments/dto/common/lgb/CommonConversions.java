@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  */
 public class CommonConversions {
 
-    public String convartDateToString(Date date){
+    public String convertDateToString(Date date){
         if(date == null) return null;
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         return df.format(date);
@@ -21,6 +21,7 @@ public class CommonConversions {
 
     public Date getDateFromString(String date) throws ParseException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
         return dateFormat.parse(date);
     }
 
@@ -44,7 +45,7 @@ public class CommonConversions {
         return  val.length() >= length;
     }
 
-    public boolean emailValidation(String email) {
+    public boolean doesEmailIsValid(String email) {
         Pattern regex = Pattern.compile("^[_a-z0-9-\\+\"]+(\\.[_a-z0-9-\\+\"]+)*@(?!-)[a-z0-9-]+(\\.[a-z0-9-]+)+$", Pattern.CASE_INSENSITIVE);
         return regex.matcher(email).matches();
     }

@@ -34,15 +34,15 @@ public class ValidationStaffHepler{
 
     public void basicValidateDepartmentId(Integer depId) throws ValidationException {
         if (depId == null ) {
-            throw new ValidationException("Mandatory department ID is missing");
+            throw new ValidationException("Mandatory department ID is missing.");
         } else if ( depId <= 0 ) {
-            throw new ValidationException("Invalid department ID");
+            throw new ValidationException("Invalid department ID.");
         }
     }
 
     public void  basicValidateStaffObject(StaffDetailsJson staff) throws ValidationException {
         if ( staff == null ) {
-            throw new ValidationException("Mandatory staff object is missing");
+            throw new ValidationException("Mandatory staff object is missing.");
         }
     }
 
@@ -50,16 +50,14 @@ public class ValidationStaffHepler{
         String message = "";
         if ( commonConv.stringIsNullOrEmpty(email) ) {
             message = "Mandatory login email is missing. ";
+        } else if ( ! commonConv.doesEmailIsValid(email) ) {
+            message += "Invalid email. ";
         }
 
         if ( commonConv.stringIsNullOrEmpty(password) ) {
             message += "Mandatory password is missing. ";
         } else if ( !commonConv.hasStringMaxLength(password, MAX_PASSWORD_LENGTH)) {
-             message += "Password must be at least " + MAX_PASSWORD_LENGTH + " characters long. ";
-        }
-
-        if ( ! commonConv.emailValidation(email) ) {
-            message += "Invalid email";
+             message += "Password must be at least " + MAX_PASSWORD_LENGTH + " characters long.";
         }
 
         if ( !message.equals("") ) {
@@ -93,7 +91,7 @@ public class ValidationStaffHepler{
             }
             return commonConv.getDateFromString(date);
         } catch ( ParseException e ) {
-            buildResponseList.add(valueName + " is invalid. Try format yyyy-mm-dd");
+            buildResponseList.add(valueName + " is invalid. Try format yyyy-mm-dd.");
         }
         return null;
     }
@@ -108,6 +106,13 @@ public class ValidationStaffHepler{
         if (commonConv.stringIsNullOrEmpty(staff.getPosition())) {
             errorMessage.add("Mandatory position is missing.");
         }
+
+        if ( !commonConv.stringIsNullOrEmpty(staff.getStaffEmail())) {
+          if ( !commonConv.doesEmailIsValid(staff.getStaffEmail())) {
+              errorMessage.add("Invalid staff email.");
+          }
+        }
+
         return errorMessage;
     }
 

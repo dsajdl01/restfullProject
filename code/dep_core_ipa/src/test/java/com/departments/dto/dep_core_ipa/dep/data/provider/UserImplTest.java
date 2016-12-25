@@ -93,8 +93,8 @@ public class UserImplTest {
 
         assertThat(staffDetails.getName(), is("New Name"));
         assertThat(staffDetails.getPosition(), is("Sales"));
-        assertThat(commonConv.convartDateToString(staffDetails.getDob()), is("2000-01-01"));
-        assertThat(commonConv.convartDateToString(staffDetails.getStartDay()), is("2016-06-06"));
+        assertThat(commonConv.convertDateToString(staffDetails.getDob()), is("2000-01-01"));
+        assertThat(commonConv.convertDateToString(staffDetails.getStartDay()), is("2016-06-06"));
 
         testedUsersId.add(staffDetails.getId());
     }
@@ -124,8 +124,8 @@ public class UserImplTest {
 
         assertThat(staffDetails.getName(), is("Bob Marley"));
         assertThat(staffDetails.getPosition(), is("Java Developer"));
-        assertThat(commonConv.convartDateToString(staffDetails.getDob()), is("2000-10-12"));
-        assertThat(commonConv.convartDateToString(staffDetails.getStartDay()), is("2016-07-11"));
+        assertThat(commonConv.convertDateToString(staffDetails.getDob()), is("2000-10-12"));
+        assertThat(commonConv.convertDateToString(staffDetails.getStartDay()), is("2016-07-11"));
 
         LoginStaff loginStaffDetails = userImp.logInUser("bob@marley.com", "someBobPassword");
         assertThat(loginStaffDetails.getName(), is("Bob Marley"));
@@ -146,8 +146,8 @@ public class UserImplTest {
         assertThat(staffDetails.getId(), is(staffId));
         assertThat(staffDetails.getName(), is("John Smith"));
         assertThat(staffDetails.getPosition(), is("Manager"));
-        assertThat(commonConv.convartDateToString(staffDetails.getDob()), is("2000-03-03"));
-        assertThat(commonConv.convartDateToString(staffDetails.getStartDay()), is("2016-03-03"));
+        assertThat(commonConv.convertDateToString(staffDetails.getDob()), is("2000-03-03"));
+        assertThat(commonConv.convertDateToString(staffDetails.getStartDay()), is("2016-03-03"));
 
         LoginStaff loginStaffDetails = userImp.logInUser("john@smith.com", "someJohnPassword!123");
         assertThat(loginStaffDetails.getName(), is("John Smith"));
