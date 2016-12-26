@@ -137,4 +137,20 @@ describe('Controller: departmentViewController', function() {
              expect(toasterMock.pop).toHaveBeenCalledWith('warning', 'Please select depertment.');
              expect(locationMock.path).not.toHaveBeenCalled();
          });
+
+         it('should relocate view by location.path when modifyStaff() is called with id', function() {
+             spyOn(locationMock, 'path');
+             spyOn(toasterMock, 'pop');
+             ctrl.modifyStaff(101);
+             expect(locationMock.path).toHaveBeenCalledWith('/modifyStaff');
+             expect(toasterMock.pop).not.toHaveBeenCalled();
+         });
+
+         it('should not relocate view and it should pop up toaster when modifyStaff() is called without id', function() {
+             spyOn(toasterMock, 'pop');
+             spyOn(locationMock, 'path');
+             ctrl.modifyStaff();
+             expect(toasterMock.pop).toHaveBeenCalledWith('warning', 'Please select depertment.');
+             expect(locationMock.path).not.toHaveBeenCalled();
+         });
 });

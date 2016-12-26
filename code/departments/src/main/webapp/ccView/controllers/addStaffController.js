@@ -24,18 +24,26 @@ controlCenterApp.controller('addStaffController', ['commonService', '$sessionSto
         }
 
         self.save = function() {
+            self.innerValidationError = null;
             var promise = staffService.saveStaff( createStaffInstance(self.user), $sessionStorage.depId );
             return promise
                 .then(function (){
                     toaster.pop("success","Done","User " + self.user.fullName + " is successfully saved");
-                    $location.path('/home');
+                    self.home();
                 })
                 .catch( function(failure) {
-                    toaster.pop("error", "ERROR", UTILS.responseErrorHandler("Error occur while getting department id.",failure));
-                    $location.path('/home');
+                    if ( failure.status == 400) {
+                        self.innerValidationError = failure.data.message;
+                    } else {
+                        toaster.pop("error", "ERROR", UTILS.responseErrorHandler("Error occur while getting department id.",failure));
+                        self.home();
+                    }
                 })
         }
 
+       self.home = function() {
+            $location.path('/home');
+       }
        var getCurrentDay = function () {
             var dateTime = new Date();
             var date = dateTime.getDate();

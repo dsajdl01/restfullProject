@@ -34,12 +34,22 @@ describe('Controller: addStaffController', function() {
             }
        };
 
+       var validationSave = {
+          then: function (m) {
+               return this;
+          },
+       catch: function (m) {
+          m( {status: 400, data: { message: "Invalid staff email"} } );
+            return this;
+          }
+       };
+
        var failSave = {
            then: function (m) {
                 return this;
            },
        catch: function (m) {
-           m( {status: 400, data: { message: "Unable to connect to database"} } );
+           m( {status: 503, data: { message: "Unable to connect to database"} } );
                 return this;
            }
        };
@@ -69,11 +79,16 @@ describe('Controller: addStaffController', function() {
 
             staffServiceMock = {
                 success: true,
+                validationError: true,
                 saveStaff: function(user, id) {
                     if ( this.success ) {
                         return successSave;
                     } else {
-                        return failSave;
+                        if (this.validationError) {
+                            return validationSave;
+                        } else {
+                            return failSave;
+                        }
                     }
                 }
             }
@@ -154,8 +169,25 @@ describe('Controller: addStaffController', function() {
             expect(toasterMock.pop).toHaveBeenCalledWith("success", "Done", "User Yadira Diez is successfully saved");
         });
 
-        it('should save staff details and pop up success toaster when save() is called', function() {
+         it('should NOT save staff details and pop up error toaster when save() is called and it failed', function() {
+              staffServiceMock.success = false;
+              staffServiceMock.validationError = true;
+              generateStaff(null, "", "");
+              spyOn(staffServiceMock, "saveStaff").and.callThrough();
+              spyOn(toasterMock, "pop");
+              spyOn(locationMock, "path");
+
+              ctrl.save();
+              expect(staffServiceMock.saveStaff).toHaveBeenCalled();
+              expect(ctrl.innerValidationError).toEqual("Invalid staff email");
+              expect(locationMock.path).not.toHaveBeenCalledWith("/home");
+              expect(toasterMock.pop).not.toHaveBeenCalled();
+         });
+
+
+        it('should NOT save staff details and pop up error toaster when save() is called and it failed', function() {
             staffServiceMock.success = false;
+            staffServiceMock.validationError = false;
             generateStaff(null, "", "");
             spyOn(staffServiceMock, "saveStaff").and.callThrough();
             spyOn(toasterMock, "pop");
@@ -163,6 +195,7 @@ describe('Controller: addStaffController', function() {
 
             ctrl.save();
             expect(staffServiceMock.saveStaff).toHaveBeenCalled();
+            expect(ctrl.innerValidationError).toBeNull();
             expect(locationMock.path).toHaveBeenCalledWith("/home");
             expect(toasterMock.pop).toHaveBeenCalledWith("error", "ERROR", "Error occur while getting department id. Error message: Unable to connect to database");
         });

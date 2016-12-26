@@ -62,6 +62,14 @@ controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonS
         }
 	}
 
+	self.modifyStaff = function(depId){
+	    if (isDepartmentSelected(depId) ) {
+	        $sessionStorage.depId =  depId;
+            getSelectedDepartment( depId );
+            $location.path('/modifyStaff')
+	    }
+	}
+
 	var getSelectedDepartment = function( depId ){
 	    for ( var inx = 0; inx < commonService.departmentList.length; inx++){
 	        if ( commonService.departmentList[inx].depId == depId ) {
