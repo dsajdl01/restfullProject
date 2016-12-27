@@ -2,6 +2,7 @@ package com.departments.dto.dep_core_ipa.dep.data.provider;
 
 import com.department.core.data.PasswordAuthentication;
 import com.departments.dto.common.lgb.CommonConversions;
+import com.departments.dto.common.lgb.SearchType;
 import com.departments.dto.data.DepartmentTable;
 import com.departments.dto.data.LoginDetails;
 import com.departments.dto.data.LoginStaff;
@@ -9,6 +10,7 @@ import com.departments.dto.data.Staff;
 import com.departments.dto.dep_core_ipa.com.provider.helper.HeplerDBO;
 import com.departments.dto.dep_dbo.DepartmentDBOConnection;
 import com.departments.dto.dep_dbo.UserDBO;
+import com.departments.dto.fault.exception.ValidationException;
 import dep.data.core.provider.UserImpl;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -25,6 +27,8 @@ import java.util.List;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+
 /**
  * Created by david on 20/11/16.
  */
@@ -161,9 +165,57 @@ public class UserImplTest {
         assertThat(loginStaffDetails, is(nullValue()));
     }
 
+    @Test
+    public void searchForStaffsByName_Test() throws Exception {
+        // Added new staff include name Diez
+        userImp.saveNewStaff(generateStaff(2, "Monserat Diez", "1971-02-01", "2016-01-01", "Designer"));
+
+        // search for name Diez
+        List<Staff> staffs = userImp.searchForStaffs(2, "Diez", SearchType.NAME);
+
+        assertThat(staffs.size(), is(2));
+        for (Staff s : staffs) {
+            if (s.getName().equalsIgnoreCase("Monserat Diez")){
+                assertThat(s.getPosition(), is("Designer"));
+                testedUsersId.add(s.getId());
+            } else {
+                assertThat(s.getName(), is("Jolita Diez"));
+                assertThat(s.getPosition(), is("Economist"));
+            }
+        }
+    }
+
+    @Test
+    public void searchForStaffsByDBO_Test() throws Exception  {
+        userImp.saveNewStaff(generateStaff("Bob Dylan", "1977-09-08", "2016-01-01", "Java Developer"));
+
+        List<Staff> staffs = userImp.searchForStaffs(1, "1977-09-08", SearchType.DOB);
+        assertThat(staffs.size(), is(1));
+        Staff staff = staffs.get(0);
+        assertThat(staff.getName(), is("Bob Dylan"));
+        assertThat(staff.getPosition(), is("Java Developer"));
+        testedUsersId.add(staff.getId());
+    }
+
+    @Test
+    public void searchForStaffsByDBOError_Test() throws Exception  {
+        try {
+            userImp.searchForStaffs(1, "1977-09-38", SearchType.DOB);
+            fail( "searchForStaffsByDBOError_Test: ValidationException should be thrown here. ");
+        } catch (ValidationException e) {
+            assertThat(e.getMessage(), is("Invalid date of birthday: 1977-09-38"));
+        }
+
+
+    }
+
     private Staff generateStaff(String name, String dob, String startDate, String position) throws Exception {
+        return generateStaff(1, name, dob, startDate, position);
+    }
+
+    private Staff generateStaff(int depId, String name, String dob, String startDate, String position) throws Exception {
         Staff.Builder staff = new Staff.Builder();
-        staff.setDepId(1);
+        staff.setDepId(depId);
         staff.setName(name);
         staff.setDob(commonConv.getDateFromString(dob));
         staff.setStartDay(commonConv.getDateFromString(startDate));
