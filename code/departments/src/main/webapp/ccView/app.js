@@ -21,6 +21,9 @@ controlCenterApp.config(['$routeProvider', function($routeProvider) {
 	  .when('/addSingleStaff',{
             templateUrl: 'ccView/views/addSingleStaff.html',
 	  })
+	  .when('/modifySingleStaff',{
+            templateUrl: 'ccView/views/modifySingleStaff.html',
+      })
 	  .when('/createdepartment', {
       	        templateUrl: 'ccView/views/createDepartment.html',
       	  })

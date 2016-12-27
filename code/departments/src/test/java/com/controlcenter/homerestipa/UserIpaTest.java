@@ -1,7 +1,7 @@
 package com.controlcenter.homerestipa;
 
 import com.controlcenter.homerestipa.provider.RestServices;
-import com.controlcenter.homerestipa.response.StaffDetailsJson;
+import com.controlcenter.homerestipa.response.StaffLoginDetailsJson;
 import com.controlcenter.homerestipa.response.UserLoginJson;
 import com.department.testutils.JerseyContainerJUnitRule;
 import com.departments.dto.data.LoginDetails;
@@ -229,9 +229,9 @@ public class UserIpaTest {
         LoginDetails loginDetails = new LoginDetails("some@email.com", "$3728bdkjabddbeqnrrekop");
         Staff staff = new Staff.Builder().build();
         int depId = 2;
-        doNothing().when(mockValidationStaffHepler).basicStaffValidation(eq(depId), any(StaffDetailsJson.class));
+        doNothing().when(mockValidationStaffHepler).basicStaffValidation(eq(depId), any(StaffLoginDetailsJson.class));
         when(mockValidationStaffHepler.validateAndGetLoginDetails("some@email.com", "somepassword120")).thenReturn(loginDetails);
-        when(mockValidationStaffHepler.validateAndGetStaffDetails(eq(depId), any(StaffDetailsJson.class))).thenReturn(staff);
+        when(mockValidationStaffHepler.validateAndGetStaffDetails(eq(depId), any(StaffLoginDetailsJson.class))).thenReturn(staff);
         doNothing().when(mockUseInter).saveNewStaffAndLoginDetails(staff, loginDetails);
 
         given()
@@ -248,7 +248,7 @@ public class UserIpaTest {
         LoginDetails loginDetails = new LoginDetails("some@email.com", "$3728bdkjabddbeqnrrekop");
         Staff staff = new Staff.Builder().build();
         int depId = 2;
-        doThrow(new ValidationException("Invalid Email Address")).when(mockValidationStaffHepler).basicStaffValidation(eq(depId), any(StaffDetailsJson.class));
+        doThrow(new ValidationException("Invalid Email Address")).when(mockValidationStaffHepler).basicStaffValidation(eq(depId), any(StaffLoginDetailsJson.class));
 
         given()
             .contentType("application/json")
@@ -265,9 +265,9 @@ public class UserIpaTest {
         LoginDetails loginDetails = new LoginDetails("some@email.com", "$3728bdkjabddbeqnrrekop");
         Staff staff = new Staff.Builder().build();
         int depId = 2;
-        doNothing().when(mockValidationStaffHepler).basicStaffValidation(eq(depId), any(StaffDetailsJson.class));
+        doNothing().when(mockValidationStaffHepler).basicStaffValidation(eq(depId), any(StaffLoginDetailsJson.class));
         when(mockValidationStaffHepler.validateAndGetLoginDetails("some@email.com", "somepassword120")).thenReturn(loginDetails);
-        when(mockValidationStaffHepler.validateAndGetStaffDetails(eq(depId), any(StaffDetailsJson.class))).thenReturn(staff);
+        when(mockValidationStaffHepler.validateAndGetStaffDetails(eq(depId), any(StaffLoginDetailsJson.class))).thenReturn(staff);
         doThrow( new SQLFaultException("Enable to connect database")).when(mockUseInter).saveNewStaffAndLoginDetails(staff, loginDetails);
 
         given()
@@ -285,9 +285,9 @@ public class UserIpaTest {
         LoginDetails loginDetails = new LoginDetails("some@email.com", "$3728bdkjabddbeqnrrekop");
         Staff staff = new Staff.Builder().build();
         int depId = 2;
-        doNothing().when(mockValidationStaffHepler).basicStaffValidation(eq(depId), any(StaffDetailsJson.class));
+        doNothing().when(mockValidationStaffHepler).basicStaffValidation(eq(depId), any(StaffLoginDetailsJson.class));
         when(mockValidationStaffHepler.validateAndGetLoginDetails("some@email.com", "somepassword120")).thenReturn(loginDetails);
-        when(mockValidationStaffHepler.validateAndGetStaffDetails(eq(depId), any(StaffDetailsJson.class))).thenReturn(staff);
+        when(mockValidationStaffHepler.validateAndGetStaffDetails(eq(depId), any(StaffLoginDetailsJson.class))).thenReturn(staff);
         doThrow( new RuntimeException()).when(mockUseInter).saveNewStaffAndLoginDetails(staff, loginDetails);
 
         given()
@@ -299,8 +299,8 @@ public class UserIpaTest {
             .statusCode(INTERNAL_SERVER_ERROR);
     }
 
-    private StaffDetailsJson generateStaffDetails() {
-        return new StaffDetailsJson("Full Name", "1990-01-01", "2016-01-01",
+    private StaffLoginDetailsJson generateStaffDetails() {
+        return new StaffLoginDetailsJson("Full Name", "1990-01-01", "2016-01-01",
                 "Developer", null, null, "some@email.com", "somepassword120");
     }
 }

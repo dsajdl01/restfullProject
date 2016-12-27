@@ -1,7 +1,7 @@
 package com.controlcenter.homerestipa.utils;
 
 
-import com.controlcenter.homerestipa.response.StaffDetailsJson;
+import com.controlcenter.homerestipa.response.StaffLoginDetailsJson;
 import com.departments.dto.data.LoginDetails;
 import com.departments.dto.data.Staff;
 
@@ -13,7 +13,7 @@ import java.util.Date;
 public class DataMapper {
 
 
-    public Staff mapStaffTable(int depId, StaffDetailsJson staff, Date dob, Date startDay) {
+    public Staff mapStaffTable(int depId, StaffLoginDetailsJson staff, Date dob, Date startDay) {
         return new Staff(null, depId, staff.getFullName(), dob, startDay,null, staff.getPosition(), staff.getStaffEmail(), staff.getComment());
     }
 

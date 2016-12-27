@@ -1,10 +1,9 @@
 package com.controlcenter.homerestipa;
 
 import com.controlcenter.homerestipa.provider.RestServices;
-import com.controlcenter.homerestipa.response.StaffDetailsJson;
-import com.controlcenter.homerestipa.response.StaffJson;
-import com.controlcenter.homerestipa.response.UserLoginJson;
+import com.controlcenter.homerestipa.response.*;
 import com.departments.dto.common.lgb.CommonConversions;
+import com.departments.dto.common.lgb.SearchType;
 import com.departments.dto.data.LoginDetails;
 import com.departments.dto.data.LoginStaff;
 import com.departments.dto.data.Staff;
@@ -21,6 +20,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import static com.controlcenter.homerestipa.cash.control.response.RestResponseHandler.*;
 
@@ -62,7 +64,7 @@ public class UserIPA {
             }
 
             session.setAttribute("userId", staff.getUserId());
-            return success( new StaffJson(staff.getUserId(), staff.getName(), staff.getFirstLogin()));
+            return success( new LoginStaffJson(staff.getUserId(), staff.getName(), staff.getFirstLogin()));
         }
         catch (SQLFaultException departmentFaultService) {
             LOGGER.error("loginUser: SQLFaultException = {} ", departmentFaultService);
@@ -77,7 +79,7 @@ public class UserIPA {
     @Path("/{depId}/addNewStaff")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addNewStaff(@PathParam("depId") final Integer depId, StaffDetailsJson newStaff, @Context HttpServletRequest request) {
+    public Response addNewStaff(@PathParam("depId") final Integer depId, StaffLoginDetailsJson newStaff, @Context HttpServletRequest request) {
         try {
             validationStaffHepler.getValidationStaffHepler().basicStaffValidation(depId, newStaff);
             LOGGER.info("addNewStaff: depId={}, new staff fullName={}", depId, newStaff.getFullName());
@@ -95,6 +97,34 @@ public class UserIPA {
             LOGGER.error("addNewStaff: Exception = {} ", e);
             return internalServerError("logInUser: error occur = " + e.getMessage());
         }
+    }
+
+    @POST
+    @Path("/{depId}/searchForStaff")
+    public Response searchForStaff(@PathParam("depId") final Integer depId, @QueryParam("searchValue") String searchValue, @QueryParam("type") String type ) {
+        LOGGER.info("searchForStaff: depId={}, searchValue={}, type={}", depId, searchValue, type);
+        try {
+            validationStaffHepler.getValidationStaffHepler().basicValidationOfDepartmentId(depId);
+            validationStaffHepler.getValidationStaffHepler().basicValidationOfSearchValue(searchValue);
+            List<Staff> staffs = coreServices.getUserImpl().searchForStaffs(depId, searchValue, SearchType.fromString(type));
+            List<StaffJson> staffLoginDetailsJsons = new ArrayList<>();
+            staffs.forEach( s -> staffLoginDetailsJsons.add( new StaffJson(s.getId(), s.getDepId(), getString(s.getDob()),
+                            getString(s.getStartDay()), getString(s.getLastDay()), s.getPosition(), s.getEmail(), s.getComment())));
+            return success(new StaffDetailsListJson(staffLoginDetailsJsons));
+        } catch (ValidationException e) {
+            LOGGER.error("addNewStaff: ValidationException = {} ", e.getMessage());
+            return badRequest(e.getMessage());
+        } catch (SQLFaultException e) {
+            LOGGER.error("SQLFaultException: {}", e);
+            return sqlConnectionError(e.getMessage());
+        }catch (Exception e ) {
+            LOGGER.error("addNewStaff: Exception = {} ", e);
+            return internalServerError("logInUser: error occur = " + e.getMessage());
+        }
+    }
+
+    private String getString(Date date) {
+            return date == null ? null : commonConv.convertDateToString(date);
     }
 
 

@@ -1,6 +1,6 @@
 package com.controlcenter.homerestipa.utils;
 
-import com.controlcenter.homerestipa.response.StaffDetailsJson;
+import com.controlcenter.homerestipa.response.StaffLoginDetailsJson;
 import com.department.core.data.PasswordAuthentication;
 import com.departments.dto.common.lgb.CommonConversions;
 import com.departments.dto.data.LoginDetails;
@@ -21,18 +21,24 @@ public class ValidationStaffHepler{
     private PasswordAuthentication passwordAuth;
 
     private static final int MAX_PASSWORD_LENGTH = 8;
+    private static final int MAX_SEARCH_VALUE = 3;
 
     public ValidationStaffHepler(PasswordAuthentication passwordAuth) {
         this.passwordAuth = passwordAuth;
     }
 
-    public void basicStaffValidation(Integer depId, StaffDetailsJson newStaff) throws ValidationException {
-        basicValidateDepartmentId(depId);
+    public void basicStaffValidation(Integer depId, StaffLoginDetailsJson newStaff) throws ValidationException {
+        basicValidationOfDepartmentId(depId);
         basicValidateStaffObject(newStaff);
     }
 
+    public void basicValidationOfSearchValue(String val) throws ValidationException {
+        if ( !commonConv.hasStringMaxLength(val, MAX_SEARCH_VALUE) ) {
+            throw new ValidationException("Search value mas be at least " + MAX_SEARCH_VALUE + " characters" );
+        }
+    }
 
-    public void basicValidateDepartmentId(Integer depId) throws ValidationException {
+    public void basicValidationOfDepartmentId(Integer depId) throws ValidationException {
         if (depId == null ) {
             throw new ValidationException("Mandatory department ID is missing.");
         } else if ( depId <= 0 ) {
@@ -40,7 +46,7 @@ public class ValidationStaffHepler{
         }
     }
 
-    public void  basicValidateStaffObject(StaffDetailsJson staff) throws ValidationException {
+    public void  basicValidateStaffObject(StaffLoginDetailsJson staff) throws ValidationException {
         if ( staff == null ) {
             throw new ValidationException("Mandatory staff object is missing.");
         }
@@ -67,7 +73,7 @@ public class ValidationStaffHepler{
         return new DataMapper().mapLoginDetails(email,passwordAuth.hashPassword(password));
     }
 
-    public Staff validateAndGetStaffDetails(int depId, StaffDetailsJson staff) throws  ValidationException {
+    public Staff validateAndGetStaffDetails(int depId, StaffLoginDetailsJson staff) throws  ValidationException {
 
         List<String> valResponseList = validateStaffDetails(staff);
         Date dob = convertDates(staff.getDob(), "Date of birthday", valResponseList);
@@ -96,7 +102,7 @@ public class ValidationStaffHepler{
         return null;
     }
 
-    private List<String> validateStaffDetails(StaffDetailsJson staff ) {
+    private List<String> validateStaffDetails(StaffLoginDetailsJson staff ) {
         List<String> errorMessage = new ArrayList<>();
 
         if (commonConv.stringIsNullOrEmpty(staff.getFullName())) {

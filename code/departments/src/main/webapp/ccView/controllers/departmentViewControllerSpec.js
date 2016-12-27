@@ -142,7 +142,7 @@ describe('Controller: departmentViewController', function() {
              spyOn(locationMock, 'path');
              spyOn(toasterMock, 'pop');
              ctrl.modifyStaff(101);
-             expect(locationMock.path).toHaveBeenCalledWith('/modifyStaff');
+             expect(locationMock.path).toHaveBeenCalledWith('/modifySingleStaff');
              expect(toasterMock.pop).not.toHaveBeenCalled();
          });
 

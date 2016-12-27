@@ -3,12 +3,17 @@ package dep.data.core.provider;
 
 import com.department.core.data.PasswordAuthentication;
 import com.departments.dto.common.lgb.CommonConversions;
+import com.departments.dto.common.lgb.SearchType;
 import com.departments.dto.data.LoginDetails;
 import com.departments.dto.data.LoginStaff;
 import com.departments.dto.data.Staff;
 import com.departments.dto.dep_dbo.UserDBO;
 import com.departments.dto.fault.exception.SQLFaultException;
+import com.departments.dto.fault.exception.ValidationException;
 import dep.data.core.provider.inter.provider.UserInter;
+
+import java.text.ParseException;
+import java.util.List;
 
 /**
  * Created by david on 13/11/16.
@@ -75,6 +80,27 @@ public class UserImpl implements UserInter {
 
     public void saveLoginDetails(LoginDetails loginDetail, int staffId) throws SQLFaultException {
         userDBO.saveLoginDetails(loginDetail, staffId);
+    }
+
+    public List<Staff> searchForStaffs(int depId, String value, SearchType type) throws SQLFaultException, ValidationException {
+
+        switch (type) {
+            case NAME:
+                return  userDBO.searchForStaffsByName(depId, value);
+            case DOB:
+                validateDate(value);
+                return userDBO.searchForStaffsByDOB(depId, value);
+            default:
+                throw new ValidationException("Unknown search type");
+        }
+    }
+
+    private void validateDate(String date) throws ValidationException {
+        try {
+            commonConv.getDateFromString(date);
+        } catch ( ParseException e ) {
+            throw new ValidationException("Invalid date of birthday: " + date );
+        }
     }
 
     public boolean doesEmailExist(String email) throws SQLFaultException {

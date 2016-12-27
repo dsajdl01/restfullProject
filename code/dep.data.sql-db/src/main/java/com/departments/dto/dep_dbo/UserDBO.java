@@ -5,6 +5,7 @@ import com.departments.dto.data.LoginDetails;
 import com.departments.dto.data.LoginStaff;
 import com.departments.dto.data.Staff;
 import com.departments.dto.fault.exception.SQLFaultException;
+import com.departments.dto.fault.exception.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +15,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by david on 13/11/16.
@@ -190,6 +193,67 @@ public class UserDBO {
             LOGGER.error("deleteStaffDetails: {}", sqlE);
             throw new SQLFaultException("Enable to connect to database when deleting staff");
         }
+    }
+
+    private final String SEARCH_FOR_STAFF_BY_NAME = "SELECT id, dep_id, name, dob, start_day, last_day, position, email, comments FROM staff WHERE dep_id = ? AND name like ?";
+    public List<Staff> searchForStaffsByName(int depId, String value) throws  SQLFaultException, ValidationException {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = con.prepareStatement(SEARCH_FOR_STAFF_BY_NAME);
+            preparedStatement.setInt(1, depId);
+            preparedStatement.setString(2, "%" +  value + "%");
+            ResultSet res = preparedStatement.executeQuery();
+            return processResultStaffProvider(res);
+        } catch (SQLException sqlE){
+            LOGGER.error("searchForStaffsByName: {}", sqlE);
+            throw new SQLFaultException("Enable to connect to database when searching for staff by name.");
+        }
+    }
+
+    private final String SEARCH_FOR_STAFF_BY_DOB = "SELECT id, dep_id, name, dob, start_day, last_day, position, email, comments FROM staff WHERE dep_id= ? AND dob = ?";
+    public List<Staff> searchForStaffsByDOB(int depId, String value) throws  SQLFaultException, ValidationException {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = con.prepareStatement(SEARCH_FOR_STAFF_BY_DOB);
+            preparedStatement.setInt(1, depId);
+            preparedStatement.setString(2, value);
+            ResultSet res = preparedStatement.executeQuery();
+            return processResultStaffProvider(res);
+        } catch (SQLException sqlE){
+            LOGGER.error("searchForStaffsByDOB: {}", sqlE);
+            throw new SQLFaultException("Enable to connect to database when searching for staff by DOB.");
+        }
+    }
+
+    private List<Staff> processResultStaffProvider(ResultSet res) throws SQLException, ValidationException {
+        List<Staff> staffsResult = new ArrayList<>();
+        while(res.next()){
+            processRow(staffsResult, res);
+        }
+        return staffsResult;
+    }
+
+    private void processRow(List<Staff> staffs, ResultSet res) throws SQLException, ValidationException {
+        int staffId = res.getInt("id");
+        int depId = res.getInt("dep_id");
+        String name = res.getString("name");
+        Date dob;
+        Date startDate;
+        Date lastDate;
+        String position = res.getString("position");
+        String email = res.getString("email");
+        String comment = res.getString("comments");
+        try {
+            String date = res.getString("dob");
+            dob = commonConv.stringIsNullOrEmpty(date) ? null : commonConv.getDateFromString(date);
+            date = res.getString("start_day");
+            startDate = commonConv.stringIsNullOrEmpty(date) ? null :  commonConv.getDateFromString(date);
+            date = res.getString("last_day");
+            lastDate = commonConv.stringIsNullOrEmpty(date) ? null :   commonConv.getDateFromString(date);
+        } catch (ParseException e) {
+            throw new ValidationException("Error occuer while converting string to date");
+        }
+        staffs.add( new Staff(staffId, depId, name, dob, startDate, lastDate, position, email, comment));
     }
 
     public void  saveLoginDetails(LoginDetails loginDetail, int staffId) throws  SQLFaultException {

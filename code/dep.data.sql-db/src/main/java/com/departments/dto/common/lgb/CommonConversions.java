@@ -37,12 +37,12 @@ public class CommonConversions {
         }
     }
 
-    public boolean stringIsNullOrEmpty(String val) {
-        return val == null || val.trim().length() == 0|| (val.equalsIgnoreCase("null"));
-    }
-
     public boolean hasStringMaxLength(String val, int length){
         return  val.length() >= length;
+    }
+
+    public boolean stringIsNullOrEmpty(String val) {
+        return val == null || val.trim().length() == 0|| (val.equalsIgnoreCase("null"));
     }
 
     public boolean doesEmailIsValid(String email) {

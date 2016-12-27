@@ -1,6 +1,6 @@
 package com.controlcenter.homerestipa.utils;
 
-import com.controlcenter.homerestipa.response.StaffDetailsJson;
+import com.controlcenter.homerestipa.response.StaffLoginDetailsJson;
 import com.department.core.data.PasswordAuthentication;
 import com.departments.dto.common.lgb.CommonConversions;
 import com.departments.dto.data.LoginDetails;
@@ -191,7 +191,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void basicValidateDepartmentId_Test() {
         try {
-            validationStaffHepler.basicValidateDepartmentId(4);
+            validationStaffHepler.basicValidationOfDepartmentId(4);
         } catch (ValidationException e) {
             fail( "basicValidateDepartmentId_Test: ValidationException should be thrown here. " + e.getMessage());
         }
@@ -200,7 +200,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void basicValidateDepartmentIdNull_Test() {
         try {
-            validationStaffHepler.basicValidateDepartmentId(null);
+            validationStaffHepler.basicValidationOfDepartmentId(null);
             fail( "basicValidateDepartmentIdNull_Test: ValidationException should be thrown here. ");
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Mandatory department ID is missing."));
@@ -210,18 +210,18 @@ public class ValidationStaffHeplerTest {
     @Test
     public void basicValidateDepartmentIdZero_Test() {
         try {
-            validationStaffHepler.basicValidateDepartmentId(0);
+            validationStaffHepler.basicValidationOfDepartmentId(0);
             fail( "basicValidateDepartmentIdNull_Test: ValidationException should be thrown here. ");
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Invalid department ID."));
         }
     }
 
-    private StaffDetailsJson generateStaff(String name, String dob, String startDay, String position, String staffEmail) {
+    private StaffLoginDetailsJson generateStaff(String name, String dob, String startDay, String position, String staffEmail) {
         return generateStaff(name, dob, startDay, position, staffEmail, "loging@email.com", "somePassword123");
     }
 
-    private StaffDetailsJson generateStaff(String name, String dob, String startDay, String position, String staffEmail, String loginEmail, String loginPassword) {
-        return new StaffDetailsJson(name, dob, startDay, position, staffEmail, null, loginEmail, loginPassword);
+    private StaffLoginDetailsJson generateStaff(String name, String dob, String startDay, String position, String staffEmail, String loginEmail, String loginPassword) {
+        return new StaffLoginDetailsJson(name, dob, startDay, position, staffEmail, null, loginEmail, loginPassword);
     }
 }

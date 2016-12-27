@@ -3,23 +3,27 @@ package com.controlcenter.homerestipa.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Created by david on 14/11/16.
+ * Created by david on 27/12/16.
  */
-public class StaffJson {
+public class StaffJson extends StaffDetailsJson {
 
-    @JsonProperty("userId")
-    private final Integer userId;
+    @JsonProperty("staffId")
+    private int staffId;
 
-    @JsonProperty("name")
-    private final String name;
+    @JsonProperty("depId")
+    private int depId;
 
-    @JsonProperty("firstLogin")
-    private final boolean firstLogin;
+    public StaffJson(@JsonProperty("staffId") int staffId,
+                     @JsonProperty("depId") int depId,
+                     @JsonProperty("fullName") String fullName,
+                     @JsonProperty("dob") String dob,
+                     @JsonProperty("startDay") String startDay,
+                     @JsonProperty("position") String position,
+                     @JsonProperty("staffEmail") String staffEmail,
+                     @JsonProperty("comment") String comment) {
 
-
-    public StaffJson( Integer userId, String name, boolean firstLogin ) {
-        this.userId = userId;
-        this.name = name;
-        this.firstLogin = firstLogin;
+        super(fullName, dob, startDay, position, staffEmail, comment);
+        this.depId = depId;
+        this.staffId = staffId;
     }
 }

@@ -1,0 +1,52 @@
+<div class="container" ng-controller="modifyStaffController as ctrl">
+    <h4> Modify Staff in Department {{ ctrl.depName }}</h4>
+    <form role="form" name="form" novalidate ng-submit="">
+        <div class="row">
+            <div class=" col-md-9">
+                <label>Search By:</label>
+                <select class="form-control"  ng-change="ctrl.getSelectedName(ctrl.searchName)" name="searchName" ng-model="ctrl.searchName">
+                    <option value=-1>Select name</option>
+                    <option ng-repeat="name in ctrl.namesToSearch" value="{{ name.id }}">{{name.name}}</option>
+                </select>
+                <div ng-show="ctrl.showFullnameField" class="form-group row white-bgr">
+                    <label class="col-xs-5 col-form-label">Search by Full Name</label>
+                    <div class="col-md-8">
+                        <input text="text"
+                               class="form-control"
+                               placeholder=" Enter full name"
+                               required="true"
+                               name="fullName"
+                               ng-model="ctrl.fullName"
+                               ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
+                    </div>
+                    <div class="col-md-3 pull-right">
+                          <button type="button" ng-click="ctrl.search(ctrl.fullName)" class="btn btn-default" title="Search for staff by name"> Search </button>
+                    </div>
+
+                </div>
+                <div ng-show="ctrl.showDOBField" class="form-group row white-bgr">
+                    <label class="col-xs-5 col-form-label">Search by Data of Birthday</label>
+                    <div class="col-md-8">
+                        <input text="text"
+                               class="form-control"
+                               placeholder=" Enter yyyy-mm-dd"
+                               date-validation="{ctrl:ctrl}"
+                               ng-maxlength="10"
+                               required="true"
+                               name="dob"
+                               ng-model="ctrl.dob"
+                               ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
+                        <div class="message-help-block" ng-messages="form.dob.$error" ng-if="form.dob.$dirty">
+                            <span class="message-error-help" ng-message="required">Date of birthday is required.</span>
+                            <div class="form_error_messages" ng-message="dateValidation">{{ ctrl.dateErrorMessage }} </div>
+                            <div class="form_error_messages" ng-message="maxlength">The length too long. Format: yyyy-mm-dd</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 pull-right">
+                        <button type="button" ng-click="ctrl.search(ctrl.dob)" class="btn btn-default" title="Search for staff by name"> Search </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

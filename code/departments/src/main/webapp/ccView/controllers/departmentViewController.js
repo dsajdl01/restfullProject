@@ -66,7 +66,7 @@ controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonS
 	    if (isDepartmentSelected(depId) ) {
 	        $sessionStorage.depId =  depId;
             getSelectedDepartment( depId );
-            $location.path('/modifyStaff')
+            $location.path('/modifySingleStaff')
 	    }
 	}
 

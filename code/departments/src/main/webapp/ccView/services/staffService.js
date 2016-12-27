@@ -24,4 +24,12 @@ function staffService($http)
             data: user
         });
     }
+
+    self.searchForStaff = function(depId, searchValue, type ) {
+         return $http  ({
+              method: "POST",
+              url: '/department/rest/user/' + depId + '/searchForStaff',
+              params: { 'searchValue': searchValue, "type": type }
+         });
+    }
 }

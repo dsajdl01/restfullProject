@@ -26,11 +26,6 @@ public class StaffDetailsJson {
     @JsonProperty("comment")
     private final String comment;
 
-    @JsonProperty("loginEmail")
-    private final String loginEmail;
-
-    @JsonProperty("password")
-    private final String password;
 
     @JsonCreator
     public StaffDetailsJson(@JsonProperty("fullName") String fullName,
@@ -38,17 +33,13 @@ public class StaffDetailsJson {
                             @JsonProperty("startDay") String startDay,
                             @JsonProperty("position") String position,
                             @JsonProperty("staffEmail") String staffEmail,
-                            @JsonProperty("comment") String comment,
-                            @JsonProperty("loginEmail") String loginEmail,
-                            @JsonProperty("password") String password) {
+                            @JsonProperty("comment") String comment ) {
         this.fullName = fullName;
         this.dob = dob;
         this.startDay = startDay;
         this.position = position;
         this.staffEmail = staffEmail;
         this.comment = comment;
-        this.loginEmail = loginEmail;
-        this.password = password;
     }
 
     public String getFullName() {
@@ -73,13 +64,5 @@ public class StaffDetailsJson {
 
     public String getComment() {
         return comment;
-    }
-
-    public String getLoginEmail() {
-        return loginEmail;
-    }
-
-    public String getPassword() {
-        return password;
     }
 }
