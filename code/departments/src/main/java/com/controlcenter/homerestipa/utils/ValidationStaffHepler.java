@@ -33,7 +33,7 @@ public class ValidationStaffHepler{
     }
 
     public void basicValidationOfSearchValue(String val) throws ValidationException {
-        if ( !commonConv.hasStringMaxLength(val, MAX_SEARCH_VALUE) ) {
+        if ( commonConv.stringIsNullOrEmpty(val) || !commonConv.hasStringMaxLength(val, MAX_SEARCH_VALUE) ) {
             throw new ValidationException("Search value mas be at least " + MAX_SEARCH_VALUE + " characters" );
         }
     }

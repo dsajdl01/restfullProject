@@ -108,7 +108,7 @@ public class UserIPA {
             validationStaffHepler.getValidationStaffHepler().basicValidationOfSearchValue(searchValue);
             List<Staff> staffs = coreServices.getUserImpl().searchForStaffs(depId, searchValue, SearchType.fromString(type));
             List<StaffJson> staffLoginDetailsJsons = new ArrayList<>();
-            staffs.forEach( s -> staffLoginDetailsJsons.add( new StaffJson(s.getId(), s.getDepId(), getString(s.getDob()),
+            staffs.forEach( s -> staffLoginDetailsJsons.add( new StaffJson(s.getId(), s.getDepId(), s.getName(), getString(s.getDob()),
                             getString(s.getStartDay()), getString(s.getLastDay()), s.getPosition(), s.getEmail(), s.getComment())));
             return success(new StaffDetailsListJson(staffLoginDetailsJsons));
         } catch (ValidationException e) {

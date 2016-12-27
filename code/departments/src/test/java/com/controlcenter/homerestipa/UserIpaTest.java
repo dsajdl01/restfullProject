@@ -4,6 +4,8 @@ import com.controlcenter.homerestipa.provider.RestServices;
 import com.controlcenter.homerestipa.response.StaffLoginDetailsJson;
 import com.controlcenter.homerestipa.response.UserLoginJson;
 import com.department.testutils.JerseyContainerJUnitRule;
+import com.departments.dto.common.lgb.CommonConversions;
+import com.departments.dto.common.lgb.SearchType;
 import com.departments.dto.data.LoginDetails;
 import com.departments.dto.data.LoginStaff;
 import com.departments.dto.data.Staff;
@@ -23,9 +25,11 @@ import org.junit.Test;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Application;
 import java.util.HashMap;
+import java.util.List;
 
 import static com.controlcenter.homerestipa.MockServices.*;
 import static com.jayway.restassured.RestAssured.given;
+import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -36,6 +40,7 @@ import static org.mockito.Mockito.*;
  */
 public class UserIpaTest {
 
+    private CommonConversions commonConv = new CommonConversions();
     @ClassRule
     public static JerseyContainerJUnitRule jerseyProvider = new JerseyContainerJUnitRule() {
         @Override
@@ -299,8 +304,82 @@ public class UserIpaTest {
             .statusCode(INTERNAL_SERVER_ERROR);
     }
 
+    @Test
+    public void searchForStaffTest() throws  Exception{
+        doNothing().when(mockValidationStaffHepler).basicValidationOfDepartmentId(1);
+        doNothing().when(mockValidationStaffHepler).basicValidationOfSearchValue("david");
+        List<Staff> staffs = asList(new Staff(2, 1, "David Smith", commonConv.getDateFromString("1999-01-01"),
+                commonConv.getDateFromString("2016-01-01"), null, "Developer", "ds@co.uk", null));
+        when(mockUseInter.searchForStaffs(1, "david", SearchType.NAME)).thenReturn(staffs);
+
+        given()
+             .queryParam("searchValue", "david")
+             .queryParam("type", "name")
+        .when()
+             .post("/" + 1 + "/searchForStaff")
+        .then()//.log().all()
+             .statusCode(HTML_OK)
+             .body("staffDetailsList[0].staffId", equalTo(2))
+                .body("staffDetailsList[0].depId", equalTo(1))
+                .body("staffDetailsList[0].fullName", equalTo("David Smith"))
+                .body("staffDetailsList[0].dob", equalTo("1999-01-01"))
+                .body("staffDetailsList[0].startDay", equalTo("2016-01-01"))
+                .body("staffDetailsList[0].lastDay", equalTo(null))
+                .body("staffDetailsList[0].position", equalTo("Developer"))
+                .body("staffDetailsList[0].staffEmail", equalTo("ds@co.uk"))
+                .body("staffDetailsList[0].comment", equalTo(null));
+    } // Validation
+
+    @Test
+    public void searchForStaffValidationTest() throws  Exception{
+        doNothing().when(mockValidationStaffHepler).basicValidationOfDepartmentId(1);
+        doNothing().when(mockValidationStaffHepler).basicValidationOfSearchValue("david");
+
+        given()
+            .queryParam("searchValue", "david")
+            .queryParam("type", "null")
+        .when()
+            .post("/" + 1 + "/searchForStaff")
+        .then()//.log().all()
+            .statusCode(BAD_REQUEST)
+            .body("message", equalTo("Invalid search type: null"));
+    }
+
+    @Test
+    public void searchForStaffSQLExceptionTest() throws  Exception{
+        doNothing().when(mockValidationStaffHepler).basicValidationOfDepartmentId(1);
+        doNothing().when(mockValidationStaffHepler).basicValidationOfSearchValue("david");
+        doThrow( new SQLFaultException("Unable to connect to database while searching for staff by name")).when(mockUseInter).searchForStaffs(1, "david", SearchType.NAME);
+
+        given()
+            .queryParam("searchValue", "david")
+            .queryParam("type", "name")
+        .when()
+            .post("/" + 1 + "/searchForStaff")
+        .then()//.log().all()
+            .statusCode(SERVICE_UNAVAILABLE)
+            .body("message", equalTo("Unable to connect to database while searching for staff by name"));
+    }
+
+    @Test
+    public void searchForStaffSQLRuntimeTest() throws  Exception{
+        doNothing().when(mockValidationStaffHepler).basicValidationOfDepartmentId(1);
+        doNothing().when(mockValidationStaffHepler).basicValidationOfSearchValue("david");
+        doThrow( new RuntimeException()).when(mockUseInter).searchForStaffs(1, "david", SearchType.NAME);
+
+        given()
+            .queryParam("searchValue", "david")
+            .queryParam("type", "name")
+        .when()
+            .post("/" + 1 + "/searchForStaff")
+        .then()//.log().all()
+            .statusCode(INTERNAL_SERVER_ERROR);
+    }
+
+
     private StaffLoginDetailsJson generateStaffDetails() {
         return new StaffLoginDetailsJson("Full Name", "1990-01-01", "2016-01-01",
                 "Developer", null, null, "some@email.com", "somepassword120");
     }
+
 }

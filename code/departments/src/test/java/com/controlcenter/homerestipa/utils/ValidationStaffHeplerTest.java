@@ -193,7 +193,7 @@ public class ValidationStaffHeplerTest {
         try {
             validationStaffHepler.basicValidationOfDepartmentId(4);
         } catch (ValidationException e) {
-            fail( "basicValidateDepartmentId_Test: ValidationException should be thrown here. " + e.getMessage());
+            fail( "basicValidateDepartmentId_Test: ValidationException should NOT be thrown here. " + e.getMessage());
         }
     }
 
@@ -214,6 +214,35 @@ public class ValidationStaffHeplerTest {
             fail( "basicValidateDepartmentIdNull_Test: ValidationException should be thrown here. ");
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Invalid department ID."));
+        }
+    }
+
+    @Test
+    public void basicValidationOfSearchValue_Test() {
+        try {
+            validationStaffHepler.basicValidationOfSearchValue("david");
+        } catch (ValidationException e) {
+            fail( "basicValidationOfSearchValue_Test: ValidationException should NOT be thrown here. " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void basicValidationOfSearchValueNullException_Test() {
+        try {
+            validationStaffHepler.basicValidationOfSearchValue(null);
+            fail( "basicValidationOfSearchValueNullException_Test: ValidationException should be thrown here. ");
+        } catch (ValidationException e) {
+            assertThat(e.getMessage(), is("Search value mas be at least 3 characters"));
+        }
+    }
+
+    @Test
+    public void basicValidationOfSearchValueException_Test() {
+        try {
+            validationStaffHepler.basicValidationOfSearchValue("da");
+            fail( "basicValidationOfSearchValueException_Test: ValidationException should be thrown here. ");
+        } catch (ValidationException e) {
+            assertThat(e.getMessage(), is("Search value mas be at least 3 characters"));
         }
     }
 
