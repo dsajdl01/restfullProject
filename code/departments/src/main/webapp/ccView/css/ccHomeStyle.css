@@ -212,3 +212,37 @@ textarea.form-control {
     font-family: "Times New Roman", Times, serif;
     font-weight: bold;
 }
+/*****************************************************
+*****       Modify Single staff view        **********
+******************************************************/
+
+.searchField {
+    margin: 30px 180px 10px -15px;
+}
+
+.btnSearch {
+    background: #d6d6d6;
+    color: #ffffff;
+    padding: 6px 30px;
+    font-weight: bold;
+}
+
+.btnCancelInModify {
+    margin-top: 60px;
+    margin-bottom: 25px;
+}
+
+/*************************************************
+********        chooser staff dialog box    ******
+**************************************************/
+.app-modal-window.modal-dialog {
+  width: 85%;
+}
+
+.isSelected:hover {
+    background: red;
+}
+
+.staffChooserTable tr {
+    cursor: pointer;
+}

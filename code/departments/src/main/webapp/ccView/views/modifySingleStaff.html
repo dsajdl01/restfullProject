@@ -2,13 +2,14 @@
     <h4> Modify Staff in Department {{ ctrl.depName }}</h4>
     <form role="form" name="form" novalidate ng-submit="">
         <div class="row">
-            <div class=" col-md-9">
+            <div class="col-md-9">
                 <label>Search By:</label>
                 <select class="form-control"  ng-change="ctrl.getSelectedName(ctrl.searchName)" name="searchName" ng-model="ctrl.searchName">
                     <option value=-1>Select name</option>
                     <option ng-repeat="name in ctrl.namesToSearch" value="{{ name.id }}">{{name.name}}</option>
                 </select>
-                <div ng-show="ctrl.showFullnameField" class="form-group row white-bgr">
+
+                <div ng-show="ctrl.showFullnameField" class="form-group row white-bgr searchField">
                     <label class="col-xs-5 col-form-label">Search by Full Name</label>
                     <div class="col-md-8">
                         <input text="text"
@@ -16,15 +17,23 @@
                                placeholder=" Enter full name"
                                required="true"
                                name="fullName"
+                               ng-minlength="3"
                                ng-model="ctrl.fullName"
                                ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
+                        <div class="message-help-block" ng-messages="form.fullName.$error" ng-if="form.fullName.$dirty">
+                            <div class="form_error_messages" ng-message="minlength">Key word needs to contains minimum 3 characters</div>
+                        </div>
                     </div>
-                    <div class="col-md-3 pull-right">
-                          <button type="button" ng-click="ctrl.search(ctrl.fullName)" class="btn btn-default" title="Search for staff by name"> Search </button>
+                    <div class="col-md-2 pull-right">
+                          <button type="button"
+                                  ng-disabled="form.fullName.$invalid"
+                                  ng-click="ctrl.search(ctrl.fullName)"
+                                  class="btn btn-default btnSearch"
+                                  title="Search for staff by name"> Search </button>
                     </div>
-
                 </div>
-                <div ng-show="ctrl.showDOBField" class="form-group row white-bgr">
+
+                <div ng-show="ctrl.showDOBField" class="form-group row white-bgr searchField">
                     <label class="col-xs-5 col-form-label">Search by Data of Birthday</label>
                     <div class="col-md-8">
                         <input text="text"
@@ -42,11 +51,23 @@
                             <div class="form_error_messages" ng-message="maxlength">The length too long. Format: yyyy-mm-dd</div>
                         </div>
                     </div>
-                    <div class="col-md-2 pull-right">
-                        <button type="button" ng-click="ctrl.search(ctrl.dob)" class="btn btn-default" title="Search for staff by name"> Search </button>
+                    <div class="col-md-2 pull-right" >
+                        <button type="button"
+                                ng-disabled="form.dob.$invalid"
+                                ng-click="ctrl.search(ctrl.dob)"
+                                class="btn btn-default btnSearch"
+                                title="Search for staff by Date of Birthday"> Search </button>
                     </div>
                 </div>
+
             </div>
         </div>
     </form>
+    <div ng-show="ctrl.zeroStaffSearch" class=" col-md-8"> <h4 class="text-center">{{ ctrl.zeroStaffSearch }} </h4> </div>
+
+    <div class="col-md-9 btnCancelInModify">
+         <span class="pull-right">
+                <button type="button" ng-click="ctrl.homeLocation()" class="btn btn-default" title="Back to home page"> Cancel </button>
+         </span>
+    </div>
 </div>
