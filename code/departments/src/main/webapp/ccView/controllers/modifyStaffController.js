@@ -31,6 +31,7 @@ controlCenterApp.controller('modifyStaffController', ['modalDialogBoxService', '
         };
 
         self.getSelectedName = function(searchId) {
+            self.showStaffForm = false;
             if (searchId == SEARCH_VALUE.NAME) {
                 self.showFullnameField = true;
                 self.showDOBField = false;
@@ -38,10 +39,14 @@ controlCenterApp.controller('modifyStaffController', ['modalDialogBoxService', '
                 self.showFullnameField = false;
                 self.showDOBField = true;
             } else {
-                self.showFullnameField = false;
-                self.showDOBField = false;
+                hideSearchInputFields();
             }
         };
+
+        var hideSearchInputFields = function() {
+            self.showFullnameField = false;
+            self.showDOBField = false;
+        }
 
         self.search = function(searchValue) {
             self.zeroStaffSearch = null;
@@ -83,6 +88,9 @@ controlCenterApp.controller('modifyStaffController', ['modalDialogBoxService', '
             };
             modalDialogBoxService.notify = function(staffId) {
                     console.log(staffId);
+                    self.showStaffForm = true;
+                    hideSearchInputFields();
+                    self.searchName = DEFAULT_VALUE;
             }
             modalDialogBoxService.showDialog();
         }
@@ -95,6 +103,7 @@ controlCenterApp.controller('modifyStaffController', ['modalDialogBoxService', '
             self.namesToSearch =[{ name: "Full Name", id: SEARCH_VALUE.NAME }, { name: "Date of Birthday", id: SEARCH_VALUE.DOB }];
             self.searchName = "-1";
             self.searchOption = null;
+            self.showStaffForm = false;
         }
 
         self.init();

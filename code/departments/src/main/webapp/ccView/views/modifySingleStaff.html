@@ -1,6 +1,6 @@
 <div class="container" ng-controller="modifyStaffController as ctrl">
     <h4> Modify Staff in Department {{ ctrl.depName }}</h4>
-    <form role="form" name="form" novalidate ng-submit="">
+    <form role="formFirst" name="formFirst" novalidate ng-submit="">
         <div class="row">
             <div class="col-md-9">
                 <label>Search By:</label>
@@ -20,13 +20,13 @@
                                ng-minlength="3"
                                ng-model="ctrl.fullName"
                                ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
-                        <div class="message-help-block" ng-messages="form.fullName.$error" ng-if="form.fullName.$dirty">
+                        <div class="message-help-block" ng-messages="formFirst.fullName.$error" ng-if="formFirst.fullName.$dirty">
                             <div class="form_error_messages" ng-message="minlength">Key word needs to contains minimum 3 characters</div>
                         </div>
                     </div>
                     <div class="col-md-2 pull-right">
                           <button type="button"
-                                  ng-disabled="form.fullName.$invalid"
+                                  ng-disabled="formFirst.fullName.$invalid"
                                   ng-click="ctrl.search(ctrl.fullName)"
                                   class="btn btn-default btnSearch"
                                   title="Search for staff by name"> Search </button>
@@ -45,7 +45,7 @@
                                name="dob"
                                ng-model="ctrl.dob"
                                ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
-                        <div class="message-help-block" ng-messages="form.dob.$error" ng-if="form.dob.$dirty">
+                        <div class="message-help-block" ng-messages="formFirst.dob.$error" ng-if="formFirst.dob.$dirty">
                             <span class="message-error-help" ng-message="required">Date of birthday is required.</span>
                             <div class="form_error_messages" ng-message="dateValidation">{{ ctrl.dateErrorMessage }} </div>
                             <div class="form_error_messages" ng-message="maxlength">The length too long. Format: yyyy-mm-dd</div>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="col-md-2 pull-right" >
                         <button type="button"
-                                ng-disabled="form.dob.$invalid"
+                                ng-disabled="formFirst.dob.$invalid"
                                 ng-click="ctrl.search(ctrl.dob)"
                                 class="btn btn-default btnSearch"
                                 title="Search for staff by Date of Birthday"> Search </button>
@@ -63,8 +63,28 @@
             </div>
         </div>
     </form>
+
     <div ng-show="ctrl.zeroStaffSearch" class=" col-md-8"> <h4 class="text-center">{{ ctrl.zeroStaffSearch }} </h4> </div>
 
+    <div ng-show="ctrl.showStaffForm">
+        <div class="row">
+            <div class="col-md-9">
+                <form role="form" name="form" novalidate ng-submit="ctrl.save()" class="modifyStaffForm">
+                     <div ng-include="'ccView/views/inputFormViews/inputFormStaffTemplate.html'"></div>
+                    <div class="form-group row">
+                        <div class="col-xs-11">
+                            <span class="pull-right">
+                                 <button class="btn btn-default"
+                                         type="submit"
+                                         title="Save modify staff details"
+                                         ng-disabled="form.$invalid"> Save </button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="col-md-9 btnCancelInModify">
          <span class="pull-right">
                 <button type="button" ng-click="ctrl.homeLocation()" class="btn btn-default" title="Back to home page"> Cancel </button>
