@@ -32,4 +32,13 @@ function staffService($http)
               params: { 'searchValue': searchValue, "type": type }
          });
     }
+
+    self.modifyStaff = function(staff, depId) {
+        return $http  ({
+                    method: "PUT",
+                    url: '/department/rest/user/' + depId + '/modifyStaff',
+                    headers: { "content-type": "application/json" },
+                    data: staff
+                });
+    }
 }

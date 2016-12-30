@@ -10,6 +10,7 @@ controlCenterApp.directive('dateValidation', ['$q',function($q) {
                     var regEx = /^\d{4}-\d{2}-\d{2}$/;
                     controller.dateErrorMessage = false;
 
+                    if(viewValue == null) return $q.when([]);
                     var setErrorMessage = function( message ) {
                         controller.dateErrorMessage = message;
                     }
