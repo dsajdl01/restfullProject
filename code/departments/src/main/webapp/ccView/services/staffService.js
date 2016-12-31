@@ -33,10 +33,10 @@ function staffService($http)
          });
     }
 
-    self.modifyStaff = function(staff, depId) {
+    self.modifyStaff = function(staff) {
         return $http  ({
                     method: "PUT",
-                    url: '/department/rest/user/' + depId + '/modifyStaff',
+                    url: '/department/rest/user/modifyStaff',
                     headers: { "content-type": "application/json" },
                     data: staff
                 });

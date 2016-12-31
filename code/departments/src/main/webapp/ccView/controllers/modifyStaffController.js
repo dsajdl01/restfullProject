@@ -123,8 +123,9 @@ controlCenterApp.controller('modifyStaffController', ['modalDialogBoxService', '
         }
 
         self.modifyStaff = function() {
+            self.user.depId = depId;
             console.log(self.user);
-            var promise = staffService.modifyStaff(self.user, depId);
+            var promise = staffService.modifyStaff(self.user);
             return promise
                   .then(function (){
                         toaster.pop("success","Done","User " + self.user.fullName + " is successfully saved");

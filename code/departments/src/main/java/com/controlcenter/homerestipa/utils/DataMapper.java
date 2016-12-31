@@ -1,6 +1,7 @@
 package com.controlcenter.homerestipa.utils;
 
 
+import com.controlcenter.homerestipa.response.StaffJson;
 import com.controlcenter.homerestipa.response.StaffLoginDetailsJson;
 import com.departments.dto.data.LoginDetails;
 import com.departments.dto.data.Staff;
@@ -19,6 +20,11 @@ public class DataMapper {
 
     public LoginDetails mapLoginDetails(String email, String password) {
         return new LoginDetails(email, password);
+    }
+
+    public Staff mapStaffDetails(StaffJson staff, Date dob, Date startDay, Date lastDay) {
+        return new Staff(staff.getStaffId(), staff.getDepId(), staff.getFullName(),
+                dob, startDay, lastDay, staff.getPosition(), staff.getStaffEmail(), staff.getComment());
     }
 
 }

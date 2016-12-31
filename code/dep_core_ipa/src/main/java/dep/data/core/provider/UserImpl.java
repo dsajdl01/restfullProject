@@ -82,6 +82,19 @@ public class UserImpl implements UserInter {
         userDBO.saveLoginDetails(loginDetail, staffId);
     }
 
+    public void staffToModify(Staff modifyStaff) throws SQLFaultException, ValidationException  {
+        final Staff staff = checkIfStaffExist(modifyStaff.getId());
+        if (staff == null ) throw new ValidationException("Staff id " + modifyStaff.getId() + " does not exist for staff name " + modifyStaff.getName());
+        departmentIdMatch(modifyStaff.getDepId(), staff.getDepId());
+        userDBO.modifyStaff(modifyStaff);
+    }
+
+    protected void departmentIdMatch(int modifyStaffDepId, int existingStaffId) throws ValidationException {
+        if ( modifyStaffDepId != existingStaffId ) {
+            throw  new ValidationException("Department id does not match.");
+        }
+    }
+
     public List<Staff> searchForStaffs(int depId, String value, SearchType type) throws SQLFaultException, ValidationException {
 
         switch (type) {
@@ -93,6 +106,10 @@ public class UserImpl implements UserInter {
             default:
                 throw new ValidationException("Unknown search type");
         }
+    }
+
+    protected Staff checkIfStaffExist(int staffId) throws  SQLFaultException, ValidationException {
+        return userDBO.checkIfStaffExist(staffId);
     }
 
     private void validateDate(String date) throws ValidationException {

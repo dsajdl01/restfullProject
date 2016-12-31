@@ -31,4 +31,16 @@ public class StaffJson extends StaffDetailsJson {
         this.staffId = staffId;
         this.lastDay = lastDay;
     }
+
+    public int getDepId () {
+        return depId;
+    }
+
+    public int getStaffId() {
+        return staffId;
+    }
+
+    public String getLastDay() {
+        return lastDay;
+    }
 }

@@ -1,5 +1,6 @@
 package com.controlcenter.homerestipa.utils;
 
+import com.controlcenter.homerestipa.response.StaffJson;
 import com.controlcenter.homerestipa.response.StaffLoginDetailsJson;
 import com.department.core.data.PasswordAuthentication;
 import com.departments.dto.common.lgb.CommonConversions;
@@ -22,6 +23,7 @@ public class ValidationStaffHepler{
 
     private static final int MAX_PASSWORD_LENGTH = 8;
     private static final int MAX_SEARCH_VALUE = 3;
+    private static final int MAX_NAME_VALUE = 4;
 
     public ValidationStaffHepler(PasswordAuthentication passwordAuth) {
         this.passwordAuth = passwordAuth;
@@ -44,6 +46,22 @@ public class ValidationStaffHepler{
         } else if ( depId <= 0 ) {
             throw new ValidationException("Invalid department ID.");
         }
+    }
+
+    public void basicStaffValidation(StaffJson staff) throws  ValidationException{
+        if ( staff == null ) {
+            throw new ValidationException("Mandatory staff object is missing.");
+        }
+    }
+
+    public Staff validateMandatoryStaffDetailsAndMapStaff(StaffJson staff) throws ValidationException{
+        basicValidationOfDepartmentId(staff.getDepId());
+        List<String> valResponse = validateMandatoryStaffDetails(staff.getFullName(), staff.getPosition(), staff.getStaffEmail());
+        Date dob = convertDates(staff.getDob(), "Date of birthday", valResponse);
+        Date startDay = convertDates(staff.getStartDay(), "Start day", valResponse);
+        Date lastDay =  convertLastDay(staff.getLastDay(), "Last Day", valResponse);
+        processValidationResponse(valResponse);
+        return new DataMapper().mapStaffDetails(staff, dob, startDay, lastDay);
     }
 
     public void  basicValidateStaffObject(StaffLoginDetailsJson staff) throws ValidationException {
@@ -75,10 +93,14 @@ public class ValidationStaffHepler{
 
     public Staff validateAndGetStaffDetails(int depId, StaffLoginDetailsJson staff) throws  ValidationException {
 
-        List<String> valResponseList = validateStaffDetails(staff);
+        List<String> valResponseList = validateMandatoryStaffDetails(staff.getFullName(), staff.getPosition(), staff.getStaffEmail());
         Date dob = convertDates(staff.getDob(), "Date of birthday", valResponseList);
         Date startDay = convertDates(staff.getStartDay(), "Start day", valResponseList);
+        processValidationResponse(valResponseList);
+        return new DataMapper().mapStaffTable(depId, staff, dob, startDay);
+    }
 
+    private void processValidationResponse(List<String> valResponseList) throws ValidationException {
         String errorMsg = "";
         if ( !valResponseList.isEmpty() ) {
             for ( String msg : valResponseList ) {
@@ -86,35 +108,43 @@ public class ValidationStaffHepler{
             }
             throw new ValidationException( errorMsg );
         }
-        return new DataMapper().mapStaffTable(depId, staff, dob, startDay);
     }
 
     private Date convertDates(String date, String valueName, List<String> buildResponseList) {
+
+        if(commonConv.stringIsNullOrEmpty(date)) {
+             buildResponseList.add("Mandatory " + valueName.toLowerCase() + " is missing.");
+             return null;
+        }
+        return  convertLastDay(date, valueName, buildResponseList);
+    }
+
+    private Date convertLastDay(String date, String valueName, List<String> buildResponseList) {
         try {
-            if(commonConv.stringIsNullOrEmpty(date)) {
-                buildResponseList.add("Mandatory " + valueName.toLowerCase() + " is missing.");
-                return null;
+            if(!commonConv.stringIsNullOrEmpty(date)) {
+                return commonConv.getDateFromString(date);
             }
-            return commonConv.getDateFromString(date);
         } catch ( ParseException e ) {
             buildResponseList.add(valueName + " is invalid. Try format yyyy-mm-dd.");
         }
         return null;
     }
 
-    private List<String> validateStaffDetails(StaffLoginDetailsJson staff ) {
+    private List<String> validateMandatoryStaffDetails(String name, String position, String email) {
         List<String> errorMessage = new ArrayList<>();
 
-        if (commonConv.stringIsNullOrEmpty(staff.getFullName())) {
+        if (commonConv.stringIsNullOrEmpty(name)) {
             errorMessage.add("Mandatory name is missing.");
+        } else if (commonConv.hasStringMaxLength(name, MAX_NAME_VALUE)) {
+            errorMessage.add("Full name must be at least " + MAX_NAME_VALUE + " characters long");
         }
 
-        if (commonConv.stringIsNullOrEmpty(staff.getPosition())) {
+        if (commonConv.stringIsNullOrEmpty(position)) {
             errorMessage.add("Mandatory position is missing.");
         }
 
-        if ( !commonConv.stringIsNullOrEmpty(staff.getStaffEmail())) {
-          if ( !commonConv.doesEmailIsValid(staff.getStaffEmail())) {
+        if ( !commonConv.stringIsNullOrEmpty(email)) {
+          if ( !commonConv.doesEmailIsValid(email)) {
               errorMessage.add("Invalid staff email.");
           }
         }

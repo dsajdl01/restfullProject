@@ -210,7 +210,9 @@ public class UserDBO {
         }
     }
 
-    private final String SEARCH_FOR_STAFF_BY_DOB = "SELECT id, dep_id, name, dob, start_day, last_day, position, email, comments FROM staff WHERE dep_id= ? AND dob = ?";
+    private final String STAFF_ALL_VALUES = "SELECT id, dep_id, name, dob, start_day, last_day, position, email, comments FROM staff";
+
+    private final String SEARCH_FOR_STAFF_BY_DOB =  STAFF_ALL_VALUES + " WHERE dep_id= ? AND dob = ?";
     public List<Staff> searchForStaffsByDOB(int depId, String value) throws  SQLFaultException, ValidationException {
         PreparedStatement preparedStatement = null;
         try {
@@ -219,6 +221,46 @@ public class UserDBO {
             preparedStatement.setString(2, value);
             ResultSet res = preparedStatement.executeQuery();
             return processResultStaffProvider(res);
+        } catch (SQLException sqlE){
+            LOGGER.error("searchForStaffsByDOB: {}", sqlE);
+            throw new SQLFaultException("Enable to connect to database when searching for staff by DOB.");
+        }
+    }
+
+    private final String UPDATE_STAFF_VALUE = "UPDATE staff SET name=?, dob=?, start_day=?, last_day=?, "
+                                                        + "position=?, email=?, comments=? WHERE id = ? AND dep_id = ?";
+
+    public void modifyStaff(Staff staff) throws SQLFaultException {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = con.prepareStatement(UPDATE_STAFF_VALUE);
+            preparedStatement.setString(1, staff.getName());
+            preparedStatement.setString(2, getString(staff.getDob()));
+            preparedStatement.setString(3, getString(staff.getStartDay()));
+            preparedStatement.setString(4, getString(staff.getLastDay()));
+            preparedStatement.setString(5, staff.getPosition());
+            preparedStatement.setString(6, commonConv.stringIsNullOrEmpty(staff.getEmail()) ? null : staff.getEmail());
+            preparedStatement.setString(7, commonConv.stringIsNullOrEmpty(staff.getEmail()) ? null : staff.getComment());
+            preparedStatement.setInt(8, staff.getId());
+            preparedStatement.setInt(9, staff.getDepId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException sqlE){
+            LOGGER.error("searchForStaffsByDOB: {}", sqlE);
+            throw new SQLFaultException("Enable to connect to database when searching for staff by DOB.");
+        }
+    }
+
+    private final String STAFF_BY_STAFFID_SQL = "SELECT " + STAFF_ALL_VALUES + " FROM staff WHERE id= ? ";
+
+    public Staff checkIfStaffExist(int staffId) throws SQLFaultException, ValidationException {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = con.prepareStatement(STAFF_BY_STAFFID_SQL);
+            preparedStatement.setInt(1, staffId);
+            ResultSet res = preparedStatement.executeQuery();
+            res.next();
+            if (res.getRow() <= 0 ) return null;
+            return processStaffRow(res);
         } catch (SQLException sqlE){
             LOGGER.error("searchForStaffsByDOB: {}", sqlE);
             throw new SQLFaultException("Enable to connect to database when searching for staff by DOB.");
@@ -234,6 +276,10 @@ public class UserDBO {
     }
 
     private void processRow(List<Staff> staffs, ResultSet res) throws SQLException, ValidationException {
+        staffs.add(processStaffRow(res));
+    }
+
+    private Staff processStaffRow(ResultSet res) throws SQLException, ValidationException {
         int staffId = res.getInt("id");
         int depId = res.getInt("dep_id");
         String name = res.getString("name");
@@ -253,7 +299,7 @@ public class UserDBO {
         } catch (ParseException e) {
             throw new ValidationException("Error occuer while converting string to date");
         }
-        staffs.add( new Staff(staffId, depId, name, dob, startDate, lastDate, position, email, comment));
+        return  new Staff(staffId, depId, name, dob, startDate, lastDate, position, email, comment);
     }
 
     public void  saveLoginDetails(LoginDetails loginDetail, int staffId) throws  SQLFaultException {

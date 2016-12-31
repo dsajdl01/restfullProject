@@ -22,6 +22,8 @@ public interface UserInter {
 
     void saveLoginDetails(LoginDetails loginDetail, int staffId) throws SQLFaultException;
 
+    void staffToModify(Staff modifyStaff) throws SQLFaultException, ValidationException;
+
     List<Staff> searchForStaffs(int depId, String value, SearchType type) throws SQLFaultException, ValidationException;
 
     boolean doesEmailExist(String email) throws SQLFaultException;

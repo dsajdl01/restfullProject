@@ -95,7 +95,24 @@ public class UserIPA {
                 return sqlConnectionError(e.getMessage());
         }catch (Exception e ) {
             LOGGER.error("addNewStaff: Exception = {} ", e);
-            return internalServerError("logInUser: error occur = " + e.getMessage());
+            return internalServerError("addNewStaff: error occur = " + e.getMessage());
+        }
+    }
+
+    @POST
+    @Path("/modifyStaff")
+    public Response modifyStaff(StaffJson staff) {
+        try {
+            validationStaffHepler.getValidationStaffHepler().basicStaffValidation(staff);
+            Staff staffToModify = validationStaffHepler.getValidationStaffHepler().validateMandatoryStaffDetailsAndMapStaff(staff);
+            coreServices.getUserImpl().staffToModify(staffToModify);
+            return success();
+        } catch (ValidationException e) {
+            LOGGER.error("modifyStaff: ValidationException = {} ", e.getMessage());
+            return badRequest(e.getMessage());
+        } catch (Exception e ) {
+            LOGGER.error("modifyStaff: Exception = {} ", e);
+            return internalServerError("modifyStaff: error occur = " + e.getMessage());
         }
     }
 
