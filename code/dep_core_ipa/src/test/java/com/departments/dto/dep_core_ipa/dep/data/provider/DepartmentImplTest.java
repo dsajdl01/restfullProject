@@ -8,6 +8,7 @@ import com.departments.dto.dep_core_ipa.com.provider.helper.HeplerDBO;
 import com.departments.dto.dep_dbo.DepartmentDBO;
 import com.departments.dto.dep_dbo.DepartmentDBOConnection;
 import com.departments.dto.fault.exception.SQLFaultException;
+import com.departments.dto.fault.exception.ValidationException;
 import dep.data.core.provider.DepartmentImpl;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -25,6 +26,7 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * Created by david on 19/08/16.
@@ -119,6 +121,24 @@ public class DepartmentImplTest {
         // checking if department name is renamed
         assertThat(depImpl.checkDepartmenName("add department"), is(false));
         assertThat(depImpl.checkDepartmenName("old department"), is(true));
+    }
+
+    @Test
+    public void doesDepartmentExist_Test() throws  Exception{
+        List<Department> departmentList = depImpl.getDepartmentList();
+        final Integer id = departmentList.get(0).getId();
+
+        assertThat(depImpl.doesDepartmentExist(id), is(true));
+    }
+
+    @Test
+    public void doesDepartmentExistFalse_Test() throws  Exception{
+        try {
+            depImpl.doesDepartmentExist(11);
+            fail( "doesDepartmentExistFalse_Test: ValidationException should be thrown here.");
+        } catch (ValidationException e) {
+            assertThat(e.getMessage(), is("Department id does not exist"));
+        }
     }
 
     private Integer getDepartmentId(String depName) throws SQLFaultException {
