@@ -135,7 +135,7 @@ public class ValidationStaffHepler{
 
         if (commonConv.stringIsNullOrEmpty(name)) {
             errorMessage.add("Mandatory name is missing.");
-        } else if (commonConv.hasStringMaxLength(name, MAX_NAME_VALUE)) {
+        } else if (!commonConv.hasStringMaxLength(name, MAX_NAME_VALUE)) {
             errorMessage.add("Full name must be at least " + MAX_NAME_VALUE + " characters long");
         }
 

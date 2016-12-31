@@ -7,7 +7,10 @@ import com.departments.dto.fault.exception.SQLFaultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +31,7 @@ public class DepartmentDBO implements DepartmentDBOInter {
     private static final String ADD_NEW_DEPARTMENT_QUERY = "insert into department (name, createdBy) values (?, ?);";
     private static final String MODIFY_DEPARTMENT_NAME_QUERY = "UPDATE department SET name= ? where id = ?";
     private static final String GET_DEPARTMENT_BY_ID =  selectDepartmetsQuery + " AND dep.id = ?";
+    private static final String CHECK_DEPID_EXIST_QUERY = "SELECT count(id) AS numOfDep FROM department WHERE id = ?";
 
     public DepartmentDBO(Connection con){
         this.con = con;
@@ -74,6 +78,21 @@ public class DepartmentDBO implements DepartmentDBOInter {
         catch (SQLException sqlE){
             LOGGER.error("modify department name: {}", sqlE);
             throw new SQLFaultException("Inable to connect to database");
+        }
+    }
+
+    public boolean doesDepartmentExist(int depId ) throws SQLFaultException {
+        LOGGER.info("doesDepartmentExist: depId={}", depId);
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = con.prepareStatement(CHECK_DEPID_EXIST_QUERY);
+            preparedStatement.setInt(1, depId);
+            ResultSet resSet = preparedStatement.executeQuery();
+            resSet.next();
+            return resSet.getInt("numOfDep") == 0 ? false : true;
+        } catch (SQLException sqlE) {
+            LOGGER.error("loninUserId: {}", sqlE);
+            throw new SQLFaultException("Enable to connect to database");
         }
     }
 

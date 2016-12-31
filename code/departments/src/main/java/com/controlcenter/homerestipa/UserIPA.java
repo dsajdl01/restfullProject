@@ -82,6 +82,7 @@ public class UserIPA {
     public Response addNewStaff(@PathParam("depId") final Integer depId, StaffLoginDetailsJson newStaff, @Context HttpServletRequest request) {
         try {
             validationStaffHepler.getValidationStaffHepler().basicStaffValidation(depId, newStaff);
+            coreServices.getDepartmentImpl().doesDepartmentExist(depId);
             LOGGER.info("addNewStaff: depId={}, new staff fullName={}", depId, newStaff.getFullName());
             LoginDetails loginDetail = validationStaffHepler.getValidationStaffHepler().validateAndGetLoginDetails(newStaff.getLoginEmail(), newStaff.getPassword());
             Staff staff = validationStaffHepler.getValidationStaffHepler().validateAndGetStaffDetails(depId, newStaff);
@@ -123,6 +124,7 @@ public class UserIPA {
         try {
             validationStaffHepler.getValidationStaffHepler().basicValidationOfDepartmentId(depId);
             validationStaffHepler.getValidationStaffHepler().basicValidationOfSearchValue(searchValue);
+            coreServices.getDepartmentImpl().doesDepartmentExist(depId);
             List<Staff> staffs = coreServices.getUserImpl().searchForStaffs(depId, searchValue, SearchType.fromString(type));
             List<StaffJson> staffLoginDetailsJsons = new ArrayList<>();
             staffs.forEach( s -> staffLoginDetailsJsons.add( new StaffJson(s.getId(), s.getDepId(), s.getName(), getString(s.getDob()),

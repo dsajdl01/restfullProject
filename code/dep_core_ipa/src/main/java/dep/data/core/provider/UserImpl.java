@@ -34,6 +34,7 @@ public class UserImpl implements UserInter {
 
     // http://stackoverflow.com/questions/2860943/how-can-i-hash-a-password-in-java
     // http://stackoverflow.com/questions/18142745/how-do-i-generate-a-salt-in-java-for-salted-hash
+    @Override
     public LoginStaff logInUser(String email, String password) throws SQLFaultException {
         String encryptPassword = userDBO.getLoginStaffPassword(email);
         if (!commonConv.stringIsNullOrEmpty(encryptPassword) ) {
@@ -56,6 +57,7 @@ public class UserImpl implements UserInter {
        return userDBO.getStaffDetails(staffId);
     }
 
+    @Override
     public void saveNewStaffAndLoginDetails(Staff staff, LoginDetails loginDetail) throws SQLFaultException {
         saveNewStaff(staff);
         final int newStaffId = getNewStaffId();
@@ -74,14 +76,17 @@ public class UserImpl implements UserInter {
         userDBO.deleteStaffDetails(staffId);
     }
 
+    @Override
     public void saveNewStaff(Staff staff) throws SQLFaultException {
         userDBO.saveNewStaff(staff);
     }
 
+    @Override
     public void saveLoginDetails(LoginDetails loginDetail, int staffId) throws SQLFaultException {
         userDBO.saveLoginDetails(loginDetail, staffId);
     }
 
+    @Override
     public void staffToModify(Staff modifyStaff) throws SQLFaultException, ValidationException  {
         final Staff staff = checkIfStaffExist(modifyStaff.getId());
         if (staff == null ) throw new ValidationException("Staff id " + modifyStaff.getId() + " does not exist for staff name " + modifyStaff.getName());
@@ -95,6 +100,7 @@ public class UserImpl implements UserInter {
         }
     }
 
+    @Override
     public List<Staff> searchForStaffs(int depId, String value, SearchType type) throws SQLFaultException, ValidationException {
 
         switch (type) {
@@ -108,7 +114,7 @@ public class UserImpl implements UserInter {
         }
     }
 
-    protected Staff checkIfStaffExist(int staffId) throws  SQLFaultException, ValidationException {
+    public Staff checkIfStaffExist(int staffId) throws  SQLFaultException, ValidationException {
         return userDBO.checkIfStaffExist(staffId);
     }
 
@@ -120,6 +126,7 @@ public class UserImpl implements UserInter {
         }
     }
 
+    @Override
     public boolean doesEmailExist(String email) throws SQLFaultException {
         return userDBO.doesEmailExist(email);
     }

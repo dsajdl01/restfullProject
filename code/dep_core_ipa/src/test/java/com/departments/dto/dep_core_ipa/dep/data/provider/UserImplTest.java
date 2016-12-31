@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -159,7 +160,6 @@ public class UserImplTest {
 
         // delete staff
         userImp.deleteStaff(staffId);
-        testedUsersId.add(staffDetails.getDepId());
         assertThat(userImp.getStaffDetails(staffId), is(nullValue()));
         loginStaffDetails = userImp.logInUser("john@smith.com", "someJohnPassword!123");
         assertThat(loginStaffDetails, is(nullValue()));
@@ -207,6 +207,81 @@ public class UserImplTest {
         }
 
 
+    }
+
+    @Test
+    public void checkIfStaffExist_Test() throws Exception {
+        assertThat(userImp.checkIfStaffExist(userImp.getNewStaffId()), is(notNullValue()));
+        assertThat(userImp.checkIfStaffExist(11), is(nullValue()));
+
+
+    }
+
+    @Test
+    public void staffToModify_Test() throws Exception {
+        userImp.saveNewStaff(generateStaff("Anna Kendrick", "1985-08-09", "2016-10-14", "Java Developer"));
+        final int AnnaId = userImp.getNewStaffId();
+        final Staff staff = userImp.checkIfStaffExist(AnnaId);
+        assertThat(staff.getName(), is("Anna Kendrick"));
+        assertThat(staff.getPosition(), is("Java Developer"));
+        assertThat(staff.getEmail(), is("some@email.com"));
+        assertThat(staff.getComment(), is("some text"));
+
+        //generate new Anna object
+        Staff modifyAnnaObj = new Staff.Builder().setId(AnnaId).setDepId(1).setName("Anna Kendrick").setDob(commonConv.getDateFromString("1985-08-09")).setStartDay(commonConv.getDateFromString("2016-10-14"))
+                .setPosition("Entertainment").setEmail("anna@kendrick.com").setComment("great singer").build();
+        userImp.staffToModify(modifyAnnaObj);
+        final Staff annaWithNewDetails = userImp.checkIfStaffExist(AnnaId);
+        assertThat(annaWithNewDetails.getName(), is("Anna Kendrick"));
+        assertThat(annaWithNewDetails.getPosition(), is("Entertainment"));
+        assertThat(annaWithNewDetails.getEmail(), is("anna@kendrick.com"));
+        assertThat(annaWithNewDetails.getComment(), is("great singer"));
+
+        testedUsersId.add(AnnaId);
+    }
+
+    @Test
+    public void staffToModifyDepIdDoesNotMath_Test() throws Exception {
+        userImp.saveNewStaff(generateStaff("New Anna Name", "1985-08-09", "2016-10-14", "Software Developer"));
+        final int AnnaId = userImp.getNewStaffId();
+        final Staff staff = userImp.checkIfStaffExist(AnnaId);
+        assertThat(staff.getName(), is("New Anna Name"));
+        assertThat(staff.getPosition(), is("Software Developer"));
+        assertThat(staff.getEmail(), is("some@email.com"));
+        assertThat(staff.getComment(), is("some text"));
+
+        //generate new Anna object
+        try {
+            Staff modifyAnnaObj = new Staff.Builder().setId(AnnaId).setDepId(4).setName("Anna Kendrick").setDob(commonConv.getDateFromString("1985-08-09")).setStartDay(commonConv.getDateFromString("2016-10-14"))
+                    .setPosition("Entertainment").setEmail("anna@kendrick.com").setComment("great singer").build();
+            userImp.staffToModify(modifyAnnaObj);
+            fail( "staffToModifyDepIdDoesNotMath_Test: ValidationException should be thrown here. ");
+        } catch (ValidationException e) {
+            assertThat(e.getMessage(), is("Department id does not match."));
+        }
+        testedUsersId.add(AnnaId);
+    }
+
+    @Test
+    public void staffToModifyStaffIdDoesNotExist_Test() throws Exception {
+        userImp.saveNewStaff(generateStaff("Anna Kendrick", "1985-08-09", "2016-10-14", "Software Developer"));
+        final int AnnaId = userImp.getNewStaffId();
+        final Staff staff = userImp.checkIfStaffExist(AnnaId);
+        assertThat(staff.getName(), is("Anna Kendrick"));
+        assertThat(staff.getPosition(), is("Software Developer"));
+        assertThat(staff.getEmail(), is("some@email.com"));
+        assertThat(staff.getComment(), is("some text"));
+
+        //generate new Anna object
+        try {
+            Staff modifyAnnaObj = new Staff.Builder().setId(31).setDepId(1).setName("Anna Kendrick").setDob(commonConv.getDateFromString("1985-08-09")).setStartDay(commonConv.getDateFromString("2016-10-14"))
+                    .setPosition("Entertainment").setEmail("anna@kendrick.com").setComment("great singer").build();
+            userImp.staffToModify(modifyAnnaObj);
+            fail( "staffToModifyStaffIdDoesNotExist_Test: ValidationException should be thrown here. ");
+        } catch (ValidationException e) {
+            assertThat(e.getMessage(), is("Staff id 31 does not exist for staff name Anna Kendrick"));
+        }
+        testedUsersId.add(AnnaId);
     }
 
     private Staff generateStaff(String name, String dob, String startDate, String position) throws Exception {

@@ -14,7 +14,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -250,7 +249,7 @@ public class UserDBO {
         }
     }
 
-    private final String STAFF_BY_STAFFID_SQL = "SELECT " + STAFF_ALL_VALUES + " FROM staff WHERE id= ? ";
+    private final String STAFF_BY_STAFFID_SQL = STAFF_ALL_VALUES + " WHERE id= ? ";
 
     public Staff checkIfStaffExist(int staffId) throws SQLFaultException, ValidationException {
         PreparedStatement preparedStatement = null;
@@ -314,18 +313,6 @@ public class UserDBO {
         } catch (SQLException sqlE){
             LOGGER.error("getNewStaffId: {}", sqlE);
             throw new SQLFaultException("Enable to connect to database");
-        }
-    }
-
-    private Date getDate(String date) throws SQLFaultException {
-        try {
-            if(date == null ) return null;
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-dd-mm");
-            Date d = formatter.parse(date);
-            return d;
-        } catch (ParseException e) {
-            LOGGER.error("getDate: format.parse error: " + e);
-            throw new SQLFaultException( date + " can not be converted into Date");
         }
     }
 }
