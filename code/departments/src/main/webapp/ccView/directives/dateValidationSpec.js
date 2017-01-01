@@ -88,4 +88,14 @@ describe('directive: dateValidation', function() {
             expect(scope.model.dob).toEqual("2016-07-22");
             expect(form.dob.$invalid).toBeFalsy();
        });
+
+      it('should set form dod invalid to true and ser error message when form date does not exist III', function(){
+            form.dob.$setViewValue(null); // It is not leap year
+            scope.$digest();
+
+            expect(scope.ctrl.origineStartDay).toEqual(stDay);
+            expect(scope.ctrl.dateErrorMessage).toBeFalsy();
+            expect(scope.model.dob).toBeNull();
+            expect(form.dob.$invalid).toBeFalsy();
+      });
 });

@@ -8,7 +8,6 @@ controlCenterApp.controller('modifyStaffController', ['modalDialogBoxService', '
         self.user  = {};
 
         self.originalEmail = null;
-        var depId = null
         var originalFullname  = null;
         var originalDbo = null;
         var originalStaffDay = null;
@@ -28,12 +27,13 @@ controlCenterApp.controller('modifyStaffController', ['modalDialogBoxService', '
             initialiseValues();
             if ( commonService.selectedDepartment ) {
                 self.depName = commonService.selectedDepartment.depName;
+                self.user.depId = commonService.selectedDepartment.depId;
             }  else {
                 var promise = depService.getDepartment($sessionStorage.depId);
                 return promise
                     .then(function (data) {
                     self.depName = data.data.depName;
-                    depId = data.data.depId;
+                    self.user.depId = data.data.depId;
 
                 })
                 .catch( function(failure) {
@@ -117,18 +117,18 @@ controlCenterApp.controller('modifyStaffController', ['modalDialogBoxService', '
             self.user.dob = staff.dob;
             self.user.startDay = staff.startDay;
             self.user.position = staff.position;
-            self.user.email = staff.staffEmail;
+            self.user.staffEmail = staff.staffEmail;
             self.user.comment = staff.comment;
             self.user.lastDay = staff.lastDay;
         }
 
         self.modifyStaff = function() {
-            self.user.depId = depId;
             console.log(self.user);
             var promise = staffService.modifyStaff(self.user);
             return promise
                   .then(function (){
                         toaster.pop("success","Done","User " + self.user.fullName + " is successfully saved");
+                        self.homeLocation();
 
                   })
                   .catch( function(failure) {

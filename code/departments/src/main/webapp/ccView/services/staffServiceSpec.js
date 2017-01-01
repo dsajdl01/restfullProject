@@ -83,5 +83,77 @@ describe('Service: staffService', function() {
 
         httpBackend.flush();
         expect(itShouldBeCalled).toBeTruthy();
-    })
+    });
+
+    it('should return all staff name that include search value when searchForStaff() is called', function(){
+        var depId = 2;
+        var searchValue = "smith";
+        var type = "NAME";
+        var response = [{name: "Fred Smith", dob: "1980-02-02"}, {name: "Kate Smith", dob: "1992-03-01"}];
+        httpBackend.whenPOST('/department/rest/user/' + depId + '/searchForStaff?searchValue=' + searchValue +'&type=' + type).respond(200, response);
+        httpBackend.expectPOST('/department/rest/user/' + depId + '/searchForStaff?searchValue=' + searchValue +'&type=' + type);
+        service.searchForStaff(depId, searchValue, type)
+              .then(function(output) {
+              expect(output.data).toEqual(response);
+        });
+
+        httpBackend.flush();
+    });
+
+    it('should return staff that match staff with date of birthday when searchForStaff() is called', function(){
+        var depId = 2;
+        var searchValue = "1980-02-02";
+        var type = "DOB";
+        var response = [{name: "Fred Smith", dob: "1980-02-02"}];
+            httpBackend.whenPOST('/department/rest/user/' + depId + '/searchForStaff?searchValue=' + searchValue +'&type=' + type).respond(200, response);
+            httpBackend.expectPOST('/department/rest/user/' + depId + '/searchForStaff?searchValue=' + searchValue +'&type=' + type);
+            service.searchForStaff(depId, searchValue, type)
+                  .then(function(output) {
+                  expect(output.data).toEqual(response);
+        });
+
+        httpBackend.flush();
+    });
+
+    it('should return status error with message when searchForStaff() is called and failed', function(){
+        var depId = 2;
+        var searchValue = "1980-02-02";
+        var type = "DOB";
+        var response = {message: "Enable to connect to database"};
+        httpBackend.whenPOST('/department/rest/user/' + depId + '/searchForStaff?searchValue=' + searchValue +'&type=' + type).respond(500, response);
+        httpBackend.expectPOST('/department/rest/user/' + depId + '/searchForStaff?searchValue=' + searchValue +'&type=' + type);
+        service.searchForStaff(depId, searchValue, type)
+                  .then(function(response) {})
+                  .catch(function (fail) {
+                        expect(fail.status).toBe(500);
+                        expect(fail.data.message).toEqual("Enable to connect to database");
+        });
+        httpBackend.flush();
+    });
+
+     it('should return staff that match staff with date of birthday when searchForStaff() is called', function(){
+         var staff = {staffId: 1, depId: 2, fullName: "Fred Smith", dob: "1980-02-02", startDay: "2016-10-22", lastDay: null, staffEmail: null, comment: null };
+         var response = "OK";
+         httpBackend.whenPUT('/department/rest/user/modifyStaff', staff).respond(200, response);
+         httpBackend.expectPUT('/department/rest/user/modifyStaff', staff);
+              service.modifyStaff(staff)
+                    .then(function(output) {
+                    expect(output.data).toEqual("OK");
+         });
+         httpBackend.flush();
+     });
+
+    it('should return status error with message when modifyStaff() is called and failed', function(){
+        var staff = {staffId: 1, depId: 2, fullName: "Fred Smith", dob: "1980-02-02", startDay: "2016-10-22", lastDay: null, staffEmail: null, comment: null };
+        var response = {message: "Enable to connect to database"};
+        httpBackend.whenPUT('/department/rest/user/modifyStaff', staff).respond(500, response);
+        httpBackend.expectPUT('/department/rest/user/modifyStaff', staff);
+        service.modifyStaff(staff)
+             .then(function(response) {})
+             .catch(function (fail) {
+             expect(fail.status).toBe(500);
+             expect(fail.data.message).toEqual("Enable to connect to database");
+        });
+        httpBackend.flush();
+    });
 });

@@ -83,12 +83,12 @@
                ng-change="ctrl.onChange()"
                placeholder="Enter optional email"
                ng-required="false"
-               name="email"
+               name="staffEmail"
                ng-maxlength="255"
-               ng-model="ctrl.user.email"
+               ng-model="ctrl.user.staffEmail"
                ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
-        <div class="message-help-block" ng-messages="form.email.$error" ng-if="form.email.$dirty">
-            <span class="message-error-help" ng-message="email">This is not a valid email.</span>
+        <div class="message-help-block" ng-messages="form.staffEmail.$error" ng-if="form.staffEmail.$dirty">
+            <span class="message-error-help" ng-message="staffEmail">This is not a valid email.</span>
         </div>
     </div>
 </div>
