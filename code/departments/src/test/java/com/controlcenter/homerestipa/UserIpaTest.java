@@ -1,6 +1,7 @@
 package com.controlcenter.homerestipa;
 
 import com.controlcenter.homerestipa.provider.RestServices;
+import com.controlcenter.homerestipa.response.StaffJson;
 import com.controlcenter.homerestipa.response.StaffLoginDetailsJson;
 import com.controlcenter.homerestipa.response.UserLoginJson;
 import com.department.testutils.JerseyContainerJUnitRule;
@@ -24,6 +25,8 @@ import org.junit.Test;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Application;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,6 +34,7 @@ import static com.controlcenter.homerestipa.MockServices.*;
 import static com.jayway.restassured.RestAssured.given;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -362,7 +366,7 @@ public class UserIpaTest {
     }
 
     @Test
-    public void searchForStaffSQLRuntimeTest() throws  Exception{
+    public void searchForStaffSQLRuntimeTest() throws  Exception {
         doNothing().when(mockValidationStaffHepler).basicValidationOfDepartmentId(1);
         doNothing().when(mockValidationStaffHepler).basicValidationOfSearchValue("david");
         doThrow( new RuntimeException()).when(mockUseInter).searchForStaffs(1, "david", SearchType.NAME);
@@ -376,10 +380,79 @@ public class UserIpaTest {
             .statusCode(INTERNAL_SERVER_ERROR);
     }
 
+    @Test
+    public void modifyStaff_Test() throws Exception {
+        doNothing().when(mockValidationStaffHepler).basicStaffValidation( any(StaffJson.class));
+        Staff staff = getStaff();
+        when(mockValidationStaffHepler.validateMandatoryStaffDetailsAndMapStaff(any(StaffJson.class))).thenReturn(staff);
+        doNothing().when(mockUseInter).modifyStaffDetails(staff);
+
+        given()
+            .contentType("application/json")
+            .body( generateStaffJson() )
+        .when()//.log().all()
+            .put("/modifyStaff")
+        .then()//.log().all()
+            .statusCode(HTML_OK);
+    }
+
+    @Test
+    public void modifyStaffValidationError_Test() throws Exception {
+        doThrow(new ValidationException("Invalid Email Address")).when(mockValidationStaffHepler).basicStaffValidation( any(StaffJson.class));
+
+        given()
+            .contentType("application/json")
+            .body( generateStaffJson() )
+        .when()//.log().all()
+            .put("/modifyStaff")
+        .then().log().all()
+            .statusCode(BAD_REQUEST)
+            .body("message", equalTo("Invalid Email Address"));
+    }
+
+    @Test
+    public void modifyStaffInternalError_Test() throws Exception {
+        doNothing().when(mockValidationStaffHepler).basicStaffValidation( any(StaffJson.class));
+        Staff staff = getStaff();
+        when(mockValidationStaffHepler.validateMandatoryStaffDetailsAndMapStaff(any(StaffJson.class))).thenReturn(staff);
+        doThrow(new RuntimeException()).when(mockUseInter).modifyStaffDetails(staff);
+
+        given()
+             .contentType("application/json")
+             .body( generateStaffJson() )
+        .when()//.log().all()
+            .put("/modifyStaff")
+        .then()//.log().all()
+            .statusCode(INTERNAL_SERVER_ERROR);
+    }
 
     private StaffLoginDetailsJson generateStaffDetails() {
         return new StaffLoginDetailsJson("Full Name", "1990-01-01", "2016-01-01",
                 "Developer", null, null, "some@email.com", "somepassword120");
+    }
+
+    private StaffJson generateStaffJson() {
+        return new StaffJson(1, 2, "Yadira Diez", "1990-01-10", "2016-10-26",null,
+                                                "Java Developer", "some@email.com", null);
+    }
+
+    private Staff getStaff() {
+        Date dob = null;
+        Date startDate = null;
+        try {
+            dob = commonConv.getDateFromString("1990-01-10");
+            startDate = commonConv.getDateFromString("2016-10-26");
+        } catch (ParseException  e) {
+            fail( "getStaff: converting date should NOT be thrown here. " + e.getMessage());
+        }
+        Staff.Builder staff = new Staff.Builder();
+        staff.setDepId(1);
+        staff.setName("Yadira Diez");
+        staff.setDob(dob);
+        staff.setStartDay(startDate);
+        staff.setPosition("Java Developer");
+        staff.setEmail("some@email.com");
+        return staff.build();
     }
 
 }

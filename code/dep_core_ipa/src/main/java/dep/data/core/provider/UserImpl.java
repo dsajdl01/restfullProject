@@ -87,7 +87,7 @@ public class UserImpl implements UserInter {
     }
 
     @Override
-    public void staffToModify(Staff modifyStaff) throws SQLFaultException, ValidationException  {
+    public void modifyStaffDetails(Staff modifyStaff) throws SQLFaultException, ValidationException  {
         final Staff staff = checkIfStaffExist(modifyStaff.getId());
         if (staff == null ) throw new ValidationException("Staff id " + modifyStaff.getId() + " does not exist for staff name " + modifyStaff.getName());
         departmentIdMatch(modifyStaff.getDepId(), staff.getDepId());

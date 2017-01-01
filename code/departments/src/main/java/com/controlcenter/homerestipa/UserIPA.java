@@ -100,13 +100,13 @@ public class UserIPA {
         }
     }
 
-    @POST
+    @PUT
     @Path("/modifyStaff")
     public Response modifyStaff(StaffJson staff) {
         try {
             validationStaffHepler.getValidationStaffHepler().basicStaffValidation(staff);
             Staff staffToModify = validationStaffHepler.getValidationStaffHepler().validateMandatoryStaffDetailsAndMapStaff(staff);
-            coreServices.getUserImpl().staffToModify(staffToModify);
+            coreServices.getUserImpl().modifyStaffDetails(staffToModify);
             return success();
         } catch (ValidationException e) {
             LOGGER.error("modifyStaff: ValidationException = {} ", e.getMessage());

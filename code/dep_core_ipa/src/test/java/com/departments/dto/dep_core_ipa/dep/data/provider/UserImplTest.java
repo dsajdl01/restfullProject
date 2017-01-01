@@ -230,7 +230,7 @@ public class UserImplTest {
         //generate new Anna object
         Staff modifyAnnaObj = new Staff.Builder().setId(AnnaId).setDepId(1).setName("Anna Kendrick").setDob(commonConv.getDateFromString("1985-08-09")).setStartDay(commonConv.getDateFromString("2016-10-14"))
                 .setPosition("Entertainment").setEmail("anna@kendrick.com").setComment("great singer").build();
-        userImp.staffToModify(modifyAnnaObj);
+        userImp.modifyStaffDetails(modifyAnnaObj);
         final Staff annaWithNewDetails = userImp.checkIfStaffExist(AnnaId);
         assertThat(annaWithNewDetails.getName(), is("Anna Kendrick"));
         assertThat(annaWithNewDetails.getPosition(), is("Entertainment"));
@@ -254,7 +254,7 @@ public class UserImplTest {
         try {
             Staff modifyAnnaObj = new Staff.Builder().setId(AnnaId).setDepId(4).setName("Anna Kendrick").setDob(commonConv.getDateFromString("1985-08-09")).setStartDay(commonConv.getDateFromString("2016-10-14"))
                     .setPosition("Entertainment").setEmail("anna@kendrick.com").setComment("great singer").build();
-            userImp.staffToModify(modifyAnnaObj);
+            userImp.modifyStaffDetails(modifyAnnaObj);
             fail( "staffToModifyDepIdDoesNotMath_Test: ValidationException should be thrown here. ");
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Department id does not match."));
@@ -276,7 +276,7 @@ public class UserImplTest {
         try {
             Staff modifyAnnaObj = new Staff.Builder().setId(31).setDepId(1).setName("Anna Kendrick").setDob(commonConv.getDateFromString("1985-08-09")).setStartDay(commonConv.getDateFromString("2016-10-14"))
                     .setPosition("Entertainment").setEmail("anna@kendrick.com").setComment("great singer").build();
-            userImp.staffToModify(modifyAnnaObj);
+            userImp.modifyStaffDetails(modifyAnnaObj);
             fail( "staffToModifyStaffIdDoesNotExist_Test: ValidationException should be thrown here. ");
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Staff id 31 does not exist for staff name Anna Kendrick"));
