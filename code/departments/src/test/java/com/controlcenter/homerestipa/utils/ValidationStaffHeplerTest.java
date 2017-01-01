@@ -1,5 +1,6 @@
 package com.controlcenter.homerestipa.utils;
 
+import com.controlcenter.homerestipa.response.StaffJson;
 import com.controlcenter.homerestipa.response.StaffLoginDetailsJson;
 import com.department.core.data.PasswordAuthentication;
 import com.departments.dto.common.lgb.CommonConversions;
@@ -244,6 +245,47 @@ public class ValidationStaffHeplerTest {
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Search value mas be at least 3 characters"));
         }
+    }
+
+    @Test
+    public void basicStaffValidationJson_Test() {
+        try {
+            validationStaffHepler.basicStaffValidation(generateStaffJson("Yadira Diez", "Java Developer", "yadira@diez.com"));
+        } catch (ValidationException e) {
+            fail( "basicStaffValidationJson_Test: ValidationException should NOT be thrown here. ");
+        }
+    }
+
+    @Test
+    public void basicStaffValidationJsonNull_Test() {
+        try {
+            validationStaffHepler.basicStaffValidation(null);
+            fail( "basicStaffValidationJsonNull_Test: ValidationException should be thrown here. ");
+        } catch (ValidationException e) {
+            assertThat(e.getMessage(), is("Mandatory staff object is missing."));
+        }
+    }
+
+    @Test
+    public void validateMandatoryStaffDetailsAndMapStaff_Test() throws  Exception {
+        Staff staff = validationStaffHepler.validateMandatoryStaffDetailsAndMapStaff(generateStaffJson("Yadira Diez", "Java Developer", "yadira.diez@example.com"));
+        assertThat(staff.getName(), is("Yadira Diez"));
+        assertThat(staff.getPosition(), is("Java Developer"));
+        assertThat(staff.getEmail(), is("yadira.diez@example.com"));
+    }
+
+    @Test
+    public void validateMandatoryStaffDetailsAndMapStaffValError_Test() throws  Exception {
+        try {
+            Staff staff = validationStaffHepler.validateMandatoryStaffDetailsAndMapStaff(generateStaffJson("Die", "Java Developer", "yadira.diez@example.com"));
+        } catch (ValidationException e) {
+            assertThat(e.getMessage(), is("Full name must be at least 4 characters long "));
+        }
+    }
+
+    private StaffJson generateStaffJson(String name, String position, String email) {
+        return new StaffJson(1, 2, name, "1990-01-10", "2016-10-26",null,
+                position, email, null);
     }
 
     private StaffLoginDetailsJson generateStaff(String name, String dob, String startDay, String position, String staffEmail) {
