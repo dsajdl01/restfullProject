@@ -105,7 +105,7 @@ describe('Controller: loginController', function() {
 
         it('should call logout when user is not login or time expire and init() is called', function() {
              authorizationMock.isLogin = false;
-             spyOn(ctrl, 'logout').and.callThrough();;
+             spyOn(ctrl, 'logout').and.callThrough();
              spyOn(authorizationMock, 'logout');
              spyOn(locationMock, 'path');
              ctrl.init();

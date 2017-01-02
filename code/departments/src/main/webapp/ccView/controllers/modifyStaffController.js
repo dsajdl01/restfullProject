@@ -31,19 +31,17 @@ controlCenterApp.controller('modifyStaffController', ['modalDialogBoxService', '
             }  else {
                 var promise = depService.getDepartment($sessionStorage.depId);
                 return promise
-                    .then(function (data) {
-                    self.depName = data.data.depName;
-                    self.user.depId = data.data.depId;
-
-                })
-                .catch( function(failure) {
+                   .then(function (data) {
+                        self.depName = data.data.depName;
+                        self.user.depId = data.data.depId;
+                }).catch( function(failure) {
                     toaster.pop("error", "ERROR", UTILS.responseErrorHandler("Error occur while getting department id.",failure));
-                    $location.path('/home');
+                    self.homeLocation();
                 })
             }
         };
 
-        self.getSelectedName = function(searchId) {
+        self.getSelectedValue = function(searchId) {
             self.showStaffForm = false;
             if (searchId == SEARCH_VALUE.NAME) {
                 self.showFullnameField = true;
@@ -61,19 +59,17 @@ controlCenterApp.controller('modifyStaffController', ['modalDialogBoxService', '
             self.showDOBField = false;
         }
 
-        self.search = function(searchValue) {
+        self.search = function(searchingValue) {
             self.zeroStaffSearch = null;
             self.searchOption = null;
-            console.log("searchValue: ", searchValue, " ctrl.searchName: ", self.searchName);
-             var promise = staffService.searchForStaff($sessionStorage.depId, searchValue, self.searchName );
+             var promise = staffService.searchForStaff(self.user.depId, searchingValue, self.searchingType );
               return promise
                     .then(function (data) {
-                    console.log(data);
                     if ( data.data.staffDetailsList.length >= 1 ) {
                         searchedStaffResult = data.data.staffDetailsList;
                         getStaffListAndDisplayDialogBox( searchedStaffResult );
                     } else {
-                        self.zeroStaffSearch = "Nothing has been found for key world: " + searchValue
+                        self.zeroStaffSearch = "Nothing has been found for key world: " + searchingValue;
                     }
               })
               .catch( function(failure) {
@@ -100,17 +96,20 @@ controlCenterApp.controller('modifyStaffController', ['modalDialogBoxService', '
                 staffList: staffList
             };
             modalDialogBoxService.notify = function(staffId) {
-                    console.log(staffId);
                     self.showStaffForm = true;
                     initialiseStaffVariables(getStaffObject(staffId))
                     hideSearchInputFields();
-                    self.searchName = DEFAULT_VALUE;
+                    self.searchingType = DEFAULT_VALUE;
                     self.onChange();
             }
             modalDialogBoxService.showDialog();
         }
 
         var initialiseStaffVariables = function(staff) {
+            if ( staff == null ) {
+                self.showStaffForm = false;
+                return;
+            }
             setOriginalValues(staff);
             self.user.staffId = staff.staffId;
             self.user.fullName = staff.fullName;
@@ -123,7 +122,6 @@ controlCenterApp.controller('modifyStaffController', ['modalDialogBoxService', '
         }
 
         self.modifyStaff = function() {
-            console.log(self.user);
             var promise = staffService.modifyStaff(self.user);
             return promise
                   .then(function (){
@@ -171,14 +169,14 @@ controlCenterApp.controller('modifyStaffController', ['modalDialogBoxService', '
 
         var initialiseValues = function() {
             self.namesToSearch =[{ name: "Full Name", id: SEARCH_VALUE.NAME }, { name: "Date of Birthday", id: SEARCH_VALUE.DOB }];
-            self.searchName = "-1";
+            self.searchingType = DEFAULT_VALUE;
             self.searchOption = null;
             self.showStaffForm = false;
         }
 
         var equalTo = function() {
             return originalFullname ===  self.user.fullName && originalDbo === self.user.dob && originalStaffDay === self.user.startDay
-            && originalPositio === self.user.position && self.originalEmail === self.user.email && originalCommet === self.user.comment && originalLastDay === self.user.lastDay;
+            && originalPositio === self.user.position && self.originalEmail === self.user.staffEmail && originalCommet === self.user.comment && originalLastDay === self.user.lastDay;
         }
 
         self.init();
