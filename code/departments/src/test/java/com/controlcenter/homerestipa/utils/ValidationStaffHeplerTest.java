@@ -7,6 +7,7 @@ import com.departments.dto.common.lgb.CommonConversions;
 import com.departments.dto.data.LoginDetails;
 import com.departments.dto.data.Staff;
 import com.departments.dto.fault.exception.ValidationException;
+import com.httpSession.core.HttpSessionCoreServlet;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
@@ -18,7 +19,7 @@ import static org.junit.Assert.fail;
  */
 public class ValidationStaffHeplerTest {
 
-    PasswordAuthentication passAuth = new PasswordAuthentication();
+    PasswordAuthentication passAuth = new PasswordAuthentication( new HttpSessionCoreServlet());
     ValidationStaffHepler validationStaffHepler = new ValidationStaffHepler(passAuth);
     private CommonConversions commonConv = new CommonConversions();
 

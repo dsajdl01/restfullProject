@@ -1,7 +1,11 @@
 package com.department.core.data;
 
+import com.departments.dto.fault.exception.LoginStaffException;
+import com.httpSession.core.HttpSessionCoreServlet;
+
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import javax.servlet.http.HttpServletRequest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -11,15 +15,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.lang.Integer.parseInt;
-import static java.util.Base64.Encoder;
-import static java.util.Base64.getUrlDecoder;
-import static java.util.Base64.getUrlEncoder;
+import static java.util.Base64.*;
 
 /**
  * Created by david on 21/12/16.
  */
 public class PasswordAuthentication {
-
 
     /**
      * Each token produced by this class uses this identifier as a prefix.
@@ -41,7 +42,9 @@ public class PasswordAuthentication {
 
     private final int cost;
 
-    public static void main(String arg[]) {
+    private HttpSessionCoreServlet httpSessionCoreServlet;
+
+/*    public static void main(String arg[]) {
         PasswordAuthentication pa = new PasswordAuthentication();
 
         System.out.println("dkjghdsk: " + pa.hashPassword("password"));
@@ -49,11 +52,12 @@ public class PasswordAuthentication {
         System.out.println("commape true: " + pa.authenticate("password", "$31$16$jDvam4TS3HgpKUwxoWBmftGKYemTwS9xjfaytGILoS0"));
 
         System.out.println("commape false: " + pa.authenticate("david.sajdl@arkessa.co.uk", "$31$16$jDvam4TS3HgpKUwxoWBmftGKYemTwS9xjfaytGILoS0"));
-    }
+    }*/
 
-    public PasswordAuthentication()
+    public PasswordAuthentication(HttpSessionCoreServlet httpSessionCoreServlet)
     {
         this(DEFAULT_COST);
+        this.httpSessionCoreServlet = httpSessionCoreServlet;
     }
 
     /**
@@ -137,5 +141,12 @@ public class PasswordAuthentication {
     public boolean authenticate(String password, String token)
     {
         return authenticate(password.toCharArray(), token);
+    }
+
+    public void authorizedStaff(int staffId, HttpServletRequest request) throws LoginStaffException {
+         httpSessionCoreServlet.staffLogin(request);
+         if (staffId != httpSessionCoreServlet.getStaffIdAttribute(request)) {
+           throw new LoginStaffException("Current staff is not authorized");
+        }
     }
 }

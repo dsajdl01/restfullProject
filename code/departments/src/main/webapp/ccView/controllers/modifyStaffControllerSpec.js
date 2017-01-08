@@ -30,7 +30,7 @@ describe('Controller: modifyStaffController', function() {
             },
             catch: function (m) {}
        }
-       
+
        var searchNull = {
             then: function (m) {
                   m( {data: { staffDetailsList: [] }} );

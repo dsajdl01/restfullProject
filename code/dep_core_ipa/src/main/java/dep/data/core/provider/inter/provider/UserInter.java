@@ -7,6 +7,7 @@ import com.departments.dto.data.Staff;
 import com.departments.dto.fault.exception.SQLFaultException;
 import com.departments.dto.fault.exception.ValidationException;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public interface UserInter {
 
-    LoginStaff logInUser(String email, String password) throws SQLFaultException;
+    LoginStaff logInUser(String email, String password, HttpSession session) throws SQLFaultException, ValidationException;
 
     void saveNewStaff(Staff staff) throws SQLFaultException;
 

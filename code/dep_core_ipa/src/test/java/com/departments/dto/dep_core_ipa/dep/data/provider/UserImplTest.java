@@ -11,6 +11,7 @@ import com.departments.dto.dep_core_ipa.com.provider.helper.HeplerDBO;
 import com.departments.dto.dep_dbo.DepartmentDBOConnection;
 import com.departments.dto.dep_dbo.UserDBO;
 import com.departments.dto.fault.exception.ValidationException;
+import com.httpSession.core.HttpSessionCoreServlet;
 import dep.data.core.provider.UserImpl;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -19,16 +20,18 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
 
 /**
  * Created by david on 20/11/16.
@@ -39,8 +42,9 @@ public class UserImplTest {
     private static HeplerDBO heplerDBO;
     private CommonConversions commonConv = new CommonConversions();
     private UserImpl userImp;
-    private static PasswordAuthentication passwordAuth = new PasswordAuthentication();
     private static List<Integer>  testedUsersId = new ArrayList<>();
+    private static HttpSessionCoreServlet httpSessionCoreServlet = new HttpSessionCoreServlet();
+    private static PasswordAuthentication passwordAuth = new PasswordAuthentication( httpSessionCoreServlet );
 
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -58,7 +62,7 @@ public class UserImplTest {
 
     @Before
     public  void setUp() throws Exception {
-        userImp = new UserImpl(new UserDBO(new DepartmentDBOConnection(heplerDBO.getPropertiesTestDataConfig()).getDbConnection()), passwordAuth);
+        userImp = new UserImpl(new UserDBO(new DepartmentDBOConnection(heplerDBO.getPropertiesTestDataConfig()).getDbConnection()), passwordAuth, httpSessionCoreServlet);
         if(!testedUsersId.isEmpty()) {
             heplerDBO.deleteStaffDetails(testedUsersId);
         }
@@ -75,15 +79,22 @@ public class UserImplTest {
 
     @Test
     public void logInUserWithIncorrectValueTest() throws Exception {
-        assertThat(userImp.logInUser("some@email.com", "l2j3j23j"), is(nullValue()));
+        try {
+            HttpSession session = mock(HttpSession.class);
+            assertThat(userImp.logInUser("some@email.com", "l2j3j23j", session), is(nullValue()));
+        } catch (ValidationException e) {
+            assertThat(e.getMessage(), is("Invalid email or password"));
+        }
     }
 
     @Test
     public void logInUserTest() throws Exception {
-        LoginStaff staffDetails = userImp.logInUser("jolita@diez.com", "password");
+        HttpSession session = mock(HttpSession.class);
+        LoginStaff staffDetails = userImp.logInUser("jolita@diez.com", "password", session);
         assertThat(staffDetails.getName(), is("Jolita Diez"));
         assertThat(staffDetails.getFirstLogin(), is(true));
     }
+
     @Test
     public void doesEmailExistTest() throws Exception {
         assertThat(userImp.doesEmailExist("jolita@diez.com"), is(true));
@@ -111,7 +122,8 @@ public class UserImplTest {
         LoginDetails loginDetails = new LoginDetails("newfullname@email.com", passwordAuth.hashPassword("somePassword"));
         userImp.saveLoginDetails(loginDetails, staffId);
 
-        LoginStaff staffDetails = userImp.logInUser("newfullname@email.com", "somePassword");
+        HttpSession session = mock(HttpSession.class);
+        LoginStaff staffDetails = userImp.logInUser("newfullname@email.com", "somePassword", session);
         assertThat(staffDetails.getName(), is("New Full Name"));
         assertThat(staffDetails.getUserId(), is(staffId));
 
@@ -132,7 +144,8 @@ public class UserImplTest {
         assertThat(commonConv.convertDateToString(staffDetails.getDob()), is("2000-10-12"));
         assertThat(commonConv.convertDateToString(staffDetails.getStartDay()), is("2016-07-11"));
 
-        LoginStaff loginStaffDetails = userImp.logInUser("bob@marley.com", "someBobPassword");
+        HttpSession session = mock(HttpSession.class);
+        LoginStaff loginStaffDetails = userImp.logInUser("bob@marley.com", "someBobPassword", session);
         assertThat(loginStaffDetails.getName(), is("Bob Marley"));
         assertThat(loginStaffDetails.getUserId(), is(staffId));
 
@@ -154,15 +167,20 @@ public class UserImplTest {
         assertThat(commonConv.convertDateToString(staffDetails.getDob()), is("2000-03-03"));
         assertThat(commonConv.convertDateToString(staffDetails.getStartDay()), is("2016-03-03"));
 
-        LoginStaff loginStaffDetails = userImp.logInUser("john@smith.com", "someJohnPassword!123");
+        HttpSession session = mock(HttpSession.class);
+        LoginStaff loginStaffDetails = userImp.logInUser("john@smith.com", "someJohnPassword!123", session);
         assertThat(loginStaffDetails.getName(), is("John Smith"));
         assertThat(loginStaffDetails.getUserId(), is(staffId));
 
         // delete staff
         userImp.deleteStaff(staffId);
         assertThat(userImp.getStaffDetails(staffId), is(nullValue()));
-        loginStaffDetails = userImp.logInUser("john@smith.com", "someJohnPassword!123");
-        assertThat(loginStaffDetails, is(nullValue()));
+        try {
+            loginStaffDetails = userImp.logInUser("john@smith.com", "someJohnPassword!123", session);
+            assertThat(loginStaffDetails, is(nullValue()));
+        } catch (ValidationException e) {
+            assertThat(e.getMessage(), is("Invalid email or password"));
+        }
     }
 
     @Test

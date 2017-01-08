@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -48,27 +47,20 @@ public class UserIPA {
     @Produces(MediaType.APPLICATION_JSON)
     public Response logInUser(UserLoginJson user, @Context HttpServletRequest request) {
         try {
+
             LOGGER.info("logInUser: user.mail={}", user.getEmail());
-            if ( user == null || commonConv.stringIsNullOrEmpty(user.getEmail()) || commonConv.stringIsNullOrEmpty(user.getPassword()) ) {
-                LOGGER.error("logInUse: attempt to login without either mail or password");
-                return badRequest("Mandatory argument email or password are missing");
-            }
-
-            LOGGER.info("logInUser: email= {}", user.getEmail());
-            LoginStaff staff = coreServices.getUserImpl().logInUser(user.getEmail(), user.getPassword());
-            HttpSession session = request.getSession(true);
-
-            if(staff == null) {
-                session.invalidate();
-                return badRequest("Invalid email or password");
-            }
-
-            session.setAttribute("userId", staff.getUserId());
+            validationStaffHepler.getValidationStaffHepler().basicValidateEmailAndPasswordLogin(user.getEmail(), user.getPassword());
+            LoginStaff staff = coreServices.getUserImpl().logInUser(user.getEmail(), user.getPassword(), request.getSession(true));
             return success( new LoginStaffJson(staff.getUserId(), staff.getName(), staff.getFirstLogin()));
-        }
-        catch (SQLFaultException departmentFaultService) {
+
+        } catch (ValidationException e) {
+                LOGGER.error("logInUser: ValidationException = {} ", e.getMessage());
+                return badRequest(e.getMessage());
+
+        } catch (SQLFaultException departmentFaultService) {
             LOGGER.error("loginUser: SQLFaultException = {} ", departmentFaultService);
             return sqlConnectionError(departmentFaultService.getMessage());
+
         } catch (Exception e ) {
             LOGGER.error("loginUser: Exception = {} ", e);
             return internalServerError("logInUser: error occur = " + e.getMessage());
@@ -102,8 +94,10 @@ public class UserIPA {
 
     @PUT
     @Path("/modifyStaff")
-    public Response modifyStaff(StaffJson staff) {
+    public Response modifyStaff(StaffJson staff, @Context HttpServletRequest request) {
         try {
+            int id = 0;
+      //      coreServices.getPasswordAuthentication().authorizedStaff(id , request);
             validationStaffHepler.getValidationStaffHepler().basicStaffValidation(staff);
             Staff staffToModify = validationStaffHepler.getValidationStaffHepler().validateMandatoryStaffDetailsAndMapStaff(staff);
             coreServices.getUserImpl().modifyStaffDetails(staffToModify);

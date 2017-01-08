@@ -4,8 +4,8 @@
         <div class="row">
             <div class="col-md-9">
                 <label>Search By:</label>
-                <select class="form-control"  ng-change="ctrl.getSelectedValue(ctrl.searchValue)" name="searchValue" ng-model="ctrl.searchValue">
-                    <option value=-1>Select name</option>
+                <select class="form-control"  ng-change="ctrl.getSelectedValue(ctrl.searchingType)" name="searchingType" ng-model="ctrl.searchingType">
+                    <option value="-1">Select name</option>
                     <option ng-repeat="name in ctrl.namesToSearch" value="{{ name.id }}">{{name.name}}</option>
                 </select>
 

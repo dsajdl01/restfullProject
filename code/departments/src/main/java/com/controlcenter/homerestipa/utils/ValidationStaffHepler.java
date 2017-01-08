@@ -71,6 +71,19 @@ public class ValidationStaffHepler{
     }
 
     public LoginDetails validateAndGetLoginDetails(String email, String password) throws ValidationException {
+        validateEmailAndPassword(email, password);
+        return new DataMapper().mapLoginDetails(email,passwordAuth.hashPassword(password));
+    }
+
+    public void basicValidateEmailAndPasswordLogin(String email, String password) throws ValidationException {
+        try {
+            validateEmailAndPassword(email, password);
+        } catch (ValidationException e) {
+            throw new ValidationException("Mandatory argument email or password are missing");
+        }
+    }
+
+    public void validateEmailAndPassword(String email, String password) throws ValidationException {
         String message = "";
         if ( commonConv.stringIsNullOrEmpty(email) ) {
             message = "Mandatory login email is missing. ";
@@ -81,14 +94,12 @@ public class ValidationStaffHepler{
         if ( commonConv.stringIsNullOrEmpty(password) ) {
             message += "Mandatory password is missing. ";
         } else if ( !commonConv.hasStringMaxLength(password, MAX_PASSWORD_LENGTH)) {
-             message += "Password must be at least " + MAX_PASSWORD_LENGTH + " characters long.";
+            message += "Password must be at least " + MAX_PASSWORD_LENGTH + " characters long.";
         }
 
         if ( !message.equals("") ) {
             throw new ValidationException( message );
         }
-
-        return new DataMapper().mapLoginDetails(email,passwordAuth.hashPassword(password));
     }
 
     public Staff validateAndGetStaffDetails(int depId, StaffLoginDetailsJson staff) throws  ValidationException {

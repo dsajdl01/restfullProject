@@ -5,6 +5,7 @@ import com.department.core.data.PasswordAuthentication;
 import com.departments.dto.dep_dbo.DepartmentDBO;
 import com.departments.dto.dep_dbo.DepartmentDBOConnection;
 import com.departments.dto.dep_dbo.UserDBO;
+import com.httpSession.core.HttpSessionCoreServlet;
 import dep.data.core.provider.inter.provider.DepartmentCoreServices;
 import dep.data.core.provider.inter.provider.UserInter;
 import dep.data.core.provider.inter.provider.DepartmentInter;
@@ -24,11 +25,16 @@ public class CoreServices implements DepartmentCoreServices {
 
     private UserInter userInter;
 
+    private HttpSessionCoreServlet httpSessionCoreServlet;
+
+    private PasswordAuthentication passwordAuth;
+
     public CoreServices() {
         LOGGER.info(" Constructor of CoreServices: is loading ...");
-        PasswordAuthentication passwordAuth = new PasswordAuthentication();
+        this.httpSessionCoreServlet = new HttpSessionCoreServlet();
+        passwordAuth = new PasswordAuthentication(httpSessionCoreServlet);
         final Connection dbConnection = new DepartmentDBOConnection(new DepartmentProperties().getPropertiesDataConfig()).getDbConnection();
-        this.userInter = new UserImpl(new UserDBO(dbConnection), passwordAuth);
+        this.userInter = new UserImpl(new UserDBO(dbConnection), passwordAuth, httpSessionCoreServlet);
         this.departmentInter = new DepartmentImpl(new DepartmentDBO(dbConnection));
     }
 
@@ -38,5 +44,13 @@ public class CoreServices implements DepartmentCoreServices {
 
     public UserInter getUserImpl() {
         return this.userInter;
+    }
+
+    public HttpSessionCoreServlet getHttpSessionCoreServlet() {
+        return httpSessionCoreServlet;
+    }
+
+    public PasswordAuthentication getPasswordAuthentication() {
+        return passwordAuth;
     }
 }

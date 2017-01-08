@@ -98,8 +98,9 @@ public class UserIpaTest {
 
     @Test
     public void logInUserSuccess() throws Exception {
+        when(mockHttpServletRequest.getSession(true)).thenReturn(httpSessionMock);
         LoginStaff loginStaff = new LoginStaff(1, "Fred Smith", true);
-        when(mockUseInter.logInUser("smith@fred.com","password")).thenReturn(loginStaff);
+        when(mockUseInter.logInUser("smith@fred.com","password", httpSessionMock)).thenReturn(loginStaff);
         when(mockHttpServletRequest.getSession(true)).thenReturn(httpSessionMock);
         UserLoginJson userLogin = new UserLoginJson("smith@fred.com","password");
 
@@ -119,8 +120,11 @@ public class UserIpaTest {
     @Test
     public void logInUserFalseAttempt() throws Exception {
 
-        when(mockUseInter.logInUser("smith@fred.com","passwordsss")).thenReturn(null);
         when(mockHttpServletRequest.getSession(true)).thenReturn(httpSessionMock);
+        when(mockUseInter.logInUser("smith@fred.com","passwordsss", httpSessionMock)).thenReturn(null);
+        when(mockHttpServletRequest.getSession(true)).thenReturn(httpSessionMock);
+        doThrow(new ValidationException("Invalid email or password")).when(mockValidationStaffHepler).basicValidateEmailAndPasswordLogin("smith@fred.com", "passwordsss");
+
         UserLoginJson userLogin = new UserLoginJson("smith@fred.com","passwordsss");
 
         given()
@@ -136,6 +140,8 @@ public class UserIpaTest {
     @Test
     public void logInUserWithNullValueTest() throws Exception {
 
+        when(mockHttpServletRequest.getSession(true)).thenReturn(httpSessionMock);
+        doThrow(new ValidationException("Mandatory argument email or password are missing")).when(mockValidationStaffHepler).basicValidateEmailAndPasswordLogin("smith@fred.com", null);
         UserLoginJson userLogin = new UserLoginJson("smith@fred.com",null);
 
         given()
@@ -151,7 +157,8 @@ public class UserIpaTest {
     @Test
     public void logInUserSQLError() throws Exception {
         LoginStaff loginStaff = new LoginStaff(1, "Fred Smith", true);
-        doThrow(new SQLFaultException("Enable to connect to database")).when(mockUseInter).logInUser("smith@fred.com","password");
+        when(mockHttpServletRequest.getSession(true)).thenReturn(httpSessionMock);
+        doThrow(new SQLFaultException("Enable to connect to database")).when(mockUseInter).logInUser("smith@fred.com","password", httpSessionMock);
         UserLoginJson userLogin = new UserLoginJson("smith@fred.com","password");
 
         given()
@@ -167,7 +174,8 @@ public class UserIpaTest {
     @Test
     public void logInUserError() throws Exception {
         LoginStaff loginStaff = new LoginStaff(1, "Fred Smith", true);
-        doThrow(new RuntimeException()).when(mockUseInter).logInUser("smith@fred.com","password");
+        when(mockHttpServletRequest.getSession(true)).thenReturn(httpSessionMock);
+        doThrow(new RuntimeException()).when(mockUseInter).logInUser("smith@fred.com","password", httpSessionMock);
         UserLoginJson userLogin = new UserLoginJson("smith@fred.com","password");
 
         given()

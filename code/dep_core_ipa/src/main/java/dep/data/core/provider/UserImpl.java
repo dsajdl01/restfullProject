@@ -10,8 +10,10 @@ import com.departments.dto.data.Staff;
 import com.departments.dto.dep_dbo.UserDBO;
 import com.departments.dto.fault.exception.SQLFaultException;
 import com.departments.dto.fault.exception.ValidationException;
+import com.httpSession.core.HttpSessionCoreServlet;
 import dep.data.core.provider.inter.provider.UserInter;
 
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.util.List;
 
@@ -25,32 +27,36 @@ public class UserImpl implements UserInter {
     private UserDBO userDBO;
     private PasswordAuthentication passwordAuth;
     private CommonConversions commonConv = new CommonConversions();
+    private HttpSessionCoreServlet httpSessionCoreServlet;
 
-    public UserImpl(UserDBO userDBO, PasswordAuthentication passwordAuth) {
+    public UserImpl(UserDBO userDBO, PasswordAuthentication passwordAuth, HttpSessionCoreServlet httpSessionCoreServlet) {
         this.userDBO = userDBO;
         this.passwordAuth = passwordAuth;
         this.loginStaff = null;
+        this.httpSessionCoreServlet = httpSessionCoreServlet;
     }
 
     // http://stackoverflow.com/questions/2860943/how-can-i-hash-a-password-in-java
     // http://stackoverflow.com/questions/18142745/how-do-i-generate-a-salt-in-java-for-salted-hash
     @Override
-    public LoginStaff logInUser(String email, String password) throws SQLFaultException {
+    public LoginStaff logInUser(String email, String password, HttpSession session) throws SQLFaultException, ValidationException {
         String encryptPassword = userDBO.getLoginStaffPassword(email);
         if (!commonConv.stringIsNullOrEmpty(encryptPassword) ) {
             boolean authenticate = passwordAuth.authenticate(password, encryptPassword);
             if (authenticate) {
-                return getLoginStaffDetails(email);
+                final LoginStaff loginStaffDetails = getLoginStaffDetails(email);
+                httpSessionCoreServlet.setStaffIdAttribute(loginStaffDetails.getUserId(), session);
+                return loginStaffDetails;
             }
         }
-        return null;
+        session.invalidate();
+        throw new ValidationException("Invalid email or password");
     }
 
     private LoginStaff getLoginStaffDetails(String email) throws SQLFaultException {
         Integer userId = userDBO.loninUserId(email);
         if (userId == null) return null;
-        loginStaff = userDBO.getLogInStaffDetails(userId);
-        return loginStaff;
+        return userDBO.getLogInStaffDetails(userId);
     }
 
     public Staff getStaffDetails(int staffId) throws SQLFaultException {
