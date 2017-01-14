@@ -11,7 +11,7 @@ controlCenterApp.controller('addStaffController', ['commonService', '$sessionSto
             if ( commonService.selectedDepartment ) {
                 self.depName = commonService.selectedDepartment.depName;
             }  else {
-                var promise = depService.getDepartment($sessionStorage.depId);
+                var promise = depService.getDepartment($sessionStorage.depId, $sessionStorage.user.userId);
                 return promise
                     .then(function (data) {
                         self.depName = data.data.depName;

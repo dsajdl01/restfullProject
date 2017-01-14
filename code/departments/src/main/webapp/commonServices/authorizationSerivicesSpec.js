@@ -52,7 +52,7 @@ describe('Service: Authorization', function() {
             httpBackend.whenPUT('/department/rest/user/login', loginData);
 
             service.loginUser("fred@example.coms", "1835347" )
-                 .then(function(response) {})
+                 .then()
                  .catch(function (fail) {
                    expect(fail.status).toBe(400);
                    expect(fail.data).toBe(errorMessage);

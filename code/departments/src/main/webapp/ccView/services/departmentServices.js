@@ -8,12 +8,13 @@ function DepService($http, commonService)
  {
     var self = this;
 
-    self.getDepartmentList = function(successCallback){
+    self.getDepartmentList = function(staffId, successCallback){
     		var Url = '/department/rest/dep/getListDepartment';
     		return $http(
     				{
     					method: 'GET',
-    					url: Url
+    					url: Url,
+    					params: {'staffId': staffId}
     				})
     				.then(function (response)
     				{
@@ -57,11 +58,11 @@ function DepService($http, commonService)
             });
     }
 
-    self.getDepartment = function(depId) {
+    self.getDepartment = function(depId, staffId) {
             return $http ({
                 method: "GET",
                 url: '/department/rest/dep',
-                params: {'depId': depId}
+                params: {'depId': depId, 'staffId' : staffId}
             });
         };
  }

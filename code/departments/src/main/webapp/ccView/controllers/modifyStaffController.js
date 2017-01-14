@@ -29,7 +29,7 @@ controlCenterApp.controller('modifyStaffController', ['modalDialogBoxService', '
                 self.depName = commonService.selectedDepartment.depName;
                 self.user.depId = commonService.selectedDepartment.depId;
             }  else {
-                var promise = depService.getDepartment($sessionStorage.depId);
+                var promise = depService.getDepartment($sessionStorage.depId, $sessionStorage.user.userId);
                 return promise
                    .then(function (data) {
                         self.depName = data.data.depName;

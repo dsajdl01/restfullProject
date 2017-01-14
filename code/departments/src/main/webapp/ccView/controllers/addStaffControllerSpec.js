@@ -63,12 +63,13 @@ describe('Controller: addStaffController', function() {
             };
 
             sessionStorageMock = {
-                depId: 118
+                depId: 118,
+                user: { userId: 1 }
             };
 
             depServiceMock = {
                 success: true,
-                getDepartment: function(id) {
+                getDepartment: function(id, staffId) {
                     if ( this.success ) {
                         return successResponse;
                     } else {

@@ -31,9 +31,9 @@ public class HttpSessionCoreServlet {
         return (Integer) session.getAttribute(SELECTED_DEP_ID);
     }
 
-    public void staffLogin(HttpServletRequest request) throws LoginStaffException {
+    public void anyStaffIsLogin(HttpServletRequest request) throws LoginStaffException {
         if ( getStaffIdAttribute(request) == null ) {
-            throw new LoginStaffException();
+            throw new LoginStaffException("Please login");
         }
     }
 }

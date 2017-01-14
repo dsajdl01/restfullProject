@@ -1,9 +1,12 @@
 package com.controlcenter.homerestipa;
 
+import com.controlcenter.homerestipa.provider.RestServices;
 import com.controlcenter.homerestipa.response.DepartmentJson;
 import com.department.testutils.JerseyContainerJUnitRule;
 import com.departments.dto.data.Department;
+import com.departments.dto.fault.exception.LoginStaffException;
 import com.departments.dto.fault.exception.SQLFaultException;
+import com.departments.dto.fault.exception.ValidationException;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.jayway.restassured.RestAssured;
 import dep.data.core.provider.inter.provider.DepartmentCoreServices;
@@ -52,6 +55,7 @@ public class DepartmentIpaTest {
                     @Override
                     protected void configure() {
                         bind(mockDepartmentCoreServices).to(DepartmentCoreServices.class);
+                        bind(mockRestServices).to(RestServices.class);
                         bindFactory(new HttpServletRequestFactory()).to(HttpServletRequest.class);
                     }
                 }
@@ -84,9 +88,11 @@ public class DepartmentIpaTest {
     public void getDepartmentTest() throws Exception {
         Department department = new Department(1, "IT Team", "Bob Marley");
         when(mockDepartmentInter.getDepartment(1)).thenReturn(department);
+        doNothing().when(mockPasswordAuthentication).authorizedStaffId(eq(1),any(HttpServletRequest.class));
 
         given()
             .queryParam("depId", 1)
+            .queryParam("staffId", 1)
         .when()
             .get()
         .then()//.log().all()
@@ -98,21 +104,38 @@ public class DepartmentIpaTest {
 
     @Test
     public void getDepartment_negativeDepIdTest() throws Exception {
-
+        doThrow(new ValidationException("Invalid department ;id -3")).when(mockValidationHepler).basicValidationOfDepartmentId(-3);
+        doNothing().when(mockPasswordAuthentication).authorizedStaffId(eq(1),any(HttpServletRequest.class));
         given()
             .queryParam("depId", -3)
+            .queryParam("staffId", 1)
         .when()
             .get()
         .then()//.log().all()
             .statusCode(BAD_REQUEST)
-            .body("message", equalTo("Invalid department id -3"));
+            .body("message", equalTo("Invalid department ;id -3"));
+    }
+
+    @Test
+    public void getDepartment_LoginStaffExceptionTest() throws Exception {
+        doThrow( new LoginStaffException("Current staff is not authorized")).when(mockPasswordAuthentication).authorizedStaffId(eq(1),any(HttpServletRequest.class));
+        given()
+            .queryParam("depId", 3)
+            .queryParam("staffId", 1)
+        .when()
+            .get()
+        .then().log().all()
+            .statusCode(FORBIDDEN)
+            .body("message", equalTo("Current staff is not authorized"));
     }
 
     @Test
     public void getDepartment_SQLErrorTest() throws Exception {
+        doNothing().when(mockPasswordAuthentication).authorizedStaffId(eq(1),any(HttpServletRequest.class));
         doThrow(new SQLFaultException("Inable to connect to database")).when(mockDepartmentInter).getDepartment( 1);
         given()
             .queryParam("depId", 1)
+            .queryParam("staffId", 1)
         .when()
             .get()
         .then()//.log().all()
@@ -137,6 +160,7 @@ public class DepartmentIpaTest {
         when(mockDepartmentInter.getDepartmentList()).thenReturn(departmentList);
 
         given()
+           .queryParam("staffId", 1)
            .when()//.log().all()
            .get("/getListDepartment")
         .then()//.log().all()
@@ -144,6 +168,20 @@ public class DepartmentIpaTest {
             .body("department[0].depId",  equalTo(1))
             .body("department[0].depName",  equalTo("IT Team"))
             .body("department[0].createdBy",  equalTo("Bob Marley"));
+    }
+
+    @Test
+    public void getDepartmentsListErrorTest() throws Exception {
+        List<Department> departmentList = Arrays.asList( new Department(1, "IT Team", "Bob Marley") );
+        doThrow( new LoginStaffException("Current staff is not authorized")).when(mockPasswordAuthentication).authorizedStaffId(eq(1),any(HttpServletRequest.class));
+
+        given()
+            .queryParam("staffId", 1)
+        .when()//.log().all()
+            .get("/getListDepartment")
+        .then()//.log().all()
+            .statusCode(FORBIDDEN)
+            .body("message",  equalTo("Current staff is not authorized"));
     }
 
     @Test
@@ -201,8 +239,24 @@ public class DepartmentIpaTest {
     }
 
     @Test
+    public void checkdepartmentNameLoginStaffExceptionTest() throws Exception {
+        String name = "IT Deapartment";
+        doThrow(new LoginStaffException("Please login"))
+                .when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
+
+        given()
+            .queryParam("depName", name)
+        .when()//.log().all()
+            .get("/checkDepartmentName")
+        .then()//.log().all()
+            .statusCode(FORBIDDEN)
+            .body("message", equalTo("Please login"));
+    }
+
+    @Test
     public void checkdepartmentNameErrorTest() throws Exception {
         String name = "IT Deapartment";
+        doNothing().when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
         doThrow(new RuntimeException()).when(mockDepartmentInter).checkDepartmenName(name);
 
         given()
@@ -261,17 +315,37 @@ public class DepartmentIpaTest {
     }
 
     @Test
-    public void saveDepartment_badRequestTest() throws Exception {
+    public void saveDepartment_LoginStaffExceptionTest() throws Exception {
         DepartmentJson dep = new DepartmentJson(null, null, "1");
+        doThrow(new LoginStaffException("Please login"))
+                .when(mockPasswordAuthentication).authorizedStaffId(eq(1), any(HttpServletRequest.class));
 
         given()
             .contentType("application/json")
+            .queryParam("staffId", 1)
             .body( dep )
         .when()//.log().all()
             .put("/createDepartment")
         .then()//.log().all()
-            .statusCode(BAD_REQUEST)
-            .body("message", equalTo("Mandatory argument department name is missing"));
+            .statusCode(FORBIDDEN)
+            .body("message", equalTo("Please login"));
+    }
+
+    @Test
+    public void saveDepartment_badRequestTest() throws Exception {
+        DepartmentJson dep = new DepartmentJson(null, null, "1");
+        doNothing().when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
+        doThrow( new ValidationException("Mandatory argument department name is missing"))
+                .when(mockValidationHepler).basicDepartmentValidation(any(DepartmentJson.class));
+
+        given()
+                .contentType("application/json")
+                .body( dep )
+                .when()//.log().all()
+                .put("/createDepartment")
+                .then()//.log().all()
+                .statusCode(BAD_REQUEST)
+                .body("message", equalTo("Mandatory argument department name is missing"));
     }
 
     @Test

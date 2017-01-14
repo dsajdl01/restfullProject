@@ -15,10 +15,10 @@ describe('Service: DepService', function() {
     });
 
     it('should return true and set commonDepartmentList when getDepartmentList() is called', function() {
-
+        var staffId = 1;
         var response = { department: {depId: 101, name: "IT", createdBy: "David" } } ;
-        httpBackend.whenGET('/department/rest/dep/getListDepartment').respond(200, response);
-        httpBackend.expectGET('/department/rest/dep/getListDepartment');
+        httpBackend.whenGET('/department/rest/dep/getListDepartment?staffId=' + staffId).respond(200, response);
+        httpBackend.expectGET('/department/rest/dep/getListDepartment?staffId=' + staffId);
 
         var callbackCalled = false;
         var callback = function(responce) {
@@ -26,14 +26,15 @@ describe('Service: DepService', function() {
           	callbackCalled = true;
         };
 
-        service.getDepartmentList( callback);
+        service.getDepartmentList(staffId, callback);
         httpBackend.flush();
         expect(callbackCalled).toBeTruthy();
     });
 
     it('should return false when getDepartmentList() is called and any errors occurs', function() {
-            httpBackend.whenGET('/department/rest/dep/getListDepartment').respond(500, "some error");
-            httpBackend.expectGET('/department/rest/dep/getListDepartment');
+            var staffId  = 1;
+            httpBackend.whenGET('/department/rest/dep/getListDepartment?staffId=' + staffId).respond(500, "some error");
+            httpBackend.expectGET('/department/rest/dep/getListDepartment?staffId=' + staffId);
 
             var callbackCalled = false;
             var callback = function(responce) {
@@ -41,7 +42,7 @@ describe('Service: DepService', function() {
               	callbackCalled = true;
             };
 
-            service.getDepartmentList( callback);
+            service.getDepartmentList(staffId, callback);
             httpBackend.flush();
             expect(callbackCalled).toBeTruthy();
     });
@@ -125,7 +126,7 @@ describe('Service: DepService', function() {
             httpBackend.expectGET('/department/rest/dep?depId=127');
 
             service.getDepartment(127)
-                 .then(function(response) {})
+                 .then()
                  .catch(function (fail) {
                     expect(fail.status).toBe(500);
                     expect(fail.data).toEqual({"message": "some error"} );

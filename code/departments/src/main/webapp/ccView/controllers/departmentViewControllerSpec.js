@@ -8,7 +8,7 @@ describe('Controller: departmentViewController', function() {
 
              depServiceMock = {
                   success: true,
-                  getDepartmentList: function(response){
+                  getDepartmentList: function(staffId, response){
                        if ( this.success ) {
                             response(true);
                        } else {

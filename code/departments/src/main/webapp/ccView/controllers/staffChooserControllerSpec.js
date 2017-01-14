@@ -13,9 +13,8 @@ describe('Controller: staffChooserController', function() {
                     shareModalData:  {
                         staffList: staff
                     },
-                    notifyAndHide: function(value) {
-                    },
-                    hideDialog: function() {}
+                    notifyAndHide: "",
+                    hideDialog: ""
             };
 
              $provide.value('modalDialogBoxService', modalDialogBoxServiceMock);

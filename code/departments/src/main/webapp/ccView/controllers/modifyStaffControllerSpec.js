@@ -87,7 +87,7 @@ describe('Controller: modifyStaffController', function() {
                     },
                     setTemplate: "",
                     showDialog: "",
-                    notify: function(){},
+                    notify: "",
             };
 
             commonServiceMock = {
@@ -95,7 +95,8 @@ describe('Controller: modifyStaffController', function() {
             };
 
             sessionStorageMock = {
-                depId: 1
+                depId: 1,
+                user: { userId: 1}
             };
 
             staffServiceMock = {
@@ -129,7 +130,7 @@ describe('Controller: modifyStaffController', function() {
 
             depServiceMock = {
                 success: true,
-                getDepartment: function(depId) {
+                getDepartment: function(depId, staffId) {
                     if ( this.success ) {
                         return departmentSuccess;
                     } else {
@@ -183,7 +184,7 @@ describe('Controller: modifyStaffController', function() {
             ctrl.init();
             expect(ctrl.depName).toEqual("IT Department");
             expect(ctrl.user.depId).toEqual(1);
-            expect(depServiceMock.getDepartment).toHaveBeenCalledWith(1);
+            expect(depServiceMock.getDepartment).toHaveBeenCalledWith(1, 1);
 
             expect(ctrl.namesToSearch).toEqual([{ name: "Full Name", id: SEARCH_VALUE.NAME }, { name: "Date of Birthday", id: SEARCH_VALUE.DOB }]);
             expect(ctrl.searchingType).toEqual(DEFAULT_VALUE);
@@ -199,7 +200,7 @@ describe('Controller: modifyStaffController', function() {
            ctrl.init();
            expect(ctrl.depName).toEqual("IT Department");
            expect(ctrl.user.depId).toEqual(1);
-           expect(depServiceMock.getDepartment).toHaveBeenCalledWith(1);
+           expect(depServiceMock.getDepartment).toHaveBeenCalledWith(1, 1);
            expect(toasterMock.pop).toHaveBeenCalledWith("error", "ERROR", "Error occur while getting department id. Error message: Enable to connect to database")
        });
 

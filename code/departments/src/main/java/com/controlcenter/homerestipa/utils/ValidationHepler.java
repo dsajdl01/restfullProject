@@ -1,5 +1,6 @@
 package com.controlcenter.homerestipa.utils;
 
+import com.controlcenter.homerestipa.response.DepartmentJson;
 import com.controlcenter.homerestipa.response.StaffJson;
 import com.controlcenter.homerestipa.response.StaffLoginDetailsJson;
 import com.department.core.data.PasswordAuthentication;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * Created by david on 17/12/16.
  */
-public class ValidationStaffHepler{
+public class ValidationHepler {
 
     private CommonConversions commonConv = new CommonConversions();
     private PasswordAuthentication passwordAuth;
@@ -25,7 +26,7 @@ public class ValidationStaffHepler{
     private static final int MAX_SEARCH_VALUE = 3;
     private static final int MAX_NAME_VALUE = 4;
 
-    public ValidationStaffHepler(PasswordAuthentication passwordAuth) {
+    public ValidationHepler(PasswordAuthentication passwordAuth) {
         this.passwordAuth = passwordAuth;
     }
 
@@ -37,6 +38,12 @@ public class ValidationStaffHepler{
     public void basicValidationOfSearchValue(String val) throws ValidationException {
         if ( commonConv.stringIsNullOrEmpty(val) || !commonConv.hasStringMaxLength(val, MAX_SEARCH_VALUE) ) {
             throw new ValidationException("Search value mas be at least " + MAX_SEARCH_VALUE + " characters" );
+        }
+    }
+
+    public void basicDepartmentValidation(DepartmentJson dep ) throws ValidationException {
+        if ( dep == null || commonConv.stringIsNullOrEmpty(dep.getDepName())) {
+            throw new  ValidationException("Mandatory argument department name is missing");
         }
     }
 

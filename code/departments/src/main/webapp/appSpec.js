@@ -6,7 +6,7 @@ describe('Module: depApp', function() {
 
     beforeEach(module(function($provide) {
             locationMock = {
-    			path: function(path) {}
+    			path: ""
             };
 
             authMock = {

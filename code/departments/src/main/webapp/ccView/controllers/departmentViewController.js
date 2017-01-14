@@ -7,15 +7,14 @@ controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonS
 	self.showPage = false;
 	self.containTable = false;
 	self.rdbDepValue = "";
-	self.texts = "harvard."
 	self.commonService = commonService;
 
 	self.init = function() {
 	    var user = $sessionStorage.user;
 	    self.commonService.init();
         delete $sessionStorage.depId;
-        DepService.getDepartmentList(function(responce) {
-            if ( responce ) {
+        DepService.getDepartmentList(user.userId, function(response) {
+            if ( response ) {
                 self.showPage = true;
                 self.containTable = !(commonService.isLengtsmallerOrEqualToZero(self.commonService.departmentList.length));
             } else {

@@ -44,7 +44,7 @@ describe('Service: staffService', function() {
              httpBackend.expectGET('/department/rest/user/emailExist?email=' + email);
 
              service.doesEmailExist(email)
-                    .then(function(response) {})
+                    .then()
                     .catch(function (fail) {
                          expect(fail.status).toBe(500);
                          expect(fail.data).toEqual({"message": "some error"} );
@@ -74,7 +74,7 @@ describe('Service: staffService', function() {
 
         var itShouldBeCalled = false;
               service.saveStaff(data, 3)
-                 .then(function(response) {})
+                 .then()
                  .catch(function (fail) {
                     expect(fail.status).toBe(500);
                     expect(fail.data).toEqual({"message": "some error"} );
@@ -123,7 +123,7 @@ describe('Service: staffService', function() {
         httpBackend.whenPOST('/department/rest/user/' + depId + '/searchForStaff?searchValue=' + searchValue +'&type=' + type).respond(500, response);
         httpBackend.expectPOST('/department/rest/user/' + depId + '/searchForStaff?searchValue=' + searchValue +'&type=' + type);
         service.searchForStaff(depId, searchValue, type)
-                  .then(function(response) {})
+                  .then()
                   .catch(function (fail) {
                         expect(fail.status).toBe(500);
                         expect(fail.data.message).toEqual("Enable to connect to database");
@@ -149,7 +149,7 @@ describe('Service: staffService', function() {
         httpBackend.whenPUT('/department/rest/user/modifyStaff', staff).respond(500, response);
         httpBackend.expectPUT('/department/rest/user/modifyStaff', staff);
         service.modifyStaff(staff)
-             .then(function(response) {})
+             .then()
              .catch(function (fail) {
              expect(fail.status).toBe(500);
              expect(fail.data.message).toEqual("Enable to connect to database");

@@ -38,7 +38,7 @@ public class UserIPA {
     DepartmentCoreServices coreServices;
 
     @Inject
-    RestServices validationStaffHepler;
+    RestServices validationHelper;
 
 
     @PUT
@@ -49,7 +49,7 @@ public class UserIPA {
         try {
 
             LOGGER.info("logInUser: user.mail={}", user.getEmail());
-            validationStaffHepler.getValidationStaffHepler().basicValidateEmailAndPasswordLogin(user.getEmail(), user.getPassword());
+            validationHelper.getValidationHepler().basicValidateEmailAndPasswordLogin(user.getEmail(), user.getPassword());
             LoginStaff staff = coreServices.getUserImpl().logInUser(user.getEmail(), user.getPassword(), request.getSession(true));
             return success( new LoginStaffJson(staff.getUserId(), staff.getName(), staff.getFirstLogin()));
 
@@ -73,11 +73,11 @@ public class UserIPA {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addNewStaff(@PathParam("depId") final Integer depId, StaffLoginDetailsJson newStaff, @Context HttpServletRequest request) {
         try {
-            validationStaffHepler.getValidationStaffHepler().basicStaffValidation(depId, newStaff);
+            validationHelper.getValidationHepler().basicStaffValidation(depId, newStaff);
             coreServices.getDepartmentImpl().doesDepartmentExist(depId);
             LOGGER.info("addNewStaff: depId={}, new staff fullName={}", depId, newStaff.getFullName());
-            LoginDetails loginDetail = validationStaffHepler.getValidationStaffHepler().validateAndGetLoginDetails(newStaff.getLoginEmail(), newStaff.getPassword());
-            Staff staff = validationStaffHepler.getValidationStaffHepler().validateAndGetStaffDetails(depId, newStaff);
+            LoginDetails loginDetail = validationHelper.getValidationHepler().validateAndGetLoginDetails(newStaff.getLoginEmail(), newStaff.getPassword());
+            Staff staff = validationHelper.getValidationHepler().validateAndGetStaffDetails(depId, newStaff);
             coreServices.getUserImpl().saveNewStaffAndLoginDetails(staff, loginDetail);
             return success();
         } catch (ValidationException e) {
@@ -97,9 +97,9 @@ public class UserIPA {
     public Response modifyStaff(StaffJson staff, @Context HttpServletRequest request) {
         try {
             int id = 0;
-      //      coreServices.getPasswordAuthentication().authorizedStaff(id , request);
-            validationStaffHepler.getValidationStaffHepler().basicStaffValidation(staff);
-            Staff staffToModify = validationStaffHepler.getValidationStaffHepler().validateMandatoryStaffDetailsAndMapStaff(staff);
+      //      coreServices.getPasswordAuthentication().authorizedStaffId(id , request);
+            validationHelper.getValidationHepler().basicStaffValidation(staff);
+            Staff staffToModify = validationHelper.getValidationHepler().validateMandatoryStaffDetailsAndMapStaff(staff);
             coreServices.getUserImpl().modifyStaffDetails(staffToModify);
             return success();
         } catch (ValidationException e) {
@@ -116,8 +116,8 @@ public class UserIPA {
     public Response searchForStaff(@PathParam("depId") final Integer depId, @QueryParam("searchValue") String searchValue, @QueryParam("type") String type ) {
         LOGGER.info("searchForStaff: depId={}, searchValue={}, type={}", depId, searchValue, type);
         try {
-            validationStaffHepler.getValidationStaffHepler().basicValidationOfDepartmentId(depId);
-            validationStaffHepler.getValidationStaffHepler().basicValidationOfSearchValue(searchValue);
+            validationHelper.getValidationHepler().basicValidationOfDepartmentId(depId);
+            validationHelper.getValidationHepler().basicValidationOfSearchValue(searchValue);
             coreServices.getDepartmentImpl().doesDepartmentExist(depId);
             List<Staff> staffs = coreServices.getUserImpl().searchForStaffs(depId, searchValue, SearchType.fromString(type));
             List<StaffJson> staffLoginDetailsJsons = new ArrayList<>();

@@ -123,7 +123,7 @@ public class UserIpaTest {
         when(mockHttpServletRequest.getSession(true)).thenReturn(httpSessionMock);
         when(mockUseInter.logInUser("smith@fred.com","passwordsss", httpSessionMock)).thenReturn(null);
         when(mockHttpServletRequest.getSession(true)).thenReturn(httpSessionMock);
-        doThrow(new ValidationException("Invalid email or password")).when(mockValidationStaffHepler).basicValidateEmailAndPasswordLogin("smith@fred.com", "passwordsss");
+        doThrow(new ValidationException("Invalid email or password")).when(mockValidationHepler).basicValidateEmailAndPasswordLogin("smith@fred.com", "passwordsss");
 
         UserLoginJson userLogin = new UserLoginJson("smith@fred.com","passwordsss");
 
@@ -141,7 +141,7 @@ public class UserIpaTest {
     public void logInUserWithNullValueTest() throws Exception {
 
         when(mockHttpServletRequest.getSession(true)).thenReturn(httpSessionMock);
-        doThrow(new ValidationException("Mandatory argument email or password are missing")).when(mockValidationStaffHepler).basicValidateEmailAndPasswordLogin("smith@fred.com", null);
+        doThrow(new ValidationException("Mandatory argument email or password are missing")).when(mockValidationHepler).basicValidateEmailAndPasswordLogin("smith@fred.com", null);
         UserLoginJson userLogin = new UserLoginJson("smith@fred.com",null);
 
         given()
@@ -246,9 +246,9 @@ public class UserIpaTest {
         LoginDetails loginDetails = new LoginDetails("some@email.com", "$3728bdkjabddbeqnrrekop");
         Staff staff = new Staff.Builder().build();
         int depId = 2;
-        doNothing().when(mockValidationStaffHepler).basicStaffValidation(eq(depId), any(StaffLoginDetailsJson.class));
-        when(mockValidationStaffHepler.validateAndGetLoginDetails("some@email.com", "somepassword120")).thenReturn(loginDetails);
-        when(mockValidationStaffHepler.validateAndGetStaffDetails(eq(depId), any(StaffLoginDetailsJson.class))).thenReturn(staff);
+        doNothing().when(mockValidationHepler).basicStaffValidation(eq(depId), any(StaffLoginDetailsJson.class));
+        when(mockValidationHepler.validateAndGetLoginDetails("some@email.com", "somepassword120")).thenReturn(loginDetails);
+        when(mockValidationHepler.validateAndGetStaffDetails(eq(depId), any(StaffLoginDetailsJson.class))).thenReturn(staff);
         doNothing().when(mockUseInter).saveNewStaffAndLoginDetails(staff, loginDetails);
 
         given()
@@ -265,7 +265,7 @@ public class UserIpaTest {
         LoginDetails loginDetails = new LoginDetails("some@email.com", "$3728bdkjabddbeqnrrekop");
         Staff staff = new Staff.Builder().build();
         int depId = 2;
-        doThrow(new ValidationException("Invalid Email Address")).when(mockValidationStaffHepler).basicStaffValidation(eq(depId), any(StaffLoginDetailsJson.class));
+        doThrow(new ValidationException("Invalid Email Address")).when(mockValidationHepler).basicStaffValidation(eq(depId), any(StaffLoginDetailsJson.class));
 
         given()
             .contentType("application/json")
@@ -282,9 +282,9 @@ public class UserIpaTest {
         LoginDetails loginDetails = new LoginDetails("some@email.com", "$3728bdkjabddbeqnrrekop");
         Staff staff = new Staff.Builder().build();
         int depId = 2;
-        doNothing().when(mockValidationStaffHepler).basicStaffValidation(eq(depId), any(StaffLoginDetailsJson.class));
-        when(mockValidationStaffHepler.validateAndGetLoginDetails("some@email.com", "somepassword120")).thenReturn(loginDetails);
-        when(mockValidationStaffHepler.validateAndGetStaffDetails(eq(depId), any(StaffLoginDetailsJson.class))).thenReturn(staff);
+        doNothing().when(mockValidationHepler).basicStaffValidation(eq(depId), any(StaffLoginDetailsJson.class));
+        when(mockValidationHepler.validateAndGetLoginDetails("some@email.com", "somepassword120")).thenReturn(loginDetails);
+        when(mockValidationHepler.validateAndGetStaffDetails(eq(depId), any(StaffLoginDetailsJson.class))).thenReturn(staff);
         doThrow( new SQLFaultException("Enable to connect database")).when(mockUseInter).saveNewStaffAndLoginDetails(staff, loginDetails);
 
         given()
@@ -302,9 +302,9 @@ public class UserIpaTest {
         LoginDetails loginDetails = new LoginDetails("some@email.com", "$3728bdkjabddbeqnrrekop");
         Staff staff = new Staff.Builder().build();
         int depId = 2;
-        doNothing().when(mockValidationStaffHepler).basicStaffValidation(eq(depId), any(StaffLoginDetailsJson.class));
-        when(mockValidationStaffHepler.validateAndGetLoginDetails("some@email.com", "somepassword120")).thenReturn(loginDetails);
-        when(mockValidationStaffHepler.validateAndGetStaffDetails(eq(depId), any(StaffLoginDetailsJson.class))).thenReturn(staff);
+        doNothing().when(mockValidationHepler).basicStaffValidation(eq(depId), any(StaffLoginDetailsJson.class));
+        when(mockValidationHepler.validateAndGetLoginDetails("some@email.com", "somepassword120")).thenReturn(loginDetails);
+        when(mockValidationHepler.validateAndGetStaffDetails(eq(depId), any(StaffLoginDetailsJson.class))).thenReturn(staff);
         doThrow( new RuntimeException()).when(mockUseInter).saveNewStaffAndLoginDetails(staff, loginDetails);
 
         given()
@@ -318,8 +318,8 @@ public class UserIpaTest {
 
     @Test
     public void searchForStaffTest() throws  Exception{
-        doNothing().when(mockValidationStaffHepler).basicValidationOfDepartmentId(1);
-        doNothing().when(mockValidationStaffHepler).basicValidationOfSearchValue("david");
+        doNothing().when(mockValidationHepler).basicValidationOfDepartmentId(1);
+        doNothing().when(mockValidationHepler).basicValidationOfSearchValue("david");
         List<Staff> staffs = asList(new Staff(2, 1, "David Smith", commonConv.getDateFromString("1999-01-01"),
                 commonConv.getDateFromString("2016-01-01"), null, "Developer", "ds@co.uk", null));
         when(mockUseInter.searchForStaffs(1, "david", SearchType.NAME)).thenReturn(staffs);
@@ -344,8 +344,8 @@ public class UserIpaTest {
 
     @Test
     public void searchForStaffValidationTest() throws  Exception{
-        doNothing().when(mockValidationStaffHepler).basicValidationOfDepartmentId(1);
-        doNothing().when(mockValidationStaffHepler).basicValidationOfSearchValue("david");
+        doNothing().when(mockValidationHepler).basicValidationOfDepartmentId(1);
+        doNothing().when(mockValidationHepler).basicValidationOfSearchValue("david");
 
         given()
             .queryParam("searchValue", "david")
@@ -359,8 +359,8 @@ public class UserIpaTest {
 
     @Test
     public void searchForStaffSQLExceptionTest() throws  Exception{
-        doNothing().when(mockValidationStaffHepler).basicValidationOfDepartmentId(1);
-        doNothing().when(mockValidationStaffHepler).basicValidationOfSearchValue("david");
+        doNothing().when(mockValidationHepler).basicValidationOfDepartmentId(1);
+        doNothing().when(mockValidationHepler).basicValidationOfSearchValue("david");
         doThrow( new SQLFaultException("Unable to connect to database while searching for staff by name")).when(mockUseInter).searchForStaffs(1, "david", SearchType.NAME);
 
         given()
@@ -375,8 +375,8 @@ public class UserIpaTest {
 
     @Test
     public void searchForStaffSQLRuntimeTest() throws  Exception {
-        doNothing().when(mockValidationStaffHepler).basicValidationOfDepartmentId(1);
-        doNothing().when(mockValidationStaffHepler).basicValidationOfSearchValue("david");
+        doNothing().when(mockValidationHepler).basicValidationOfDepartmentId(1);
+        doNothing().when(mockValidationHepler).basicValidationOfSearchValue("david");
         doThrow( new RuntimeException()).when(mockUseInter).searchForStaffs(1, "david", SearchType.NAME);
 
         given()
@@ -390,9 +390,9 @@ public class UserIpaTest {
 
     @Test
     public void modifyStaff_Test() throws Exception {
-        doNothing().when(mockValidationStaffHepler).basicStaffValidation( any(StaffJson.class));
+        doNothing().when(mockValidationHepler).basicStaffValidation( any(StaffJson.class));
         Staff staff = getStaff();
-        when(mockValidationStaffHepler.validateMandatoryStaffDetailsAndMapStaff(any(StaffJson.class))).thenReturn(staff);
+        when(mockValidationHepler.validateMandatoryStaffDetailsAndMapStaff(any(StaffJson.class))).thenReturn(staff);
         doNothing().when(mockUseInter).modifyStaffDetails(staff);
 
         given()
@@ -406,7 +406,7 @@ public class UserIpaTest {
 
     @Test
     public void modifyStaffValidationError_Test() throws Exception {
-        doThrow(new ValidationException("Invalid Email Address")).when(mockValidationStaffHepler).basicStaffValidation( any(StaffJson.class));
+        doThrow(new ValidationException("Invalid Email Address")).when(mockValidationHepler).basicStaffValidation( any(StaffJson.class));
 
         given()
             .contentType("application/json")
@@ -420,9 +420,9 @@ public class UserIpaTest {
 
     @Test
     public void modifyStaffInternalError_Test() throws Exception {
-        doNothing().when(mockValidationStaffHepler).basicStaffValidation( any(StaffJson.class));
+        doNothing().when(mockValidationHepler).basicStaffValidation( any(StaffJson.class));
         Staff staff = getStaff();
-        when(mockValidationStaffHepler.validateMandatoryStaffDetailsAndMapStaff(any(StaffJson.class))).thenReturn(staff);
+        when(mockValidationHepler.validateMandatoryStaffDetailsAndMapStaff(any(StaffJson.class))).thenReturn(staff);
         doThrow(new RuntimeException()).when(mockUseInter).modifyStaffDetails(staff);
 
         given()

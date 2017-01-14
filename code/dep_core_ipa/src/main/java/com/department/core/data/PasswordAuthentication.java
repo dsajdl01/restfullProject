@@ -1,6 +1,7 @@
 package com.department.core.data;
 
 import com.departments.dto.fault.exception.LoginStaffException;
+import com.departments.dto.fault.exception.ValidationException;
 import com.httpSession.core.HttpSessionCoreServlet;
 
 import javax.crypto.SecretKeyFactory;
@@ -143,10 +144,19 @@ public class PasswordAuthentication {
         return authenticate(password.toCharArray(), token);
     }
 
-    public void authorizedStaff(int staffId, HttpServletRequest request) throws LoginStaffException {
-         httpSessionCoreServlet.staffLogin(request);
-         if (staffId != httpSessionCoreServlet.getStaffIdAttribute(request)) {
-           throw new LoginStaffException("Current staff is not authorized");
-        }
+    public void authorizedStaffId(int staffId, HttpServletRequest request) throws ValidationException, LoginStaffException {
+        basicStaffIdValidation(staffId);
+        httpSessionCoreServlet.anyStaffIsLogin(request);
+        staffIdmatchWithLoginStaffId(staffId, request);
+    }
+
+    private void staffIdmatchWithLoginStaffId(int staffId, HttpServletRequest request) throws LoginStaffException {
+        if (staffId != httpSessionCoreServlet.getStaffIdAttribute(request)) {
+          throw new LoginStaffException("Current staff is not authorized");
+       }
+    }
+
+    private void basicStaffIdValidation(int staffId) throws ValidationException {
+        if(staffId <= 0 ) throw new ValidationException("Staff id cannot be zero or negative");
     }
 }
