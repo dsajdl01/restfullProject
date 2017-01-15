@@ -1,4 +1,4 @@
-package com.departments.dto.dep_core_ipa.dep.data.provider;
+package com.departments.core.dep.data.core.provider;
 
 import com.department.core.data.PasswordAuthentication;
 import com.departments.dto.common.lgb.CommonConversions;
@@ -7,7 +7,7 @@ import com.departments.dto.data.DepartmentTable;
 import com.departments.dto.data.LoginDetails;
 import com.departments.dto.data.LoginStaff;
 import com.departments.dto.data.Staff;
-import com.departments.dto.dep_core_ipa.com.provider.helper.HeplerDBO;
+import com.departments.core.provider.helper.HeplerDBO;
 import com.departments.dto.dep_dbo.DepartmentDBOConnection;
 import com.departments.dto.dep_dbo.UserDBO;
 import com.departments.dto.fault.exception.ValidationException;

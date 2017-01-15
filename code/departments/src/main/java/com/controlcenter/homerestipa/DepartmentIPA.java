@@ -41,7 +41,7 @@ public class DepartmentIPA {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDepartment(@QueryParam("depId") Integer depId, @QueryParam("staffId")  Integer staffId, @Context HttpServletRequest request) {
         try {
-            validationHelper.getValidationHepler().basicValidationOfDepartmentId(depId);
+            validationHelper.getValidationHelper().basicValidationOfDepartmentId(depId);
             coreServices.getPasswordAuthentication().authorizedStaffId(staffId, request);
             Department dep = coreServices.getDepartmentImpl().getDepartment(depId);
             return success(new DepartmentJson(dep.getId(), dep.getName(), dep.getCreater()));
@@ -122,7 +122,7 @@ public class DepartmentIPA {
 
         try {
             coreServices.getPasswordAuthentication().authorizedStaffId(staffId, request);
-            validationHelper.getValidationHepler().basicDepartmentValidation(dep);
+            validationHelper.getValidationHelper().basicDepartmentValidation(dep);
             LOGGER.info("saveDepartment: staffId={}, [depId={} depName={}, depCreater={}]", staffId, dep.getDepId(), dep.getDepName(), dep.getCreatedBy());
 
             String message;

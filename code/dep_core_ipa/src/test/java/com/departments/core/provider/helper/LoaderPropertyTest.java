@@ -1,4 +1,4 @@
-package com.departments.dto.dep_core_ipa.com.provider.helper;
+package com.departments.core.provider.helper;
 
 import com.departments.dto.data.PropertiesDataConfig;
 import org.slf4j.Logger;

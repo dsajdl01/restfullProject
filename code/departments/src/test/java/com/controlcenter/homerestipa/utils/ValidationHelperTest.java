@@ -1,5 +1,6 @@
 package com.controlcenter.homerestipa.utils;
 
+import com.controlcenter.homerestipa.response.DepartmentJson;
 import com.controlcenter.homerestipa.response.StaffJson;
 import com.controlcenter.homerestipa.response.StaffLoginDetailsJson;
 import com.department.core.data.PasswordAuthentication;
@@ -17,16 +18,16 @@ import static org.junit.Assert.fail;
 /**
  * Created by david on 25/12/16.
  */
-public class ValidationStaffHeplerTest {
+public class ValidationHelperTest {
 
     PasswordAuthentication passAuth = new PasswordAuthentication( new HttpSessionCoreServlet());
-    ValidationHepler validationHepler = new ValidationHepler(passAuth);
+    ValidationHelper validationHelper = new ValidationHelper(passAuth);
     private CommonConversions commonConv = new CommonConversions();
 
     @Test
     public void basicStaffValidation_Test() {
         try {
-            validationHepler.basicStaffValidation(3, generateStaff("Full Name", "1999-02-02", "2016-08-09", "Developer", "satff@email.com"));
+            validationHelper.basicStaffValidation(3, generateStaff("Full Name", "1999-02-02", "2016-08-09", "Developer", "satff@email.com"));
         } catch (ValidationException e) {
             fail( "basicStaffValidation_Test: should not be thrown ValidationException: " + e.getMessage());
         }
@@ -35,7 +36,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void basicStaffValidationErrorDepId_Test() {
         try {
-            validationHepler.basicStaffValidation(-3, generateStaff("Full Name", "1999-02-02", "2016-08-09", "Developer", "satff@email.com"));
+            validationHelper.basicStaffValidation(-3, generateStaff("Full Name", "1999-02-02", "2016-08-09", "Developer", "satff@email.com"));
             fail( "basicStaffValidationErrorDepId_Test: should be throw ValidationException: ");
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Invalid department ID."));
@@ -45,7 +46,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void basicStaffValidationErrorNull_Test() {
         try {
-            validationHepler.basicStaffValidation(3, null);
+            validationHelper.basicStaffValidation(3, null);
             fail( "basicStaffValidationErrorDepId_Test: should be throw ValidationException: ");
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Mandatory staff object is missing."));
@@ -56,7 +57,7 @@ public class ValidationStaffHeplerTest {
     public void validateAndGetStaffDetailsTest() {
         String email = "email@example.com";
        try {
-           LoginDetails loginDetails = validationHepler.validateAndGetLoginDetails(email, "password123");
+           LoginDetails loginDetails = validationHelper.validateAndGetLoginDetails(email, "password123");
            assertThat(loginDetails.getEmail(), is(email));
        } catch (ValidationException e) {
            fail( "validateAndGetStaffDetailsTest should not throw ValidationException: " + e.getMessage());
@@ -66,7 +67,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void validateAndGetStaffDetailsMissingEmailTest() {
         try {
-            validationHepler.validateAndGetLoginDetails(null, "password123");
+            validationHelper.validateAndGetLoginDetails(null, "password123");
             fail( "validateAndGetStaffDetailsTest: ValidationException should be thrown here.");
         } catch (ValidationException e) {
             String mm = e.getMessage();
@@ -77,7 +78,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void validateAndGetStaffDetailsMissingInvalidEmailTest() {
         try {
-            validationHepler.validateAndGetLoginDetails("email@eemail@com", "password123");
+            validationHelper.validateAndGetLoginDetails("email@eemail@com", "password123");
             fail( "validateAndGetStaffDetailsTest: ValidationException should be thrown here.");
         } catch (ValidationException e) {
             String mm = e.getMessage();
@@ -88,7 +89,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void validateAndGetStaffDetailsMissingEmailAndPasswordTest() {
         try {
-            validationHepler.validateAndGetLoginDetails(null, null);
+            validationHelper.validateAndGetLoginDetails(null, null);
             fail( "validateAndGetStaffDetailsTest: ValidationException should be thrown here.");
         } catch (ValidationException e) {
             String mm = e.getMessage();
@@ -99,7 +100,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void validateAndGetStaffDetailsPasswordToShortTest() {
         try {
-            validationHepler.validateAndGetLoginDetails("soem@email.com", "pass123");
+            validationHelper.validateAndGetLoginDetails("soem@email.com", "pass123");
             fail( "validateAndGetStaffDetailsTest: ValidationException should be thrown here.");
         } catch (ValidationException e) {
             String mm = e.getMessage();
@@ -110,7 +111,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void validateAndGetStaffDetails_Test() {
         try {
-            Staff staff = validationHepler.validateAndGetStaffDetails(2, generateStaff("Full Name", "1999-01-01", "2016-01-01", "Manager", "staff@email.com"));
+            Staff staff = validationHelper.validateAndGetStaffDetails(2, generateStaff("Full Name", "1999-01-01", "2016-01-01", "Manager", "staff@email.com"));
             assertThat(staff.getName(), is("Full Name"));
             assertThat(staff.getPosition() , is("Manager"));
             assertThat(staff.getEmail(), is("staff@email.com"));
@@ -124,7 +125,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void validateAndGetStaffDetailsMissingDates_Test(){
         try {
-            validationHepler.validateAndGetStaffDetails(2, generateStaff("Full Name", null, null, "Manager", "staff@email.com"));
+            validationHelper.validateAndGetStaffDetails(2, generateStaff("Full Name", null, null, "Manager", "staff@email.com"));
             fail( "validateAndGetStaffDetailsMissingDates_Test: ValidationException should be thrown here. ");
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Mandatory date of birthday is missing. Mandatory start day is missing. "));
@@ -134,7 +135,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void validateAndGetStaffDetailsInvalidEmail_Test(){
         try {
-            validationHepler.validateAndGetStaffDetails(2, generateStaff("Full Name", "1999-01-01", "2016-01-01", "Manager", "staff@email@co.uk"));
+            validationHelper.validateAndGetStaffDetails(2, generateStaff("Full Name", "1999-01-01", "2016-01-01", "Manager", "staff@email@co.uk"));
             fail( "validateAndGetStaffDetailsInvalidEmail_Test: ValidationException should be thrown here. ");
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Invalid staff email. "));
@@ -144,7 +145,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void validateAndGetStaffDetailsInvaliDOB_Test(){
         try {
-            validationHepler.validateAndGetStaffDetails(2, generateStaff("Full Name", "1999/01/01", "2016-01-01", "Manager", "staff@email.co.uk"));
+            validationHelper.validateAndGetStaffDetails(2, generateStaff("Full Name", "1999/01/01", "2016-01-01", "Manager", "staff@email.co.uk"));
             fail( "validateAndGetStaffDetailsInvalidEmail_Test: ValidationException should be thrown here. ");
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Date of birthday is invalid. Try format yyyy-mm-dd. "));
@@ -154,7 +155,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void validateAndGetStaffDetailsInvaliStartDay_Test(){
         try {
-            validationHepler.validateAndGetStaffDetails(2, generateStaff("Full Name", "1999-01-01", "2016.01.01", "Manager", "staff@email.co.uk"));
+            validationHelper.validateAndGetStaffDetails(2, generateStaff("Full Name", "1999-01-01", "2016.01.01", "Manager", "staff@email.co.uk"));
             fail( "validateAndGetStaffDetailsInvalidEmail_Test: ValidationException should be thrown here. ");
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Start day is invalid. Try format yyyy-mm-dd. "));
@@ -164,7 +165,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void validateAndGetStaffDetailsFullNameAndPositionMissing_Test(){
         try {
-            validationHepler.validateAndGetStaffDetails(2, generateStaff(null, "1999-01-01", "2016-01-01", null, "staff@email.co.uk"));
+            validationHelper.validateAndGetStaffDetails(2, generateStaff(null, "1999-01-01", "2016-01-01", null, "staff@email.co.uk"));
             fail( "validateAndGetStaffDetailsInvalidEmail_Test: ValidationException should be thrown here. ");
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Mandatory name is missing. Mandatory position is missing. "));
@@ -174,7 +175,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void basicValidateStaffObject_Test() {
         try {
-            validationHepler.basicValidateStaffObject(generateStaff("Full Name", "1999-01-01", "2016-01-01", "Manager", "staff@email.co.uk"));
+            validationHelper.basicValidateStaffObject(generateStaff("Full Name", "1999-01-01", "2016-01-01", "Manager", "staff@email.co.uk"));
         } catch (ValidationException e) {
             fail( "basicValidateStaffObject_Test: ValidationException should be thrown here. " + e.getMessage());
         }
@@ -183,7 +184,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void basicValidateStaffObjectError_Test() {
         try {
-            validationHepler.basicValidateStaffObject(null);
+            validationHelper.basicValidateStaffObject(null);
             fail( "basicValidateStaffObjectError: ValidationException should be thrown here. ");
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Mandatory staff object is missing."));
@@ -193,7 +194,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void basicValidateDepartmentId_Test() {
         try {
-            validationHepler.basicValidationOfDepartmentId(4);
+            validationHelper.basicValidationOfDepartmentId(4);
         } catch (ValidationException e) {
             fail( "basicValidateDepartmentId_Test: ValidationException should NOT be thrown here. " + e.getMessage());
         }
@@ -202,7 +203,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void basicValidateDepartmentIdNull_Test() {
         try {
-            validationHepler.basicValidationOfDepartmentId(null);
+            validationHelper.basicValidationOfDepartmentId(null);
             fail( "basicValidateDepartmentIdNull_Test: ValidationException should be thrown here. ");
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Mandatory department ID is missing."));
@@ -212,7 +213,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void basicValidateDepartmentIdZero_Test() {
         try {
-            validationHepler.basicValidationOfDepartmentId(0);
+            validationHelper.basicValidationOfDepartmentId(0);
             fail( "basicValidateDepartmentIdNull_Test: ValidationException should be thrown here. ");
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Invalid department ID."));
@@ -222,7 +223,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void basicValidationOfSearchValue_Test() {
         try {
-            validationHepler.basicValidationOfSearchValue("david");
+            validationHelper.basicValidationOfSearchValue("david");
         } catch (ValidationException e) {
             fail( "basicValidationOfSearchValue_Test: ValidationException should NOT be thrown here. " + e.getMessage());
         }
@@ -231,7 +232,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void basicValidationOfSearchValueNullException_Test() {
         try {
-            validationHepler.basicValidationOfSearchValue(null);
+            validationHelper.basicValidationOfSearchValue(null);
             fail( "basicValidationOfSearchValueNullException_Test: ValidationException should be thrown here. ");
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Search value mas be at least 3 characters"));
@@ -241,7 +242,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void basicValidationOfSearchValueException_Test() {
         try {
-            validationHepler.basicValidationOfSearchValue("da");
+            validationHelper.basicValidationOfSearchValue("da");
             fail( "basicValidationOfSearchValueException_Test: ValidationException should be thrown here. ");
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Search value mas be at least 3 characters"));
@@ -251,7 +252,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void basicStaffValidationJson_Test() {
         try {
-            validationHepler.basicStaffValidation(generateStaffJson("Yadira Diez", "Java Developer", "yadira@diez.com"));
+            validationHelper.basicStaffValidation(generateStaffJson("Yadira Diez", "Java Developer", "yadira@diez.com"));
         } catch (ValidationException e) {
             fail( "basicStaffValidationJson_Test: ValidationException should NOT be thrown here. ");
         }
@@ -260,7 +261,7 @@ public class ValidationStaffHeplerTest {
     @Test
     public void basicStaffValidationJsonNull_Test() {
         try {
-            validationHepler.basicStaffValidation(null);
+            validationHelper.basicStaffValidation(null);
             fail( "basicStaffValidationJsonNull_Test: ValidationException should be thrown here. ");
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Mandatory staff object is missing."));
@@ -269,7 +270,7 @@ public class ValidationStaffHeplerTest {
 
     @Test
     public void validateMandatoryStaffDetailsAndMapStaff_Test() throws  Exception {
-        Staff staff = validationHepler.validateMandatoryStaffDetailsAndMapStaff(generateStaffJson("Yadira Diez", "Java Developer", "yadira.diez@example.com"));
+        Staff staff = validationHelper.validateMandatoryStaffDetailsAndMapStaff(generateStaffJson("Yadira Diez", "Java Developer", "yadira.diez@example.com"));
         assertThat(staff.getName(), is("Yadira Diez"));
         assertThat(staff.getPosition(), is("Java Developer"));
         assertThat(staff.getEmail(), is("yadira.diez@example.com"));
@@ -278,9 +279,58 @@ public class ValidationStaffHeplerTest {
     @Test
     public void validateMandatoryStaffDetailsAndMapStaffValError_Test() throws  Exception {
         try {
-            Staff staff = validationHepler.validateMandatoryStaffDetailsAndMapStaff(generateStaffJson("Die", "Java Developer", "yadira.diez@example.com"));
+            Staff staff = validationHelper.validateMandatoryStaffDetailsAndMapStaff(generateStaffJson("Die", "Java Developer", "yadira.diez@example.com"));
+            fail( "validateMandatoryStaffDetailsAndMapStaffValError_Test: ValidationException should be thrown here. ");
         } catch (ValidationException e) {
             assertThat(e.getMessage(), is("Full name must be at least 4 characters long "));
+        }
+    }
+
+    @Test
+    public void basicDepartmentValidation_Test() throws Exception {
+        try {
+            validationHelper.basicDepartmentValidation( new DepartmentJson(2, "IT", "Bob Fred"));
+        } catch (ValidationException e) {
+            fail( "basicDepartmentValidation_Test: ValidationException should NOT be thrown here. ");
+        }
+    }
+
+    @Test
+    public void basicDepartmentValidationError_Test() throws Exception {
+        try {
+            validationHelper.basicDepartmentValidation( new DepartmentJson(2, "", "Bob Fred"));
+            fail( "basicDepartmentValidationError_Test: ValidationException should be thrown here. ");
+        } catch (ValidationException e) {
+            assertThat(e.getMessage(), is("Mandatory argument department name is missing"));
+        }
+    }
+
+    @Test
+    public void basicDepartmentValidationErrorNull_Test() throws Exception {
+        try {
+            validationHelper.basicDepartmentValidation( null );
+            fail( "basicDepartmentValidationErrorNull_Test: ValidationException should be thrown here. ");
+        } catch (ValidationException e) {
+            assertThat(e.getMessage(), is("Mandatory argument department name is missing"));
+        }
+    }
+
+    @Test
+    public void basicValidateEmailAndPasswordLogin_Test() throws Exception {
+        try {
+            validationHelper.basicValidateEmailAndPasswordLogin("some@email.com", "password123");
+        } catch (ValidationException e) {
+            fail( "basicValidateEmailAndPasswordLogin_Test: ValidationException should NOT be thrown here. ");
+        }
+    }
+
+    @Test
+    public void basicValidateEmailAndPasswordLoginError_Test() throws Exception {
+        try {
+            validationHelper.basicValidateEmailAndPasswordLogin("some@email@com", "password123");
+            fail( "basicValidateEmailAndPasswordLogin_Test: ValidationException should be thrown here. ");
+        } catch (ValidationException e) {
+            assertThat(e.getMessage(), is("Mandatory argument email or password are missing"));
         }
     }
 

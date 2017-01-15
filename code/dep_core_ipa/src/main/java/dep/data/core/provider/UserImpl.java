@@ -67,9 +67,8 @@ public class UserImpl implements UserInter {
     public void saveNewStaffAndLoginDetails(Staff staff, LoginDetails loginDetail) throws SQLFaultException {
         saveNewStaff(staff);
         final int newStaffId = getNewStaffId();
-        if ( newStaffId <= 0 ){
-            throw new SQLFaultException("Error occur when getting new staff id");
-        }
+        if ( newStaffId <= 0 ) throw new SQLFaultException("Error occur when getting new staff id");
+
         saveLoginDetails(loginDetail, newStaffId);
     }
 

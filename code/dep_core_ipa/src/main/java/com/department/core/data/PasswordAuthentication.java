@@ -46,12 +46,9 @@ public class PasswordAuthentication {
     private HttpSessionCoreServlet httpSessionCoreServlet;
 
 /*    public static void main(String arg[]) {
-        PasswordAuthentication pa = new PasswordAuthentication();
-
+        PasswordAuthentication pa = new PasswordAuthentication(new HttpSessionCoreServlet());
         System.out.println("dkjghdsk: " + pa.hashPassword("password"));
-
         System.out.println("commape true: " + pa.authenticate("password", "$31$16$jDvam4TS3HgpKUwxoWBmftGKYemTwS9xjfaytGILoS0"));
-
         System.out.println("commape false: " + pa.authenticate("david.sajdl@arkessa.co.uk", "$31$16$jDvam4TS3HgpKUwxoWBmftGKYemTwS9xjfaytGILoS0"));
     }*/
 
@@ -75,8 +72,7 @@ public class PasswordAuthentication {
 
     private static int iterations(int cost)
     {
-        if ((cost & ~0x1F) != 0)
-            throw new IllegalArgumentException("cost: " + cost);
+        if ((cost & ~0x1F) != 0) throw new IllegalArgumentException("cost: " + cost);
         return 1 << cost;
     }
 
@@ -106,8 +102,7 @@ public class PasswordAuthentication {
     protected boolean authenticate(char[] password, String token)
     {
         Matcher m = layout.matcher(token);
-        if (!m.matches())
-            throw new IllegalArgumentException("Invalid token format");
+        if (!m.matches()) throw new IllegalArgumentException("Invalid token format");
         int iterations = iterations(parseInt(m.group(1)));
         byte[] hash = getUrlDecoder().decode(m.group(2));
         byte[] salt = Arrays.copyOfRange(hash, 0, SIZE / 8);
@@ -147,10 +142,10 @@ public class PasswordAuthentication {
     public void authorizedStaffId(int staffId, HttpServletRequest request) throws ValidationException, LoginStaffException {
         basicStaffIdValidation(staffId);
         httpSessionCoreServlet.anyStaffIsLogin(request);
-        staffIdmatchWithLoginStaffId(staffId, request);
+        staffIdMatchWithLoginStaffId(staffId, request);
     }
 
-    private void staffIdmatchWithLoginStaffId(int staffId, HttpServletRequest request) throws LoginStaffException {
+    private void staffIdMatchWithLoginStaffId(int staffId, HttpServletRequest request) throws LoginStaffException {
         if (staffId != httpSessionCoreServlet.getStaffIdAttribute(request)) {
           throw new LoginStaffException("Current staff is not authorized");
        }

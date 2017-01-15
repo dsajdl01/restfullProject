@@ -104,7 +104,7 @@ public class DepartmentIpaTest {
 
     @Test
     public void getDepartment_negativeDepIdTest() throws Exception {
-        doThrow(new ValidationException("Invalid department ;id -3")).when(mockValidationHepler).basicValidationOfDepartmentId(-3);
+        doThrow(new ValidationException("Invalid department ;id -3")).when(mockValidationHelper).basicValidationOfDepartmentId(-3);
         doNothing().when(mockPasswordAuthentication).authorizedStaffId(eq(1),any(HttpServletRequest.class));
         given()
             .queryParam("depId", -3)
@@ -336,7 +336,7 @@ public class DepartmentIpaTest {
         DepartmentJson dep = new DepartmentJson(null, null, "1");
         doNothing().when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
         doThrow( new ValidationException("Mandatory argument department name is missing"))
-                .when(mockValidationHepler).basicDepartmentValidation(any(DepartmentJson.class));
+                .when(mockValidationHelper).basicDepartmentValidation(any(DepartmentJson.class));
 
         given()
                 .contentType("application/json")

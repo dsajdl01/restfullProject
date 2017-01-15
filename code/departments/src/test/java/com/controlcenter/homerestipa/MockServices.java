@@ -2,7 +2,7 @@ package com.controlcenter.homerestipa;
 
 import com.controlcenter.homerestipa.provider.RestCenterServices;
 import com.controlcenter.homerestipa.provider.RestServices;
-import com.controlcenter.homerestipa.utils.ValidationHepler;
+import com.controlcenter.homerestipa.utils.ValidationHelper;
 import com.department.core.data.PasswordAuthentication;
 import com.httpSession.core.HttpSessionCoreServlet;
 import dep.data.core.provider.CoreServices;
@@ -27,7 +27,7 @@ public class MockServices {
     protected static DepartmentCoreServices mockDepartmentCoreServices = mock(CoreServices.class);
     protected static RestServices mockRestServices = mock(RestCenterServices.class);
     protected static DepartmentInter mockDepartmentInter  = mock(DepartmentImpl.class);
-    protected static ValidationHepler mockValidationHepler = mock(ValidationHepler.class);
+    protected static ValidationHelper mockValidationHelper = mock(ValidationHelper.class);
     protected static HttpSessionCoreServlet mockHttpSessionCoreServlet = mock(HttpSessionCoreServlet.class);
     protected static PasswordAuthentication mockPasswordAuthentication = mock(PasswordAuthentication.class);
 
@@ -40,13 +40,13 @@ public class MockServices {
 
     public static void resetMocks() {
         reset(mockHttpServletRequest, mockUseInter, httpSessionMock, mockDepartmentCoreServices, mockDepartmentInter,
-                mockRestServices, mockValidationHepler, mockHttpServletRequest, mockPasswordAuthentication);
+                mockRestServices, mockValidationHelper, mockHttpServletRequest, mockPasswordAuthentication);
 
         when(mockDepartmentCoreServices.getUserImpl()).thenReturn(mockUseInter);
         when(mockDepartmentCoreServices.getDepartmentImpl()).thenReturn(mockDepartmentInter);
         when(mockDepartmentCoreServices.getHttpSessionCoreServlet()).thenReturn(mockHttpSessionCoreServlet);
         when(mockDepartmentCoreServices.getPasswordAuthentication()).thenReturn(mockPasswordAuthentication);
-        when(mockRestServices.getValidationHepler()).thenReturn(mockValidationHepler);
+        when(mockRestServices.getValidationHelper()).thenReturn(mockValidationHelper);
     }
 
 }

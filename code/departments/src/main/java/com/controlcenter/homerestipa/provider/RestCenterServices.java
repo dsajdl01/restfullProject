@@ -1,6 +1,6 @@
 package com.controlcenter.homerestipa.provider;
 
-import com.controlcenter.homerestipa.utils.ValidationHepler;
+import com.controlcenter.homerestipa.utils.ValidationHelper;
 import com.department.core.data.PasswordAuthentication;
 import com.httpSession.core.HttpSessionCoreServlet;
 
@@ -10,17 +10,17 @@ import com.httpSession.core.HttpSessionCoreServlet;
 public class RestCenterServices implements RestServices {
 
     private PasswordAuthentication passwordAuth;
-    private ValidationHepler validationHepler;
+    private ValidationHelper validationHelper;
 
     public RestCenterServices(){
 
         HttpSessionCoreServlet httpSessionCoreServlet = new HttpSessionCoreServlet();
         passwordAuth = new PasswordAuthentication( httpSessionCoreServlet );
-        validationHepler = new ValidationHepler(passwordAuth);
+        validationHelper = new ValidationHelper(passwordAuth);
 
     }
 
-    public ValidationHepler getValidationHepler() {
-        return validationHepler;
+    public ValidationHelper getValidationHelper() {
+        return validationHelper;
     }
 }

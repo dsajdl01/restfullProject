@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by david on 17/12/16.
  */
-public class ValidationHepler {
+public class ValidationHelper {
 
     private CommonConversions commonConv = new CommonConversions();
     private PasswordAuthentication passwordAuth;
@@ -26,7 +26,7 @@ public class ValidationHepler {
     private static final int MAX_SEARCH_VALUE = 3;
     private static final int MAX_NAME_VALUE = 4;
 
-    public ValidationHepler(PasswordAuthentication passwordAuth) {
+    public ValidationHelper(PasswordAuthentication passwordAuth) {
         this.passwordAuth = passwordAuth;
     }
 
