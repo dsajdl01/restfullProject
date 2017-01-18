@@ -16,12 +16,13 @@ function staffService($http)
         });
     }
 
-    self.saveStaff = function(user, depId) {
+    self.saveStaff = function(user, depId, staffId) {
         return $http  ({
             method: "PUT",
             url: '/department/rest/user/' + depId + '/addNewStaff',
             headers: { "content-type": "application/json" },
-            data: user
+            data: user,
+            params: {'staffId' : staffId}
         });
     }
 
@@ -33,12 +34,13 @@ function staffService($http)
          });
     }
 
-    self.modifyStaff = function(staff) {
+    self.modifyStaff = function(staff, staffId) {
         return $http  ({
                     method: "PUT",
                     url: '/department/rest/user/modifyStaff',
                     headers: { "content-type": "application/json" },
-                    data: staff
+                    data: staff,
+                    params: {'staffId' : staffId}
                 });
     }
 }

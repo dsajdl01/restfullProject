@@ -25,7 +25,7 @@ controlCenterApp.controller('addStaffController', ['commonService', '$sessionSto
 
         self.save = function() {
             self.innerValidationError = null;
-            var promise = staffService.saveStaff( createStaffInstance(self.user), $sessionStorage.depId );
+            var promise = staffService.saveStaff( createStaffInstance(self.user), $sessionStorage.depId, $sessionStorage.user.userId );
             return promise
                 .then(function (){
                     toaster.pop("success","Done","User " + self.user.fullName + " is successfully saved");

@@ -10,6 +10,7 @@ import com.departments.dto.common.lgb.SearchType;
 import com.departments.dto.data.LoginDetails;
 import com.departments.dto.data.LoginStaff;
 import com.departments.dto.data.Staff;
+import com.departments.dto.fault.exception.LoginStaffException;
 import com.departments.dto.fault.exception.SQLFaultException;
 import com.departments.dto.fault.exception.ValidationException;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
@@ -189,6 +190,7 @@ public class UserIpaTest {
 
     @Test
     public void doesEmailExistTest() throws Exception {
+        doNothing().when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
         String email = "example@co.uk";
         when(mockUseInter.doesEmailExist(email)).thenReturn(true);
         given()
@@ -201,8 +203,10 @@ public class UserIpaTest {
 
     }
 
+
     @Test
     public void doesEmailExistBedRequestTest() throws Exception {
+        doNothing().when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
         String email = "";
         given()
             .queryParam("email", email)
@@ -211,6 +215,21 @@ public class UserIpaTest {
         .then()//.log().all()
             .statusCode(BAD_REQUEST)
             .body("message", equalTo("Mandatory argument email is missing"));
+
+    }
+
+    @Test
+    public void doesEmailExistLoginStaffExceptionTest() throws Exception {
+        doNothing().when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
+        doThrow(new LoginStaffException("Please login")).when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
+        String email = "ds@example.com";
+        given()
+           .queryParam("email", email)
+        .when()//.log().all()
+           .get("/emailExist")
+        .then()//.log().all()
+           .statusCode(FORBIDDEN)
+           .body("message", equalTo("Please login"));
 
     }
 
@@ -230,6 +249,7 @@ public class UserIpaTest {
     @Test
     public void doesEmailExistSQLError() throws Exception {
         String email = "example@co.uk";
+        doNothing().when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
         doThrow(new SQLFaultException("Enable to connect to database")).when(mockUseInter).doesEmailExist(email);
 
         given()
@@ -246,6 +266,7 @@ public class UserIpaTest {
         LoginDetails loginDetails = new LoginDetails("some@email.com", "$3728bdkjabddbeqnrrekop");
         Staff staff = new Staff.Builder().build();
         int depId = 2;
+        doNothing().when(mockPasswordAuthentication).authorizedStaffId(eq(1) , any(HttpServletRequest.class));
         doNothing().when(mockValidationHelper).basicStaffValidation(eq(depId), any(StaffLoginDetailsJson.class));
         when(mockValidationHelper.validateAndGetLoginDetails("some@email.com", "somepassword120")).thenReturn(loginDetails);
         when(mockValidationHelper.validateAndGetStaffDetails(eq(depId), any(StaffLoginDetailsJson.class))).thenReturn(staff);
@@ -253,6 +274,7 @@ public class UserIpaTest {
 
         given()
             .contentType("application/json")
+            .queryParam("staffId", 1)
             .body( generateStaffDetails() )
         .when()//.log().all()
             .put("/" + depId + "/addNewStaff")
@@ -261,14 +283,34 @@ public class UserIpaTest {
     }
 
     @Test
+    public void addNewStaffLoginStaffExceptionTest() throws Exception {
+        LoginDetails loginDetails = new LoginDetails("some@email.com", "$3728bdkjabddbeqnrrekop");
+        Staff staff = new Staff.Builder().build();
+        int depId = 2;
+        doThrow(new LoginStaffException("Current staff is not authorized")).when(mockPasswordAuthentication).authorizedStaffId(eq(1) , any(HttpServletRequest.class));
+
+        given()
+            .contentType("application/json")
+            .queryParam("staffId", 1)
+            .body( generateStaffDetails() )
+        .when()//.log().all()
+            .put("/" + depId + "/addNewStaff")
+        .then()//.log().all()
+            .statusCode(FORBIDDEN)
+            .body("message", equalTo("Current staff is not authorized"));
+    }
+
+    @Test
     public void addNewStaffValidationErrorTest() throws Exception {
         LoginDetails loginDetails = new LoginDetails("some@email.com", "$3728bdkjabddbeqnrrekop");
         Staff staff = new Staff.Builder().build();
         int depId = 2;
+        doNothing().when(mockPasswordAuthentication).authorizedStaffId(eq(1) , any(HttpServletRequest.class));
         doThrow(new ValidationException("Invalid Email Address")).when(mockValidationHelper).basicStaffValidation(eq(depId), any(StaffLoginDetailsJson.class));
 
         given()
             .contentType("application/json")
+            .queryParam("staffId", 1)
             .body( generateStaffDetails() )
         .when()//.log().all()
             .put("/" + depId + "/addNewStaff")
@@ -282,6 +324,7 @@ public class UserIpaTest {
         LoginDetails loginDetails = new LoginDetails("some@email.com", "$3728bdkjabddbeqnrrekop");
         Staff staff = new Staff.Builder().build();
         int depId = 2;
+        doNothing().when(mockPasswordAuthentication).authorizedStaffId(eq(1) , any(HttpServletRequest.class));
         doNothing().when(mockValidationHelper).basicStaffValidation(eq(depId), any(StaffLoginDetailsJson.class));
         when(mockValidationHelper.validateAndGetLoginDetails("some@email.com", "somepassword120")).thenReturn(loginDetails);
         when(mockValidationHelper.validateAndGetStaffDetails(eq(depId), any(StaffLoginDetailsJson.class))).thenReturn(staff);
@@ -289,6 +332,7 @@ public class UserIpaTest {
 
         given()
             .contentType("application/json")
+            .queryParam("staffId", 1)
             .body( generateStaffDetails() )
         .when()//.log().all()
             .put("/" + depId + "/addNewStaff")
@@ -302,6 +346,7 @@ public class UserIpaTest {
         LoginDetails loginDetails = new LoginDetails("some@email.com", "$3728bdkjabddbeqnrrekop");
         Staff staff = new Staff.Builder().build();
         int depId = 2;
+        doNothing().when(mockPasswordAuthentication).authorizedStaffId(eq(1) , any(HttpServletRequest.class));
         doNothing().when(mockValidationHelper).basicStaffValidation(eq(depId), any(StaffLoginDetailsJson.class));
         when(mockValidationHelper.validateAndGetLoginDetails("some@email.com", "somepassword120")).thenReturn(loginDetails);
         when(mockValidationHelper.validateAndGetStaffDetails(eq(depId), any(StaffLoginDetailsJson.class))).thenReturn(staff);
@@ -318,6 +363,7 @@ public class UserIpaTest {
 
     @Test
     public void searchForStaffTest() throws  Exception{
+        doNothing().when(mockPasswordAuthentication).authorizedStaffId(eq(1) , any(HttpServletRequest.class));
         doNothing().when(mockValidationHelper).basicValidationOfDepartmentId(1);
         doNothing().when(mockValidationHelper).basicValidationOfSearchValue("david");
         List<Staff> staffs = asList(new Staff(2, 1, "David Smith", commonConv.getDateFromString("1999-01-01"),
@@ -340,10 +386,26 @@ public class UserIpaTest {
                 .body("staffDetailsList[0].position", equalTo("Developer"))
                 .body("staffDetailsList[0].staffEmail", equalTo("ds@co.uk"))
                 .body("staffDetailsList[0].comment", equalTo(null));
-    } // Validation
+    }
+
+    @Test
+    public void searchForStaffLoginStaffExceptionTest() throws  Exception{
+        doThrow(new LoginStaffException("Please login")).when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
+
+        given()
+             .queryParam("searchValue", "david")
+             .queryParam("type", "null")
+        .when()
+             .post("/" + 1 + "/searchForStaff")
+        .then()//.log().all()
+             .statusCode(FORBIDDEN)
+             .body("message", equalTo("Please login"));
+    }
+
 
     @Test
     public void searchForStaffValidationTest() throws  Exception{
+        doNothing().when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
         doNothing().when(mockValidationHelper).basicValidationOfDepartmentId(1);
         doNothing().when(mockValidationHelper).basicValidationOfSearchValue("david");
 
@@ -358,7 +420,8 @@ public class UserIpaTest {
     }
 
     @Test
-    public void searchForStaffSQLExceptionTest() throws  Exception{
+    public void searchForStaffSQLExceptionTest() throws  Exception {
+        doNothing().when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
         doNothing().when(mockValidationHelper).basicValidationOfDepartmentId(1);
         doNothing().when(mockValidationHelper).basicValidationOfSearchValue("david");
         doThrow( new SQLFaultException("Unable to connect to database while searching for staff by name")).when(mockUseInter).searchForStaffs(1, "david", SearchType.NAME);
@@ -375,6 +438,7 @@ public class UserIpaTest {
 
     @Test
     public void searchForStaffSQLRuntimeTest() throws  Exception {
+        doNothing().when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
         doNothing().when(mockValidationHelper).basicValidationOfDepartmentId(1);
         doNothing().when(mockValidationHelper).basicValidationOfSearchValue("david");
         doThrow( new RuntimeException()).when(mockUseInter).searchForStaffs(1, "david", SearchType.NAME);
@@ -390,6 +454,7 @@ public class UserIpaTest {
 
     @Test
     public void modifyStaff_Test() throws Exception {
+        doNothing().when(mockPasswordAuthentication).authorizedStaffId( eq(1), any(HttpServletRequest.class));
         doNothing().when(mockValidationHelper).basicStaffValidation( any(StaffJson.class));
         Staff staff = getStaff();
         when(mockValidationHelper.validateMandatoryStaffDetailsAndMapStaff(any(StaffJson.class))).thenReturn(staff);
@@ -397,6 +462,7 @@ public class UserIpaTest {
 
         given()
             .contentType("application/json")
+            .queryParam("staffId", 1)
             .body( generateStaffJson() )
         .when()//.log().all()
             .put("/modifyStaff")
@@ -405,11 +471,28 @@ public class UserIpaTest {
     }
 
     @Test
+    public void modifyStaffLoginStaffException_Test() throws Exception {
+        doThrow(new LoginStaffException("Current staff is not authorized")).when(mockPasswordAuthentication).authorizedStaffId( eq(1), any(HttpServletRequest.class));
+
+        given()
+            .contentType("application/json")
+            .queryParam("staffId", 1)
+            .body( generateStaffJson() )
+        .when()//.log().all()
+            .put("/modifyStaff")
+        .then().log().all()
+            .statusCode(FORBIDDEN)
+            .body("message", equalTo("Current staff is not authorized"));
+    }
+
+    @Test
     public void modifyStaffValidationError_Test() throws Exception {
+        doNothing().when(mockPasswordAuthentication).authorizedStaffId( eq(1), any(HttpServletRequest.class));
         doThrow(new ValidationException("Invalid Email Address")).when(mockValidationHelper).basicStaffValidation( any(StaffJson.class));
 
         given()
             .contentType("application/json")
+            .queryParam("staffId", 1)
             .body( generateStaffJson() )
         .when()//.log().all()
             .put("/modifyStaff")
@@ -420,6 +503,7 @@ public class UserIpaTest {
 
     @Test
     public void modifyStaffInternalError_Test() throws Exception {
+        doNothing().when(mockPasswordAuthentication).authorizedStaffId( eq(1), any(HttpServletRequest.class));
         doNothing().when(mockValidationHelper).basicStaffValidation( any(StaffJson.class));
         Staff staff = getStaff();
         when(mockValidationHelper.validateMandatoryStaffDetailsAndMapStaff(any(StaffJson.class))).thenReturn(staff);
@@ -427,6 +511,7 @@ public class UserIpaTest {
 
         given()
              .contentType("application/json")
+             .queryParam("staffId", 1)
              .body( generateStaffJson() )
         .when()//.log().all()
             .put("/modifyStaff")
