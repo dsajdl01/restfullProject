@@ -1,5 +1,5 @@
-controlCenterApp.controller('departmentCreaterController', ['DepService', 'commonService','modalDialogBoxService', 'toaster',
-        function(depService, commonService, modalDialogBoxService, toaster){
+controlCenterApp.controller('departmentCreaterController', ['DepService', 'commonService','modalDialogBoxService', 'toaster','$sessionStorage',
+        function(depService, commonService, modalDialogBoxService, toaster, $sessionStorage){
 
     var self = this;
     self.btnName = "Save";
@@ -16,8 +16,8 @@ controlCenterApp.controller('departmentCreaterController', ['DepService', 'commo
     };
 
     self.save = function(){
-        var userId = 1; // later get logon user
-        depService.saveDepartment(null, self.depName, userId, function() {
+         // later get logon user
+        depService.saveDepartment(null, self.depName, $sessionStorage.user.userId, function() {
             self.btnName = "Done";
             var name = self.depName;
             self.depName = null;

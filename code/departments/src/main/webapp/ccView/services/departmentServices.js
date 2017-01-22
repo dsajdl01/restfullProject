@@ -38,9 +38,9 @@ function DepService($http, commonService)
            );
     }
 
-    self.saveDepartment = function (depId, depName, userId, callbackSuccess, callbackFailure) {
+    self.saveDepartment = function (depId, depName, staffId, callbackSuccess, callbackFailure) {
          var restUrl = '/department/rest/dep/createDepartment';
-         var newDepartment = { "depId": depId, "depName": depName, "createdBy": userId };
+         var newDepartment = { "depId": depId, "depName": depName, "createdBy": staffId };
          return $http(
             {
                 method: 'PUT',
@@ -48,6 +48,7 @@ function DepService($http, commonService)
                 headers : {
                     "content-type": "application/json"
                 },
+                params: {"staffId": staffId},
                 data:  newDepartment
             }).
             then(function(response) {

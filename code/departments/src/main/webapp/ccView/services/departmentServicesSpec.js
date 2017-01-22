@@ -78,31 +78,31 @@ describe('Service: DepService', function() {
     });
 
     it('should save department when saveDepartment() is called', function(){
-        var dep = { "depId": 127, "depName": "Network team", "createdBy": "David"}
-         httpBackend.whenPUT('/department/rest/dep/createDepartment', dep).respond(200, true);
-         httpBackend.expectPUT('/department/rest/dep/createDepartment', dep);
+        var dep = { "depId": 127, "depName": "Network team", "createdBy": 1}
+         httpBackend.whenPUT('/department/rest/dep/createDepartment?staffId=' + 1, dep).respond(200, true);
+         httpBackend.expectPUT('/department/rest/dep/createDepartment?staffId=' + 1, dep);
 
         var callbackCalled = false;
             var callback = function() {
                 callbackCalled = true;
             };
 
-        service.saveDepartment(127, "Network team", "David", callback, "DammyFunction");
+        service.saveDepartment(127, "Network team", 1, callback, "DammyFunction");
         httpBackend.flush();
         expect(callbackCalled).toBeTruthy();
     });
 
     it('should not save department when saveDepartment() is called and any error occur', function(){
-        var dep = { "depId": 127, "depName": "Network team", "createdBy": "David"}
-        httpBackend.whenPUT('/department/rest/dep/createDepartment', dep).respond(500, false);
-        httpBackend.expectPUT('/department/rest/dep/createDepartment', dep);
+        var dep = { "depId": 127, "depName": "Network team", "createdBy": 1}
+        httpBackend.whenPUT('/department/rest/dep/createDepartment?staffId=' + 1, dep).respond(500, false);
+        httpBackend.expectPUT('/department/rest/dep/createDepartment?staffId=' + 1, dep);
 
         var callbackCalled = false;
         var callback = function() {
                   callbackCalled = true;
         };
 
-        service.saveDepartment(127, "Network team", "David", "DammyFunction", callback);
+        service.saveDepartment(127, "Network team", 1, "DammyFunction", callback);
         httpBackend.flush();
         expect(callbackCalled).toBeTruthy();
     });

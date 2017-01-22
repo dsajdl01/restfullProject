@@ -2,7 +2,7 @@ describe('Controller: departmentCreaterController', function() {
 
        beforeEach(module('ccApp'));
 
-       var ctrl, depServiceMock, commonServiceMock, modalDialogBoxServiceMock, toasterMock;
+       var ctrl, depServiceMock, commonServiceMock, modalDialogBoxServiceMock, toasterMock, sessionStorageMock;
 
        beforeEach(module(function($provide) {
 
@@ -34,10 +34,16 @@ describe('Controller: departmentCreaterController', function() {
                 pop: ""
            };
 
+           sessionStorageMock = {
+                user: {
+                    userId: 1
+                }
+           }
            $provide.value('modalDialogBoxService', modalDialogBoxServiceMock);
            $provide.value('commonService', commonServiceMock);
            $provide.value('DepService', depServiceMock);
            $provide.value('toaster', toasterMock);
+           $provide.value('$sessionStorage', sessionStorageMock);
        }));
 
        beforeEach(inject(function($controller) {
