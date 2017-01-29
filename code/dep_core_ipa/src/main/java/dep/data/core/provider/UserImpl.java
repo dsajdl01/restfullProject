@@ -56,7 +56,11 @@ public class UserImpl implements UserInter {
     private LoginStaff getLoginStaffDetails(String email) throws SQLFaultException {
         Integer userId = userDBO.loninUserId(email);
         if (userId == null) return null;
-        return userDBO.getLogInStaffDetails(userId);
+        return getLoginStaff(userId);
+    }
+
+    public LoginStaff getLoginStaff(int staffId) throws SQLFaultException  {
+        return userDBO.getLogInStaffDetails(staffId);
     }
 
     public Staff getStaffDetails(int staffId) throws SQLFaultException {

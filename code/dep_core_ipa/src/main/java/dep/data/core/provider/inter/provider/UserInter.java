@@ -17,6 +17,8 @@ public interface UserInter {
 
     LoginStaff logInUser(String email, String password, HttpSession session) throws SQLFaultException, ValidationException;
 
+    LoginStaff getLoginStaff(int staffId) throws SQLFaultException;
+
     void saveNewStaff(Staff staff) throws SQLFaultException;
 
     void saveNewStaffAndLoginDetails(Staff staff, LoginDetails loginDetail) throws SQLFaultException;

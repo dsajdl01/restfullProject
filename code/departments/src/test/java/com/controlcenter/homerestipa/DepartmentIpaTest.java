@@ -378,4 +378,81 @@ public class DepartmentIpaTest {
         .then()//.log().all()
             .statusCode(INTERNAL_SERVER_ERROR);
     }
+
+    @Test
+    public void getSelectedDepartment_test() throws Exception {
+        doNothing().when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
+        Integer departmentId = 2;
+        when(mockHttpSessionCoreServlet.getSelectedDepIdAttribute(any(HttpServletRequest.class))).thenReturn(departmentId);
+        Department department = new Department(departmentId, "Network Team", "Some Name");
+        when(mockDepartmentInter.getDepartment(departmentId)).thenReturn(department);
+
+        given()
+            .contentType("application/json")
+        .when()
+           .get("/getSelectedDepartment")
+        .then()//.log().all()
+            .statusCode(HTML_OK)
+            .body("depId", equalTo(departmentId))
+            .body("depName", equalTo("Network Team"))
+            .body("createdBy", equalTo("Some Name"));
+    }
+
+    @Test
+    public void getSelectedDepartmentLoginStaffException_test() throws Exception {
+        doThrow( new LoginStaffException("Please login")).when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
+
+        given()
+            .contentType("application/json")
+        .when()
+            .get("/getSelectedDepartment")
+        .then()//.log().all()
+            .statusCode(FORBIDDEN)
+            .body("message", equalTo("Please login"));
+    }
+
+    @Test
+    public void getSelectedDepartmentValidationExp_test() throws Exception {
+        doNothing().when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
+        doThrow(new ValidationException("Department is not selected.")).when(mockHttpSessionCoreServlet).getSelectedDepIdAttribute(any(HttpServletRequest.class));
+
+        given()
+             .contentType("application/json")
+        .when()
+             .get("/getSelectedDepartment")
+        .then()//.log().all()
+             .statusCode(BAD_REQUEST)
+             .body("message", equalTo("Department is not selected."));
+    }
+
+    @Test
+    public void getSelectedDepartmentSQLException_test() throws Exception {
+        doNothing().when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
+        Integer departmentId = 2;
+        when(mockHttpSessionCoreServlet.getSelectedDepIdAttribute(any(HttpServletRequest.class))).thenReturn(departmentId);
+        doThrow(new SQLFaultException("Enable to connect to database")).when(mockDepartmentInter).getDepartment(departmentId);
+
+        given()
+            .contentType("application/json")
+        .when()
+            .get("/getSelectedDepartment")
+        .then()//.log().all()
+            .statusCode(SERVICE_UNAVAILABLE)
+            .body("message", equalTo("Enable to connect to database"));
+    }
+
+    @Test
+    public void getSelectedDepartmentException_test() throws Exception {
+        doNothing().when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
+        Integer departmentId = 2;
+        when(mockHttpSessionCoreServlet.getSelectedDepIdAttribute(any(HttpServletRequest.class))).thenReturn(departmentId);
+        doThrow(new RuntimeException()).when(mockDepartmentInter).getDepartment(departmentId);
+
+        given()
+                .contentType("application/json")
+                .when()
+                .get("/getSelectedDepartment")
+                .then()//.log().all()
+                .statusCode(INTERNAL_SERVER_ERROR);
+    }
 }

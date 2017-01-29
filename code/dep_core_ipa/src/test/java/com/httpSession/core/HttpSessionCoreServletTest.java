@@ -1,6 +1,7 @@
 package com.httpSession.core;
 
 import com.departments.dto.fault.exception.LoginStaffException;
+import com.departments.dto.fault.exception.ValidationException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,9 +48,27 @@ public class HttpSessionCoreServletTest {
         int depId = 2;
         when(httpRequest.getSession()).thenReturn(httpSession);
         when(httpSession.getAttribute("selectedDepId")).thenReturn(depId);
+        try {
+            httpCoreSession.setSelectedDepIdAttribute(depId, httpSession);
+            assertThat(httpCoreSession.getSelectedDepIdAttribute(httpRequest), is(depId));
+        } catch (ValidationException e) {
+            fail( "departmentIdAttribute_Test: LoginStaffException should NOT be thrown here.");
+        }
+    }
 
-        httpCoreSession.setSelectedDepIdAttribute(depId, httpSession);
-        assertThat(httpCoreSession.getSelectedDepIdAttribute(httpRequest), is(depId));
+
+    @Test
+    public void getSelectedDepIdAttributeValidationException() throws Exception {
+        try {
+            Integer depId = 0;
+            when(httpRequest.getSession()).thenReturn(httpSession);
+            when(httpSession.getAttribute("selectedDepId")).thenReturn(depId);
+            httpCoreSession.setSelectedDepIdAttribute(depId, httpSession);
+            httpCoreSession.getSelectedDepIdAttribute(httpRequest);
+            fail( "getSelectedDepIdAttributeValidationException: ValidationException should be thrown here.");
+        } catch (ValidationException e ) {
+            assertThat(e.getMessage(), is("Department is not selected."));
+        }
     }
 
     @Test

@@ -94,6 +94,30 @@ public class DepartmentIPA {
     }
 
     @GET
+    @Path("/getSelectedDepartment")
+    public Response getSelectedDepartment(@Context HttpServletRequest request) {
+        try {
+            LOGGER.info("getSelectedDepartment: ");
+            coreServices.getHttpSessionCoreServlet().anyStaffIsLogin(request);
+            final int selectedDepId = coreServices.getHttpSessionCoreServlet().getSelectedDepIdAttribute(request);
+            Department dep = coreServices.getDepartmentImpl().getDepartment(selectedDepId);
+            return success(new DepartmentJson(dep.getId(), dep.getName(), dep.getCreater()));
+        } catch (LoginStaffException e) {
+            LOGGER.error("getSelectedDepartment: LoginStaffException = {}", e.getMessage());
+            return forbidden(e.getMessage());
+        } catch (ValidationException e) {
+            LOGGER.error("getSelectedDepartment: ValidationException = {} ", e.getMessage());
+            return badRequest(e.getMessage());
+        } catch (SQLFaultException departmentFaultService) {
+            LOGGER.error("getSelectedDepartment: SQLFaultException = {} ", departmentFaultService);
+            return sqlConnectionError(departmentFaultService.getMessage());
+        } catch (Exception e ) {
+            LOGGER.error("getSelectedDepartment: Exception = {} ", e);
+            return internalServerError(e.getMessage());
+        }
+    }
+
+    @GET
     @Path("/checkDepartmentName")
     public Response checkDepartmentName(@QueryParam("depName") String depName, @Context HttpServletRequest request) {
         try {

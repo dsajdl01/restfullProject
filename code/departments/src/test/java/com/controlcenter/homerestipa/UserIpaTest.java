@@ -236,6 +236,7 @@ public class UserIpaTest {
     @Test
     public void doesEmailExistError() throws Exception {
         String email = "example@co.uk";
+        doNothing().when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
         doThrow(new RuntimeException()).when(mockUseInter).doesEmailExist(email);
 
         given()
@@ -518,6 +519,73 @@ public class UserIpaTest {
         .then()//.log().all()
             .statusCode(INTERNAL_SERVER_ERROR);
     }
+
+    @Test
+    public void getLoginStaff_test() throws Exception {
+        doNothing().when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
+        Integer staffId = 1;
+        when(mockHttpSessionCoreServlet.getStaffIdAttribute(any(HttpServletRequest.class))).thenReturn(staffId);
+        LoginStaff loginStaff = new LoginStaff(staffId, "Some Name", true);
+        when(mockUseInter.getLoginStaff(staffId)).thenReturn(loginStaff);
+
+        given()
+            .contentType("application/json")
+        .when()
+            .get("/getLoginStaff")
+        .then()//.log().all()
+            .statusCode(HTML_OK)
+            .body("userId", equalTo(staffId))
+            .body("name", equalTo("Some Name"))
+            .body("firstLogin", equalTo(true));
+    }
+
+    @Test
+    public void getLoginStaffLoginStaffException_test() throws Exception {
+        doThrow( new LoginStaffException("Please login")).when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
+
+        given()
+             .contentType("application/json")
+        .when()
+             .get("/getLoginStaff")
+        .then()//.log().all()
+             .statusCode(FORBIDDEN)
+             .body("message", equalTo("Please login"));
+    }
+
+    @Test
+    public void getLoginStaffSQLFaultException_test() throws Exception {
+        doNothing().when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
+        Integer staffId = 1;
+        when(mockHttpSessionCoreServlet.getStaffIdAttribute(any(HttpServletRequest.class))).thenReturn(staffId);
+        LoginStaff loginStaff = new LoginStaff(staffId, "Some Name", true);
+        doThrow(new SQLFaultException("Enable to connect to database")).when(mockUseInter).getLoginStaff(staffId);
+
+        given()
+            .contentType("application/json")
+        .when()
+            .get("/getLoginStaff")
+        .then()//.log().all()
+            .statusCode(SERVICE_UNAVAILABLE)
+            .body("message", equalTo("Enable to connect to database"));
+    }
+
+    @Test
+    public void getLoginStaffException_test() throws Exception {
+        doNothing().when(mockHttpSessionCoreServlet).anyStaffIsLogin(any(HttpServletRequest.class));
+        Integer staffId = 1;
+        when(mockHttpSessionCoreServlet.getStaffIdAttribute(any(HttpServletRequest.class))).thenReturn(staffId);
+        LoginStaff loginStaff = new LoginStaff(staffId, "Some Name", true);
+        doThrow(new RuntimeException()).when(mockUseInter).getLoginStaff(staffId);
+
+        given()
+             .contentType("application/json")
+        .when()
+             .get("/getLoginStaff")
+        .then()//.log().all()
+             .statusCode(INTERNAL_SERVER_ERROR);
+    }
+
+
 
     private StaffLoginDetailsJson generateStaffDetails() {
         return new StaffLoginDetailsJson("Full Name", "1990-01-01", "2016-01-01",

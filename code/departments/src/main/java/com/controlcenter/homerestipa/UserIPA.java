@@ -64,7 +64,28 @@ public class UserIPA {
 
         } catch (Exception e ) {
             LOGGER.error("loginUser: Exception = {} ", e);
-            return internalServerError("logInUser: error occur = " + e.getMessage());
+            return internalServerError("logInUser: error = " + e.getMessage());
+        }
+    }
+
+    @GET
+    @Path("/getLoginStaff")
+    public Response getLoginStaff(@Context HttpServletRequest request) {
+        try {
+            LOGGER.info("getLoginStaff: ");
+            coreServices.getHttpSessionCoreServlet().anyStaffIsLogin(request);
+            int staffId = coreServices.getHttpSessionCoreServlet().getStaffIdAttribute(request);
+            final LoginStaff loginStaff = coreServices.getUserImpl().getLoginStaff(staffId);
+            return success( new LoginStaffJson(loginStaff.getUserId(), loginStaff.getName(), loginStaff.getFirstLogin()));
+        } catch (LoginStaffException e) {
+            LOGGER.error("getLoginStaff: LoginStaffException = {}", e.getMessage());
+            return forbidden(e.getMessage());
+        } catch (SQLFaultException departmentFaultService) {
+            LOGGER.error("getLoginStaff: SQLFaultException = {} ", departmentFaultService);
+            return sqlConnectionError(departmentFaultService.getMessage());
+        } catch (Exception e ) {
+            LOGGER.error("getLoginStaff: Exception = {} ", e);
+            return internalServerError(e.getMessage());
         }
     }
 
@@ -94,7 +115,7 @@ public class UserIPA {
                 return sqlConnectionError(e.getMessage());
         }catch (Exception e ) {
             LOGGER.error("addNewStaff: Exception = {} ", e);
-            return internalServerError("addNewStaff: error occur = " + e.getMessage());
+            return internalServerError(e.getMessage());
         }
     }
 
@@ -115,7 +136,7 @@ public class UserIPA {
             return badRequest(e.getMessage());
         } catch (Exception e ) {
             LOGGER.error("modifyStaff: Exception = {} ", e);
-            return internalServerError("modifyStaff: error occur = " + e.getMessage());
+            return internalServerError(e.getMessage());
         }
     }
 
@@ -147,7 +168,7 @@ public class UserIPA {
             return sqlConnectionError(e.getMessage());
         }catch (Exception e ) {
             LOGGER.error("searchForStaff: Exception = {} ", e);
-            return internalServerError("logInUser: error occur = " + e.getMessage());
+            return internalServerError(e.getMessage());
         }
     }
 
