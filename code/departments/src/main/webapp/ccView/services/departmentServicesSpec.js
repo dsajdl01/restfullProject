@@ -4,8 +4,16 @@ describe('Service: DepService', function() {
 
 	beforeEach(module('ccApp'));
 
+    beforeEach(module(function($provide) {
+        commonServiceMock = {
+            setDepartmentList: function(departments){
+            }
+        };
+
+        $provide.value('commonService', commonServiceMock);
+    }));
+
 	beforeEach(inject(function($injector, _$httpBackend_, commonService) {
-	    commonServiceMock = commonService;
     	httpBackend = _$httpBackend_;
     	service = $injector.get('DepService');
     }));
@@ -20,6 +28,8 @@ describe('Service: DepService', function() {
         httpBackend.whenGET('/department/rest/dep/getListDepartment?staffId=' + staffId).respond(200, response);
         httpBackend.expectGET('/department/rest/dep/getListDepartment?staffId=' + staffId);
 
+        spyOn(commonServiceMock, 'setDepartmentList');
+
         var callbackCalled = false;
         var callback = function(responce) {
            	expect(responce).toBeTruthy;
@@ -29,6 +39,8 @@ describe('Service: DepService', function() {
         service.getDepartmentList(staffId, callback);
         httpBackend.flush();
         expect(callbackCalled).toBeTruthy();
+        expect(commonServiceMock.setDepartmentList).toHaveBeenCalledWith(response.department);
+
     });
 
     it('should return false when getDepartmentList() is called and any errors occurs', function() {
@@ -36,6 +48,7 @@ describe('Service: DepService', function() {
             httpBackend.whenGET('/department/rest/dep/getListDepartment?staffId=' + staffId).respond(500, "some error");
             httpBackend.expectGET('/department/rest/dep/getListDepartment?staffId=' + staffId);
 
+            spyOn(commonServiceMock, 'setDepartmentList');
             var callbackCalled = false;
             var callback = function(responce) {
                	expect(responce).toBeFalsy();
@@ -45,6 +58,7 @@ describe('Service: DepService', function() {
             service.getDepartmentList(staffId, callback);
             httpBackend.flush();
             expect(callbackCalled).toBeTruthy();
+            expect(commonServiceMock.setDepartmentList).not.toHaveBeenCalled();
     });
 
     it('should callback false when department does not exist', function(){
@@ -113,7 +127,7 @@ describe('Service: DepService', function() {
         httpBackend.expectGET('/department/rest/dep?depId=' + 127);
 
 
-         service.getDepartment(127)
+         service.getDepartmentById(127)
                 .then(function(response) {
                 expect(response.data).toEqual(dep);
          });
@@ -125,12 +139,64 @@ describe('Service: DepService', function() {
             httpBackend.whenGET('/department/rest/dep?depId=127').respond( 500, {"message": "some error"} );
             httpBackend.expectGET('/department/rest/dep?depId=127');
 
-            service.getDepartment(127)
+            service.getDepartmentById(127)
                  .then()
                  .catch(function (fail) {
                     expect(fail.status).toBe(500);
                     expect(fail.data).toEqual({"message": "some error"} );
             });
+
+            httpBackend.flush();
+     });
+
+     it('Should save department id when saveSelectedDepartmentId() is called', function() {
+         var depId = 175;
+         httpBackend.whenPOST('/department/rest/dep/saveSelectedDepartmentId?depId=' + depId).respond( 200 );
+         httpBackend.expectPOST('/department/rest/dep/saveSelectedDepartmentId?depId=' + depId);
+
+         var callback = jasmine.createSpy("callback");
+
+         service.saveSelectedDepartmentId(depId).then(callback);
+         httpBackend.flush();
+         expect(callback).toHaveBeenCalled();
+     });
+
+     it('Should catch error when saveSelectedDepartmentId() is called', function() {
+          var depId = 175;
+          httpBackend.whenPOST('/department/rest/dep/saveSelectedDepartmentId?depId=' + depId).respond( 500);
+          httpBackend.expectPOST('/department/rest/dep/saveSelectedDepartmentId?depId=' + depId);
+
+          var callback = jasmine.createSpy("callback");
+
+          service.saveSelectedDepartmentId(depId).then().catch(callback);
+          httpBackend.flush();
+          expect(callback).toHaveBeenCalled();
+     });
+
+     it('should get selected department when getSelectedDepartment() is called', function() {
+         var dep = { "depId": 127, "depName": "Network team", "createdBy": "David"};
+         httpBackend.whenGET('/department/rest/dep/getSelectedDepartment').respond( 200, dep );
+         httpBackend.expectGET('/department/rest/dep/getSelectedDepartment');
+
+
+         service.getSelectedDepartment()
+                .then(function(response) {
+                expect(response.data).toEqual(dep);
+         });
+
+         httpBackend.flush();
+     });
+
+     it('should return promise with error when getDepartment() is called and faild', function(){
+            httpBackend.whenGET('/department/rest/dep/getSelectedDepartment').respond( 500, {"message": "some error"} );
+            httpBackend.expectGET('/department/rest/dep/getSelectedDepartment');
+
+            service.getSelectedDepartment()
+                    .then()
+                    .catch(function (fail) {
+                        expect(fail.status).toBe(500);
+                        expect(fail.data).toEqual({"message": "some error"});
+                    });
 
             httpBackend.flush();
      });

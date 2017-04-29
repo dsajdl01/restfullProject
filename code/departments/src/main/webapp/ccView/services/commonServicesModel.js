@@ -1,8 +1,8 @@
-controlCenterApp.factory('commonService',[ function(){
-	return new commonService();
+controlCenterApp.factory('commonService', [ '$http', function($http){
+	return new commonService($http);
 }]);
 
-function commonService (){
+function commonService ($http){
 
     var self = this;
 
@@ -12,6 +12,7 @@ function commonService (){
     }
 
     self.setDepartmentList = function(departments){
+        self.departmentList = [];
         for(var ixd = 0; ixd < departments.length; ixd++){
             addDepartmentToList(departments[ixd])
         }
@@ -39,4 +40,6 @@ function commonService (){
     self.isLengtsmallerOrEqualToZero = function(length){
         return length <= 0 ;
     }
+
+    self.init();
 }

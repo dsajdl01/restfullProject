@@ -11,8 +11,10 @@ controlCenterApp.controller('departmentViewController', [ 'DepService', 'commonS
 
 	self.init = function() {
 	    var user = $sessionStorage.user;
-	    self.commonService.init();
         delete $sessionStorage.depId;
+
+
+
         DepService.getDepartmentList(user.userId, function(response) {
             if ( response ) {
                 self.showPage = true;

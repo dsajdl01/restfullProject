@@ -1,9 +1,14 @@
 'use strict';
 describe('directive: departmentValidation', function() {
 
-    var elm, scope, $httpBackend, form, depName = "IT";
+    var elm, scope, $httpBackend, form, commonServiceMock, depName = "IT";
 
      beforeEach(module('ccApp'));
+
+     beforeEach(module(function($provide) {
+          commonServiceMock = {   };
+          $provide.value('commonService', commonServiceMock);
+     }));
 
      beforeEach(inject(function($injector) {
            $httpBackend = $injector.get('$httpBackend');

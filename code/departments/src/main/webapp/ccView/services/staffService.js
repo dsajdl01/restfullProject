@@ -16,6 +16,14 @@ function staffService($http)
         });
     }
 
+    self.getLogInStaffDetails = function() {
+        return $http ({
+            method: "GET",
+            url: '/department/rest/user/getLoginStaff',
+            headers: { "content-type": "application/json" },
+        });
+    }
+
     self.saveStaff = function(user, depId, staffId) {
         return $http  ({
             method: "PUT",

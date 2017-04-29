@@ -93,6 +93,31 @@ public class DepartmentIPA {
         }
     }
 
+    @PUT
+    @Path("/saveSelectedDepartmentId")
+    public Response saveSelectedDepartmentId(@QueryParam("depId") final Integer depId, @Context HttpServletRequest request) {
+        try {
+            LOGGER.info("saveSelectedDepartmentId: depId = {}", depId);
+            coreServices.getHttpSessionCoreServlet().anyStaffIsLogin(request);
+            validationHelper.getValidationHelper().basicValidationOfDepartmentId(depId);
+            coreServices.getDepartmentImpl().doesDepartmentExist(depId);
+            coreServices.getHttpSessionCoreServlet().setSelectedDepIdAttribute(depId, request.getSession());
+            return success();
+        } catch (LoginStaffException e) {
+            LOGGER.error("saveSelectedDepartmentId: LoginStaffException = {}", e.getMessage());
+            return forbidden(e.getMessage());
+        } catch (ValidationException e) {
+            LOGGER.error("saveSelectedDepartmentId: ValidationException = {} ", e.getMessage());
+            return badRequest(e.getMessage());
+        } catch (SQLFaultException departmentFaultService) {
+            LOGGER.error("saveSelectedDepartmentId: SQLFaultException = {} ", departmentFaultService.getMessage());
+            return sqlConnectionError(departmentFaultService.getMessage());
+        } catch (Exception e ) {
+            LOGGER.error("saveSelectedDepartmentId: Exception = {} ", e.getMessage());
+            return internalServerError(e.getMessage());
+        }
+    }
+
     @GET
     @Path("/getSelectedDepartment")
     public Response getSelectedDepartment(@Context HttpServletRequest request) {

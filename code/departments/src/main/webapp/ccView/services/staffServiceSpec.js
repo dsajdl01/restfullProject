@@ -4,8 +4,7 @@ describe('Service: staffService', function() {
 
 	beforeEach(module('ccApp'));
 
-	beforeEach(inject(function($injector, _$httpBackend_, commonService) {
-        commonServiceMock = commonService;
+	beforeEach(inject(function($injector, _$httpBackend_) {
        	httpBackend = _$httpBackend_;
       	service = $injector.get('staffService');
     }));
@@ -155,5 +154,38 @@ describe('Service: staffService', function() {
              expect(fail.data.message).toEqual("Enable to connect to database");
         });
         httpBackend.flush();
+    });
+
+    it('should get details of the login person when getLogInStaffDetails is called and user is login', function() {
+        var loginDetails = {"userId": 2, "name": "Alex", "firstLogin": true};
+        httpBackend.whenGET('/department/rest/user/getLoginStaff' ).respond(200, loginDetails);
+        httpBackend.expectGET('/department/rest/user/getLoginStaff');
+
+        var calledBack = false;
+        service.getLogInStaffDetails()
+             .then(function(response) {
+                   calledBack = true;
+                   expect(response.status).toBe(200);
+                   expect(response.data).toEqual(loginDetails);
+             });
+        httpBackend.flush();
+        expect(calledBack).toBeTruthy();
+    });
+
+    it('should catch error massage Plaese login when getLogInStaffDetails is called and user is NOT login', function() {
+        var message = "Please login";
+        httpBackend.whenGET('/department/rest/user/getLoginStaff' ).respond(403, message);
+        httpBackend.expectGET('/department/rest/user/getLoginStaff');
+
+        var calledBack = false;
+        service.getLogInStaffDetails()
+              .then()
+              .catch(function(response){
+                    calledBack = true;
+                    expect(response.status).toBe(403);
+                    expect(response.data).toEqual(message);
+              });
+        httpBackend.flush();
+        expect(calledBack).toBeTruthy();
     });
 });

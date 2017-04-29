@@ -1,30 +1,28 @@
 
-controlCenterApp.factory('DepService', [ '$http', 'commonService',
- function($http, commonService) {
-	return new DepService($http, commonService);
+controlCenterApp.factory('DepService', [ '$http', 'commonService', function($http, commonService) {
+    	return new DepService($http, commonService);
 }]);
 
-function DepService($http, commonService)
- {
+function DepService($http, commonService) {
+
     var self = this;
 
-    self.getDepartmentList = function(staffId, successCallback){
-    		var Url = '/department/rest/dep/getListDepartment';
-    		return $http(
-    				{
+    self.getDepartmentList = function(staffId, successCallback) {
+    	var Url = '/department/rest/dep/getListDepartment';
+    	return $http(
+    		{
     					method: 'GET',
     					url: Url,
     					params: {'staffId': staffId}
-    				})
-    				.then(function (response)
-    				{
-    					commonService.setDepartmentList(response.data.department);
-    					successCallback(true);
-    				},
-    				function errorCallBack(error){
-    				    successCallback(false);
-    				});
-    	}
+    		})
+    		.then(function (response) {
+    			commonService.setDepartmentList(response.data.department);
+    			successCallback(true);
+    		},
+    		function errorCallBack(error) {
+    			successCallback(false);
+    		});
+    }
 
     self.doesDepartmentExist = function(depName, callback){
            return $http(
@@ -34,7 +32,7 @@ function DepService($http, commonService)
                 }).then(function (response) {
                     callback(response.data);
                 }
-                       // Errors are ignored here, since it's just a convenience operation
+                // Errors are ignored here, since it's just a convenience operation
            );
     }
 
@@ -57,13 +55,28 @@ function DepService($http, commonService)
             function(response) {
                 callbackFailure(response);
             });
-    }
+    };
 
-    self.getDepartment = function(depId, staffId) {
+    self.getDepartmentById = function(depId, staffId) {
             return $http ({
                 method: "GET",
                 url: '/department/rest/dep',
                 params: {'depId': depId, 'staffId' : staffId}
             });
-        };
+    };
+
+    self.saveSelectedDepartmentId = function(depId) {
+          return $http ({
+                method: "POST",
+                url: '/department/rest/dep/saveSelectedDepartmentId',
+                params: {'depId': depId }
+          });
+    };
+
+    self.getSelectedDepartment = function() {
+        return $http ({
+            method: "GET",
+            url: '/department/rest/dep/getSelectedDepartment'
+        });
+    };
  }
